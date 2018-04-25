@@ -21,17 +21,10 @@ public class ConnectionFactory {
      * Método para gerar conexão com o banco de dados.
      * @throws java.sql.SQLException
      */
-    
-      /* Configura os parâmetros da conexão */
-           private static final String  URL = "jdbc:mysql:ip:porta/schema";
-           private static final String  USERNAME = "projeto"; 
-           private static final String  PASSWORD = "projeto";
-    
-    
-    public static Connection getConnection() throws SQLException{
+      public static Connection getConnection() throws SQLException{
         try {
             /* Tenta se conectar */
-            return  DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            return  DriverManager.getConnection("jdbc:sqlserver://localhost;user=projeto;password=projeto");
         } catch (SQLException ex) {
                 throw new RuntimeException("ERRO: ",ex);
         }
