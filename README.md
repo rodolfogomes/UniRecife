@@ -1,5 +1,5 @@
 # UniRecife -Projeto POO 
-Projeto de uma biblioteca simples , este projeto servirá como complemento da cadeira de Programacão Orientada a Objetos
+Projeto de um sistema simples para gerenciar as disciplinas ofertados pelos departamentos e professores , este projeto servirá como complemento da cadeira de Programacão Orientada a Objetos
 onde foi solicitado para que cada integrante do grupo fizesse um CRUD completo da tela ao banco de uma area do sistema.
 <h3>#Professor</h3>
 Tito Kenzo
