@@ -1,5 +1,7 @@
 package aplicacao.aluno;
 
+import java.util.*;
+
 /**
  *
  * @author Dadniel Medeiros
@@ -7,6 +9,8 @@ package aplicacao.aluno;
 public class Aluno {
 
     private int matricula;
+    private int idCurso;
+    private int idDept;
     private String nome;
     private String cpf;
     private String rua;
@@ -21,9 +25,8 @@ public class Aluno {
 
     }
 
-    public Aluno(int matricula, String nome, String cpf, String rua, String cidade, String cep, String telefone1, String telefone2, String datnasc) {
-
-        this.matricula = matricula;
+    public Aluno(String nome, String cpf, String rua, String cidade, String cep, String telefone1, String telefone2, String datnasc) {
+        
         this.nome = nome;
         this.cpf = cpf;
         this.rua = rua;
@@ -40,15 +43,7 @@ public class Aluno {
     public int getMatricula() {
         return matricula;
     }
-
-    /**
-     * @param matricula the matricula to set
-     */
-    public void setMatricula(int matricula) {
-        this.matricula = matricula;
-    }
-
-    /**
+     /**
      * @return the nome
      */
     public String getNome() {
