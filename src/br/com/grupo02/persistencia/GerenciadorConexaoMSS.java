@@ -17,13 +17,15 @@ import java.sql.SQLException;
  */
 public class GerenciadorConexaoMSS implements GerenciadorConexao{
 
+    Connection con;
     @Override
     public Connection conectar() throws ConexaoException {
           try {
-            return  DriverManager.getConnection("jdbc:sqlserver://localhost;user=projeto;password=projeto");
-        } catch (SQLException ex) {
-                throw new RuntimeException("ERRO: ",ex);
+            con = DriverManager.getConnection("jdbc:sqlserver://localhost;user=projeto;password=projeto");
+        } catch (SQLException e) {
+                throw new ConexaoException();
         }
+          return con;
     }
 
     @Override
