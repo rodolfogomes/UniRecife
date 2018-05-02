@@ -20,5 +20,24 @@ public class  AlunoDAO implements GerenciadorConexao  {
     public void desconectar(Connection c) throws ConexaoException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+   
+    
+    public void salvar (){
+        
+    }
+    public void deletar (Aluno a){
+        
+    }
+    public void editar (Aluno a){
+        
+    }
+    
+    public Aluno localizar(Aluno a){
+        
+        return null;
+    }
+    
+    
+    
     
 }
