@@ -1,5 +1,5 @@
 
-package aplicacao.aluno;
+package br.com.grupo02.aplicacao.aluno;
 
 import java.util.*;
 
