@@ -7,17 +7,13 @@ import java.sql.Connection;
  *
  * @author ADM
  */
-public interface GerenciadorConexao  {
-
-    public Connection conectar() throws ConexaoException;
-
-    public void desconectar(Connection c) throws ConexaoException;
+public interface GerenciadorConexao {
 
     public abstract void salvar(GerenciadorConexao gc);
     public abstract void editar(GerenciadorConexao gc);
     public abstract void deletar (GerenciadorConexao gc);
-    public abstract GerenciadorConexao carregar(GerenciadorConexao gc);
-    public abstract GerenciadorConexao listar();
+    public abstract Object carregar(GerenciadorConexao gc);
+    public abstract Object listar();
 
 
 

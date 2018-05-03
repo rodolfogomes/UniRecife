@@ -17,7 +17,7 @@ import java.sql.SQLException;
  */
 public abstract class GerenciadorConexaoMSS {
 
-    private static Connection conectar() throws ConexaoException {
+    public static Connection conectar() throws ConexaoException {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String local = "jdbc:sqlserver://localhost";
