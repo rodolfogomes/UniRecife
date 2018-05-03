@@ -20,17 +20,17 @@ public class UniRecife {
 
     public static void main(String[] args) throws SQLException {
      
-        GerenciadorConexao gc = new GerenciadorConexaoMSS();
-        Connection c;
-        try {
-            c = gc.conectar();
-            System.out.println("Conexão funcionando!");
-            gc.desconectar(c);
-            System.out.println("Conexão fechada!");
-            
-        } catch (ConexaoException ex) {
-            System.out.println("Erro na conexão!");
-        }
+////        GerenciadorConexao gc = new GerenciadorConexaoMSS();
+//        Connection c;
+//        try {
+//            c = gc.conectar();
+//            System.out.println("Conexão funcionando!");
+//            gc.desconectar(c);
+//            System.out.println("Conexão fechada!");
+//            
+//        } catch (ConexaoException ex) {
+//            System.out.println("Erro na conexão!");
+//        }
         
     }
     
