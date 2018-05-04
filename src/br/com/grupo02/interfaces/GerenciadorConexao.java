@@ -1,18 +1,15 @@
 package br.com.grupo02.interfaces;
 
-import br.com.grupo02.erro.ConexaoException;
-import java.sql.Connection;
-
 /**
  *
  * @author ADM
  */
-public interface GerenciadorConexao {
+public interface GerenciadorConexao<OBJETO>{
 
-    public abstract void salvar(GerenciadorConexao gc);
-    public abstract void editar(GerenciadorConexao gc);
-    public abstract void deletar (GerenciadorConexao gc);
-    public abstract Object carregar(GerenciadorConexao gc);
+    public abstract void salvar(OBJETO obj);
+    public abstract void editar(OBJETO obj);
+    public abstract void deletar (OBJETO obj);
+    public abstract Object carregar(OBJETO obj);
     public abstract Object listar();
 
 

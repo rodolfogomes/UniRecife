@@ -1,4 +1,3 @@
-
 package br.com.grupo02.aplicacao.aluno;
 
 import java.util.*;
@@ -27,7 +26,7 @@ public class Aluno {
     }
 
     public Aluno(String nome, String cpf, String rua, String cidade, String cep, String telefone1, String telefone2, String datnasc) {
-        
+
         this.nome = nome;
         this.cpf = cpf;
         this.rua = rua;
@@ -44,11 +43,33 @@ public class Aluno {
     public int getMatricula() {
         return matricula;
     }
-     /**
+
+    public void setMatricula(int matricula) {
+        this.matricula = matricula;
+
+    }
+
+    /**
      * @return the nome
      */
     public String getNome() {
         return nome;
+    }
+
+    public int getIdCurso() {
+        return idCurso;
+    }
+
+    public void setIdCurso(int idCurso) {
+        this.idCurso = idCurso;
+    }
+
+    public int getIdDept() {
+        return idDept;
+    }
+
+    public void setIdDept(int idDept) {
+        this.idDept = idDept;
     }
 
     /**
@@ -168,6 +189,21 @@ public class Aluno {
      */
     public void setSexo(String sexo) {
         this.sexo = sexo;
+    }
+
+    public Aluno carregarAluno(Aluno al) {
+        Aluno alun = null;
+        try {
+            AlunoDAO alDAO = new AlunoDAO();
+            alun = alDAO.carregar(al);
+            if (alun == null) {
+                System.out.println("Aluno não encontrado!");
+            }
+            return alun;
+
+        } catch (Exception e) {
+        }
+        return alun;
     }
 
 }
