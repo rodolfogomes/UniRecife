@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.grupo02.persistencia;
+package Dados.Persistencia;
 
-import br.com.grupo02.erro.ConexaoException;
+import Negocio.Exceptions.ConexaoException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

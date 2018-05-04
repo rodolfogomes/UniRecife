@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.grupo02.aplicacao;
+package Apresentacao;
 
 
-import br.com.grupo02.erro.ConexaoException;
-import br.com.grupo02.persistencia.GerenciadorConexao;
-import br.com.grupo02.persistencia.GerenciadorConexaoMSS;
+import Negocio.Exceptions.ConexaoException;
+import Dados.Persistencia.GerenciadorConexao;
+import Dados.Persistencia.GerenciadorConexaoMSS;
 import java.sql.Connection;
 import java.sql.SQLException;
 

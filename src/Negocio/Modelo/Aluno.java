@@ -1,5 +1,5 @@
 
-package aplicacao.aluno;
+package Negocio.Modelo;
 
 import java.util.*;
 
