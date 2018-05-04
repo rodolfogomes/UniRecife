@@ -16,6 +16,6 @@ public interface IGerenciadorConexao {
     
     public Connection getConnection()throws ConexaoException;
     
-    public void desconectar(Connection c)throws ConexaoException;
+    public void closeConnection(Connection c)throws ConexaoException;
     
 }

@@ -27,7 +27,7 @@ public class UniRecife {
         } catch (ConexaoException ex) {
             System.out.println("Erro na conexão!");
         }finally{ 
-            GerenciadorConexao.getInstance().desconectar(con);
+            GerenciadorConexao.getInstance().closeConnection(con);
             System.out.println("Conexão encerrada!");
         }
     }   

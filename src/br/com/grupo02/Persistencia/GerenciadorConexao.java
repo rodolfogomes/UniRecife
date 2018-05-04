@@ -50,7 +50,7 @@ public class GerenciadorConexao implements IGerenciadorConexao{
      * @throws ConexaoException 
      */
     @Override
-    public void desconectar(Connection c) throws ConexaoException {
+    public void closeConnection(Connection c) throws ConexaoException {
            try {
             c.close();
         } catch (SQLException ex) {

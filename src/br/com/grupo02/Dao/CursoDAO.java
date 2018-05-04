@@ -22,47 +22,50 @@ import java.util.List;
 public class CursoDAO implements DAO<Curso>{
 
     @Override
-    public void inserir(Curso obj) {
+    public void inserir(Curso curso) throws ConexaoException {
         Connection con =null;
-        PreparedStatement st=null;
         String sql = "insert into UniRecife.dbo.curso (curso_tipo,curso_cpf_coordenador,curso_cpf_vicecoordenador)values(?,?,?)";
         int index=0;
         try {
              con = GerenciadorConexao.getInstance().getConnection();
-             st = con.prepareStatement(sql);
-             st.setString(++index, "GRADUAÇÂO");
+             PreparedStatement st = con.prepareStatement(sql);
+             st.setString(++index, curso.getTipo());
+           //st.setString(++index, curso.getCoordenador());
+          // st.setString(++index, curso.getViceCoordenador());
              st.execute();
+             st.close();
         } catch (ConexaoException ex) {
             ex.printStackTrace();
+            throw new ConexaoException();
         } catch (SQLException ex) {
             ex.printStackTrace();
+            throw new ConexaoException();
+        }finally{
+            GerenciadorConexao.getInstance().closeConnection(con);
         }
-         
-        
+    }
+
+    @Override
+    public void atualizar(Curso obj) throws ConexaoException {
         
     }
 
     @Override
-    public void atualizar(Curso obj) {
+    public void deletar(Integer id) throws ConexaoException {
         
     }
 
     @Override
-    public void deletar(Integer id) {
-        
-    }
-
-    @Override
-    public List listarTodos() {
+    public List<Curso> listarTodos() throws ConexaoException {
         return null;
         
     }
 
     @Override
-    public Curso buscarPorId(Integer id) {
+    public Curso buscarPorId(Integer id) throws ConexaoException {
         return null;
-        
-        
+       
     }
+
     
 }

@@ -5,6 +5,7 @@
  */
 package br.com.grupo02.Negocio.Modelo.Interfaces;
 
+import br.com.grupo02.Negocio.Modelo.Excepitons.ConexaoException;
 import java.util.List;
 
 /**
@@ -13,10 +14,10 @@ import java.util.List;
  */
 public interface DAO<o> {
     
-    void inserir(o obj);
-    void atualizar(o obj);
-    void deletar(Integer id);
-    List<o> listarTodos();
-    o buscarPorId(Integer id);
+    void inserir(o obj)throws ConexaoException;
+    void atualizar(o obj)throws ConexaoException;
+    void deletar(Integer id)throws ConexaoException;
+    List<o> listarTodos()throws ConexaoException;
+    o buscarPorId(Integer id)throws ConexaoException;
     
 }
