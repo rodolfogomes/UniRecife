@@ -1,5 +1,5 @@
 
-package Negocio.Modelo;
+package br.com.grupo02.Negocio.Modelo;
 
 import java.util.*;
 

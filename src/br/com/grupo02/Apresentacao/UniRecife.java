@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Apresentacao;
+package br.com.grupo02.Apresentacao;
 
 
-import Negocio.Exceptions.ConexaoException;
-import Dados.Persistencia.GerenciadorConexao;
-import Dados.Persistencia.GerenciadorConexaoMSS;
+import br.com.grupo02.Negocio.Modelo.Excepitons.ConexaoException;
+import br.com.grupo02.Persistencia.GerenciadorConexaoMSS;
 import java.sql.Connection;
 import java.sql.SQLException;
+import br.com.grupo02.Persistencia.IGerenciadorConexao;
 
 /**
  *
@@ -20,7 +20,7 @@ public class UniRecife {
 
     public static void main(String[] args) throws SQLException {
      
-        GerenciadorConexao gc = new GerenciadorConexaoMSS();
+        IGerenciadorConexao gc = new GerenciadorConexaoMSS();
         Connection c;
         try {
             c = gc.conectar();

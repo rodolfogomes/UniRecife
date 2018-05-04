@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dados.Persistencia;
+package br.com.grupo02.Persistencia;
 
-import Negocio.Exceptions.ConexaoException;
+import br.com.grupo02.Negocio.Modelo.Excepitons.ConexaoException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,7 +14,7 @@ import java.sql.SQLException;
  *
  * @author ADM
  */
-public class GerenciadorConexaoMSS implements GerenciadorConexao{
+public class GerenciadorConexaoMSS implements IGerenciadorConexao{
 
     Connection con;
     @Override
