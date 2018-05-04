@@ -7,7 +7,7 @@ package br.com.grupo02.aplicacao;
 
 
 import br.com.grupo02.erro.ConexaoException;
-import br.com.grupo02.interfaces.GerenciadorConexao;
+import br.com.grupo02.persistencia.GerenciadorConexao;
 import br.com.grupo02.persistencia.GerenciadorConexaoMSS;
 import java.sql.Connection;
 import java.sql.SQLException;

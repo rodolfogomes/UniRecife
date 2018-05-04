@@ -6,7 +6,6 @@
 package br.com.grupo02.persistencia;
 
 import br.com.grupo02.erro.ConexaoException;
-import br.com.grupo02.interfaces.GerenciadorConexao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
