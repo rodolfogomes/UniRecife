@@ -14,11 +14,28 @@ import java.sql.SQLException;
  *
  * @author ADM
  */
-public class GerenciadorConexaoMSS implements IGerenciadorConexao{
-
+public class GerenciadorConexao implements IGerenciadorConexao{
+    
+    private static GerenciadorConexao intancia;
     Connection con;
+    /**
+     * implementando o padrão Singleton. Garante que só haverá uma instância para conexão com o banco de dados.
+     * @return Uma instância de conexão com o banco de dados 
+     */
+    public static GerenciadorConexao getInstance(){
+        if(intancia == null){
+            intancia = new GerenciadorConexao();
+        }
+        return intancia;
+    }
+    
+    /**
+     * Método para pegar uma conexão com o banco de dados.
+     * @return Retorna conexão.
+     * @throws ConexaoException 
+     */
     @Override
-    public Connection conectar() throws ConexaoException {
+    public Connection getConnection() throws ConexaoException {
           try {
             con = DriverManager.getConnection("jdbc:sqlserver://localhost;user=projeto;password=projeto");
         } catch (SQLException e) {
@@ -27,6 +44,11 @@ public class GerenciadorConexaoMSS implements IGerenciadorConexao{
           return con;
     }
 
+    /**
+     * Recebe uma conexão e fecha.
+     * @param c
+     * @throws ConexaoException 
+     */
     @Override
     public void desconectar(Connection c) throws ConexaoException {
            try {

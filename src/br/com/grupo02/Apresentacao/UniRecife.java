@@ -7,7 +7,7 @@ package br.com.grupo02.Apresentacao;
 
 
 import br.com.grupo02.Negocio.Modelo.Excepitons.ConexaoException;
-import br.com.grupo02.Persistencia.GerenciadorConexaoMSS;
+import br.com.grupo02.Persistencia.GerenciadorConexao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import br.com.grupo02.Persistencia.IGerenciadorConexao;
@@ -18,19 +18,20 @@ import br.com.grupo02.Persistencia.IGerenciadorConexao;
  */
 public class UniRecife {
 
-    public static void main(String[] args) throws SQLException {
-     
-        IGerenciadorConexao gc = new GerenciadorConexaoMSS();
-        Connection c;
+    public static void main(String[] args) throws SQLException, ConexaoException {
+        Connection con= null;
         try {
-            c = gc.conectar();
+             con = GerenciadorConexao.getInstance().getConnection();
             System.out.println("Conexão funcionando!");
-            gc.desconectar(c);
-            System.out.println("Conexão fechada!");
             
         } catch (ConexaoException ex) {
             System.out.println("Erro na conexão!");
+        }finally{ 
+        GerenciadorConexao.getInstance().desconectar(con);
+        System.out.println("Conexão encerrada!");
         }
+            
+       
         
     }
     
