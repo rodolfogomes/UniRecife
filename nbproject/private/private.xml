@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/persistencia/GerenciadorConexaoMSS.java</file>
-            <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/aplicacao/UniRecife.java</file>
-            <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/aplicacao/aluno/Aluno.java</file>
+            <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/Persistencia/GerenciadorConexao.java</file>
+            <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/Dao/CursoDAO.java</file>
+            <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/Apresentacao/UniRecife.java</file>
+            <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/Persistencia/IGerenciadorConexao.java</file>
+            <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/Negocio/Modelo/Interfaces/DAO.java</file>
         </group>
     </open-files>
 </project-private>
