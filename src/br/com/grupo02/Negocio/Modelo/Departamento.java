@@ -9,7 +9,7 @@ import java.util.*;
 
 /**
  *
- * @author Bruno Rodrigues
+ * @author Bruno Rodrigues / Github: @brunojgrc
  */
 public class Departamento {
 
