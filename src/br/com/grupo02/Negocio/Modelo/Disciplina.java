@@ -10,7 +10,7 @@ import java.util.*;
 
 /**
  *
- * @author Bruno Rodrigues /Git Brunojgrc
+ * @author Bruno Rodrigues /Git: @Brunojgrc
  */
 public class Disciplina {
     
