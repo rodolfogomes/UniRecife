@@ -17,19 +17,23 @@ import java.sql.SQLException;
 public abstract class GerenciarConexao {
 
     protected Connection conectar() throws ConexaoException {
+            String local = "jdbc:jtds:sqlserver://sql.locadados.com.br:1433/UniRecife2";
+            String base ="UniRecife2";
+            String login = "sa";
+            String senha = "projeto";
+//            String url ="jdbc:sqlserver://localhost:1433;\\\\SQLEXPRESS;databaseName=Tema6\",\"sa\",\"123456\";
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String local = "jdbc:sqlserver://localhost";
-            String login = "projeto";
-            String senha = "projeto";
-            Connection con = DriverManager.getConnection(local, login, senha);
+//            System.out.println(url);
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1434;databaseName=UniRecife2","sa","projeto");
+            System.out.println(local+login+senha);
             return con;
 
-        } catch (ClassNotFoundException ex) {
-            throw new ConexaoException();
-        } catch (SQLException ex) {
-            throw new ConexaoException();
-        }
+        } catch (ClassNotFoundException |SQLException ex) {
+            ex.getMessage();
+            System.out.println(ex.getMessage());
+        } 
+        return null;
 
     }
 
