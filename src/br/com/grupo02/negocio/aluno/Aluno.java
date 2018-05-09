@@ -1,7 +1,4 @@
-
-package br.com.grupo02.Negocio.Modelo;
-
-import java.util.*;
+package br.com.grupo02.negocio.aluno;
 
 /**
  *
@@ -27,7 +24,7 @@ public class Aluno {
     }
 
     public Aluno(String nome, String cpf, String rua, String cidade, String cep, String telefone1, String telefone2, String datnasc) {
-        
+
         this.nome = nome;
         this.cpf = cpf;
         this.rua = rua;
@@ -44,7 +41,8 @@ public class Aluno {
     public int getMatricula() {
         return matricula;
     }
-     /**
+
+    /**
      * @return the nome
      */
     public String getNome() {
@@ -168,6 +166,32 @@ public class Aluno {
      */
     public void setSexo(String sexo) {
         this.sexo = sexo;
+    }
+
+    public void setMatricula(int matricula) {
+        this.matricula = matricula;
+    }
+
+    public void setIdCurso(int idCurso) {
+        this.idCurso = idCurso;
+    }
+
+    public void setIdDept(int idDept) {
+        this.idDept = idDept;
+    }
+
+    public int getIdCurso() {
+        return idCurso;
+    }
+
+    public Aluno bucarAluno(Aluno al) {
+        AlunoDAO aldao = new AlunoDAO();
+        try {
+            al = aldao.buscarPorId(al.getMatricula());
+        } catch (Exception e) {
+        }
+        return al;
+
     }
 
 }

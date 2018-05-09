@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.grupo02.Negocio.Modelo;
+package br.com.grupo02.negocio.professor;
 
 /**
  *
  * @author ADM
  */
-class Professor {
+public class Professor {
     
 }

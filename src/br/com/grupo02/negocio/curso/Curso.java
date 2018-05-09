@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.grupo02.Negocio.Modelo;
+package br.com.grupo02.negocio.curso;
+import br.com.grupo02.negocio.professor.Professor;
 
 /**
  *
