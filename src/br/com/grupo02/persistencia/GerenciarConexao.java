@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package br.com.grupo02.persistencia;
-
 import br.com.grupo02.negocio.error.ConexaoException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,23 +16,21 @@ import java.sql.SQLException;
 public abstract class GerenciarConexao {
 
     protected Connection conectar() throws ConexaoException {
-            String local = "jdbc:jtds:sqlserver://sql.locadados.com.br:1433/UniRecife2";
-            String base ="UniRecife2";
-            String login = "sa";
-            String senha = "projeto";
-//            String url ="jdbc:sqlserver://localhost:1433;\\\\SQLEXPRESS;databaseName=Tema6\",\"sa\",\"123456\";
+
+        String local = "jdbc:postgresql://localhost:5432/teste";
+        String user = "postgres";
+        String pass = "postgres";
+
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-//            System.out.println(url);
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1434;databaseName=UniRecife2","sa","projeto");
-            System.out.println(local+login+senha);
+            Connection con = DriverManager.getConnection(local, user, pass);
             return con;
 
-        } catch (ClassNotFoundException |SQLException ex) {
+        } catch (SQLException ex) {
             ex.getMessage();
             System.out.println(ex.getMessage());
-        } 
+            ex.getStackTrace();
         return null;
+        }
 
     }
 

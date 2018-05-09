@@ -5,7 +5,8 @@
         <group>
             <file>file:/C:/Users/Daniel/Documents/NetBeansProjects/Unibratec/ProjPOO/UniRecife/src/br/com/grupo02/negocio/aluno/Aluno.java</file>
             <file>file:/C:/Users/Daniel/Documents/NetBeansProjects/Unibratec/ProjPOO/UniRecife/src/br/com/grupo02/persistencia/GerenciarConexao.java</file>
-            <file>file:/C:/Users/Daniel/Documents/NetBeansProjects/Unibratec/ProjPOO/UniRecife/src/br/com/grupo02/negocio/departamento/Departamento.java</file>
+            <file>file:/C:/Users/Daniel/Documents/NetBeansProjects/Unibratec/ProjPOO/UniRecife/src/br/com/grupo02/apresentacao/UniRecife.java</file>
+            <file>file:/C:/Users/Daniel/Documents/NetBeansProjects/Unibratec/ProjPOO/UniRecife/src/br/com/grupo02/negocio/aluno/AlunoDAO.java</file>
         </group>
     </open-files>
 </project-private>

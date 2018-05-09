@@ -1,5 +1,9 @@
 package br.com.grupo02.negocio.aluno;
 
+import br.com.grupo02.negocio.error.ConexaoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Dadniel Medeiros
@@ -188,9 +192,13 @@ public class Aluno {
         AlunoDAO aldao = new AlunoDAO();
         try {
             al = aldao.buscarPorId(al.getMatricula());
-        } catch (Exception e) {
+           
+            return al;
+        } catch (NullPointerException | ConexaoException e) {
+            System.out.println("1aa"+e.getMessage());
+            e.getMessage();
+            return al;
         }
-        return al;
 
     }
 
