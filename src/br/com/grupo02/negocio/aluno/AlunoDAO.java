@@ -1,21 +1,20 @@
 package br.com.grupo02.negocio.aluno;
 
 import br.com.grupo02.negocio.error.ConexaoException;
-import br.com.grupo02.persistencia.IGerenciarDados;
+import br.com.grupo02.persistencia.GerenciadorConexao;
 import br.com.grupo02.persistencia.GerenciarConexao;
+import br.com.grupo02.persistencia.IGerenciarDados;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Daniel
  */
-public class AlunoDAO extends GerenciarConexao implements IGerenciarDados<Aluno> {
+public class AlunoDAO implements IGerenciarDados<Aluno> {
 
     @Override
     public void inserir(Aluno obj) throws ConexaoException {
@@ -36,13 +35,16 @@ public class AlunoDAO extends GerenciarConexao implements IGerenciarDados<Aluno>
     public List<Aluno> listarTodos() throws ConexaoException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+  
+    
     @Override
     public Aluno buscarPorId(Integer id) throws ConexaoException {
+        GerenciadorConexao gc;
+        gc = GerenciarConexao.getInstancia();
         Aluno al;
         String sql = "SELECT * FROM ALUNO WHERE matricula=" + id;
         al = new Aluno();
-        try (Connection con = conectar()) {
+        try (Connection con = gc.conectar()) {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
 

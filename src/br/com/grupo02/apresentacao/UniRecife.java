@@ -17,7 +17,7 @@ public class UniRecife {
 
         Aluno alun = new Aluno();
 
-        alun.setMatricula(2);
+        alun.setMatricula(3);
         alun = alun.bucarAluno(alun);
         System.out.println(alun.getNome());
 

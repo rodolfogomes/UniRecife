@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * Contém métodos genericos para realização do crud.
  * @author Rodolfo Gomes
+ * @param <objeto>
  */
 public interface IGerenciarDados<objeto> {
     
