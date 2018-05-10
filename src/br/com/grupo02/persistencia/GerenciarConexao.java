@@ -9,40 +9,64 @@ import br.com.grupo02.negocio.error.ConexaoException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 /**
  *
  * @author Daniel Medeiros
  */
-public abstract class GerenciarConexao {
+public class GerenciarConexao implements GerenciadorConexao {
 
-    protected Connection conectar() throws ConexaoException {
-            String local = "jdbc:jtds:sqlserver://sql.locadados.com.br:1433/UniRecife2";
-            String base ="UniRecife2";
-            String login = "sa";
-            String senha = "projeto";
-//            String url ="jdbc:sqlserver://localhost:1433;\\\\SQLEXPRESS;databaseName=Tema6\",\"sa\",\"123456\";
-        try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-//            System.out.println(url);
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1434;databaseName=UniRecife2","sa","projeto");
-            System.out.println(local+login+senha);
-            return con;
+    private final String URL;
+    private final String USU;
+    private final String SEN;
+    private static GerenciarConexao instancia;
 
-        } catch (ClassNotFoundException |SQLException ex) {
-            ex.getMessage();
-            System.out.println(ex.getMessage());
-        } 
-        return null;
+    public GerenciarConexao(String URL, String USU, String SEN) {
+        this.URL = URL;
+        this.USU = USU;
+        this.SEN = SEN;
+    }
+
+    private GerenciarConexao() {
+
+        ResourceBundle rb = ResourceBundle.getBundle("br.com.grupo02.persistencia.DataBase");
+        URL = rb.getString("url");
+        USU = rb.getString("usuario");
+        SEN = rb.getString("senha");
 
     }
 
-    protected void desconectar(Connection c) throws ConexaoException {
+    public static GerenciarConexao getInstancia() {
+
+        if (instancia == null) {
+            instancia = new GerenciarConexao();
+        }
+
+        return instancia;
+    }
+
+    @Override
+    public Connection conectar() throws ConexaoException {
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection(URL, USU, SEN);
+            return con;
+
+        } catch (SQLException ex) {
+          throw new ConexaoException();
+            
+        }
+    }
+
+    ;
+
+    @Override
+    public void desconectar(Connection c) throws ConexaoException {
         try {
             c.close();
         } catch (SQLException ex) {
             throw new ConexaoException();
         }
     }
-
-}
+};

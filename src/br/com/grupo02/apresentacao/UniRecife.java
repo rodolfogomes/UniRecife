@@ -7,7 +7,6 @@ package br.com.grupo02.apresentacao;
 
 import br.com.grupo02.negocio.aluno.Aluno;
 
-
 /**
  *
  * @author Rodolfo Gomes
@@ -15,11 +14,11 @@ import br.com.grupo02.negocio.aluno.Aluno;
 public class UniRecife {
 
     public static void main(String[] args) {
-        
+
         Aluno alun = new Aluno();
-        
+
         alun.setMatricula(3);
-        alun.bucarAluno(alun);
+        alun = alun.bucarAluno(alun);
         System.out.println(alun.getNome());
 
     }
