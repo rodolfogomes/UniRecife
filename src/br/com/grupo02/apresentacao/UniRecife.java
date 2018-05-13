@@ -6,6 +6,11 @@
 package br.com.grupo02.apresentacao;
 
 import br.com.grupo02.negocio.aluno.Aluno;
+import br.com.grupo02.negocio.error.ConexaoException;
+import br.com.grupo02.persistencia.GerenciarConexao;
+import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,11 +20,13 @@ public class UniRecife {
 
     public static void main(String[] args) {
 
-        Aluno alun = new Aluno();
-
-        alun.setMatricula(3);
-        alun = alun.bucarAluno(alun);
-        System.out.println(alun.getNome());
+        try {
+            Connection con =GerenciarConexao.getInstancia().conectar();
+            System.out.println("Conexão Funciona!");
+        } catch (ConexaoException ex) {
+            System.out.println("Erro na conexão: " + ex.getMessage());
+           ex.printStackTrace();
+        }
 
     }
 }
