@@ -6,6 +6,8 @@
 package br.com.grupo02.negocio.disciplina;
 
 
+import br.com.grupo02.negocio.error.ConexaoException;
+
 import java.util.*;
 
 /**
@@ -87,6 +89,21 @@ public class Disciplina {
     public void setIdDept(int idDept) {
         this.idDept = idDept;
     }
+    
+    public Disciplina buscarDisciplina (Disciplina disc){
+        
+        DisciplinaDAO discDao = new DisciplinaDAO ();
+        try {
+             disc = discDao.buscarPorId(disc.getIdDisciplina());
+                
+             return disc;     
+             
+        } catch (NullPointerException | ConexaoException e) {
+            System.out.println("1aa"+e.getMessage());
+            e.getMessage();
+            return disc;
+        } 
+    }  
 }
 
 
