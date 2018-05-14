@@ -95,7 +95,7 @@ public class CursoDAO  implements IGerenciarDados<Curso> {
                 + " from  UniRecife.dbo.curso c left join professor p"
                 + "on c.curso_cpf_coordenador= p.professor_cpf  "
                 + "or c.curso_cpf_vicecoordenador= p.professor_cpf "
-                + "where c.curso_codigo = ? ";
+                + "where c.curso_codigo ="+id;
         
         Curso curso=null;
         
