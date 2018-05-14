@@ -5,12 +5,11 @@
  */
 package br.com.grupo02.apresentacao;
 
-import br.com.grupo02.negocio.aluno.Aluno;
+
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.persistencia.GerenciarConexao;
 import java.sql.Connection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
