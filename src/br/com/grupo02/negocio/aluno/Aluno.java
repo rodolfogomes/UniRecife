@@ -195,9 +195,16 @@ public class Aluno {
            
             return al;
         } catch (NullPointerException | ConexaoException e) {
-            System.out.println("1aa"+e.getMessage());
-            e.getMessage();
-            return al;
+           throw new NullPointerException();
+        }
+
+    }
+    public void salvarAluno (Aluno al) {
+        AlunoDAO aldao = new AlunoDAO();
+        try {
+            aldao.inserir(al);
+        } catch (NullPointerException | ConexaoException e) {
+           throw new NullPointerException();
         }
 
     }
