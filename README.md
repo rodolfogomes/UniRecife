@@ -13,7 +13,7 @@ Analise e Desenvolvimento de Sistemas - 2 Periodo
 
 ° Joanna Catarina </br>
 ° Bruno Jose</br>
-° Rodolfo</br>
+° Rodolfo Gomes</br>
 ° João Paulo</br>
 ° Wallison de Moura</br>
 ° Daniel de Medeiros</br>

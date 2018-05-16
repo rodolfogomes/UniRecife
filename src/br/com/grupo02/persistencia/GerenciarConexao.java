@@ -21,8 +21,9 @@ public class GerenciarConexao implements GerenciadorConexao {
     private final String USU;
     private final String SEN;
     private static GerenciarConexao instancia;
+    private static ResourceBundle rb =null;
 
-    public GerenciarConexao(String URL, String USU, String SEN) {
+    private GerenciarConexao(String URL, String USU, String SEN) {
         this.URL = URL;
         this.USU = USU;
         this.SEN = SEN;
@@ -30,7 +31,7 @@ public class GerenciarConexao implements GerenciadorConexao {
 
     private GerenciarConexao() {
 
-        ResourceBundle rb = ResourceBundle.getBundle("br.com.grupo02.persistencia.DataBase");
+        rb = ResourceBundle.getBundle("br.com.grupo02.persistencia.DataBase");
         URL = rb.getString("url");
         USU = rb.getString("usuario");
         SEN = rb.getString("senha");
@@ -48,18 +49,17 @@ public class GerenciarConexao implements GerenciadorConexao {
 
     @Override
     public Connection conectar() throws ConexaoException {
-        Connection con = null;
+        
         try {
-            con = DriverManager.getConnection(URL, USU, SEN);
-            return con;
-
+            Connection c;
+            return  c = DriverManager.getConnection(URL, USU, SEN);
         } catch (SQLException ex) {
           throw new ConexaoException();
-            
         }
+        
     }
 
-    ;
+    
 
     @Override
     public void desconectar(Connection c) throws ConexaoException {

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.grupo02.negocio.professor;
+package br.com.grupo02.aplicacao.aluno;
 
-import br.com.grupo02.negocio.error.ConexaoException;
+import java.util.*;
 
 /**
  *
- * @author ADM
+ * @author Valeria
  */
 public class Professor {
     private String cpf;
@@ -98,17 +98,4 @@ public class Professor {
     public void setSalario (float salario){
         this.salario = salario;
     }
-    
-    public Professor bucarProfessor(Professor pl) {
-        ProfessorDAO pldao = new ProfessorDAO();
-        try {
-            pl = pldao.buscarPorId(Integer.parseInt(pl.getCpf()));
-           
-            return pl;
-        } catch (NullPointerException | ConexaoException e) {
-            System.out.println("1aa"+e.getMessage());
-            e.getMessage();
-            return pl;}
-    }
-    
-   }
+}
