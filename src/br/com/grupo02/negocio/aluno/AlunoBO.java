@@ -2,6 +2,7 @@
 package br.com.grupo02.negocio.aluno;
 
 import br.com.grupo02.negocio.error.ConexaoException;
+import br.com.grupo02.negocio.error.DAOException;
 
 /**
  *
@@ -13,7 +14,7 @@ public class AlunoBO {
     public AlunoBO() {
     }
     
-     public Aluno bucarAluno(Aluno al) {
+     public Aluno bucarAluno(Aluno al) throws DAOException {
         AlunoDAO aldao = new AlunoDAO();
         try {
             al = aldao.buscarPorId(al.getMatricula());
@@ -25,7 +26,7 @@ public class AlunoBO {
 
     }
 
-    public void salvarAluno(String acao, Aluno al) {
+    public void salvarAluno(String acao, Aluno al) throws DAOException {
         AlunoDAO aldao = new AlunoDAO();
         try {
             switch (acao) {

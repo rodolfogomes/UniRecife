@@ -7,7 +7,6 @@ package br.com.grupo02.negocio.curso;
 
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.negocio.professor.Professor;
-import br.com.grupo02.persistencia.GerenciadorConexao;
 import br.com.grupo02.persistencia.IGerenciarDados;
 import br.com.grupo02.persistencia.GerenciarConexao;
 import java.sql.Connection;
@@ -16,8 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -64,7 +62,7 @@ public class CursoDAO  implements IGerenciarDados<Curso> {
 
     @Override
     public void deletar(Integer id) throws ConexaoException {
-        String sql = "delete from UniRecife.dbo.curso where curso_codigo = ?";
+        String sql = "delete from UniRecife.dbo.curso where curso_codigo ="+id;
         
         try (Connection con = GerenciarConexao.getInstancia().conectar()){
             PreparedStatement ps = con.prepareStatement(sql);
