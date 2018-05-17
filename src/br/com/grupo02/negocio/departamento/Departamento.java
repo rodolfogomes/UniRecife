@@ -95,5 +95,9 @@ public class Departamento {
             return dept;
         }
     }
+
+    void setCentroDept(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
