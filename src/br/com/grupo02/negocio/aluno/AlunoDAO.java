@@ -1,6 +1,7 @@
 package br.com.grupo02.negocio.aluno;
 
 import br.com.grupo02.negocio.error.ConexaoException;
+import br.com.grupo02.negocio.error.DAOException;
 import br.com.grupo02.persistencia.GerenciadorConexao;
 import br.com.grupo02.persistencia.GerenciarConexao;
 import br.com.grupo02.persistencia.IGerenciarDados;
@@ -9,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +20,7 @@ import java.util.List;
 public class AlunoDAO implements IGerenciarDados<Aluno> {
 
     @Override
-    public void inserir(Aluno aluno) throws ConexaoException {
+    public void inserir(Aluno aluno) throws ConexaoException, DAOException {
         GerenciadorConexao gc;
         gc = GerenciarConexao.getInstancia();
         StringBuilder sb = new StringBuilder();
@@ -43,12 +45,12 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
             pst.setString(i++, aluno.getTelefone2());
             pst.setDate(i++, aluno.getDatnasc());
             pst.setString(i++, aluno.getSexo());
-            pst.setInt(i++, 1); // id dpt
-            pst.setInt(i++, 1); // id curso
+            pst.setInt(i++, aluno.getIdDept()); // id dpt
+            pst.setInt(i++, aluno.getIdCurso()); // id curso
             pst.executeUpdate();
 
         } catch (Exception e) {
-            System.out.println("AAAAAAAAAAAA" + e.getMessage());
+           throw new DAOException();
         } finally {
             sb.delete(0, sb.length());
             sb = null;
@@ -57,7 +59,7 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
     }
 
     @Override
-    public void atualizar(Aluno aluno) throws ConexaoException {
+    public void atualizar(Aluno aluno) throws ConexaoException , DAOException{
         GerenciadorConexao gc;
         gc = GerenciarConexao.getInstancia();
         StringBuilder sb = new StringBuilder();
@@ -81,13 +83,13 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
             pst.setString(i++, aluno.getTelefone2());
             pst.setDate(i++, aluno.getDatnasc());
             pst.setString(i++, aluno.getSexo());
-            pst.setInt(i++, 1); // id dpt
-            pst.setInt(i++, 1); // id curso
+            pst.setInt(i++, aluno.getIdDept()); // id dpt
+            pst.setInt(i++, aluno.getIdCurso()); // id curso
             pst.setInt(i++, aluno.getMatricula());
             pst.executeUpdate();
 
         } catch (Exception e) {
-            System.out.println("AAAAAAAAAAAA" + e.getMessage());
+           throw new DAOException();
         } finally {
             sb.delete(0, sb.length());
             sb = null;
@@ -95,7 +97,7 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
     }
 
     @Override
-    public void deletar(Integer id) throws ConexaoException {
+    public void deletar(Integer id) throws ConexaoException, DAOException {
         GerenciadorConexao gc;
         gc = GerenciarConexao.getInstancia();
         String sql = "DELETE FROM ALUNO WHERE aluno_matricula=?";
@@ -104,16 +106,51 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
             pstm = con.prepareStatement(sql);
             pstm.setInt(1, id);
         } catch (Exception e) {
+            throw new DAOException();
         }
     }
 
     @Override
-    public List<Aluno> listarTodos() throws ConexaoException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Aluno> listarTodos() throws ConexaoException , DAOException{
+        GerenciadorConexao gc;
+        gc = GerenciarConexao.getInstancia();
+        List<Aluno> lista = new ArrayList();
+        Aluno alun = null;
+        String sql = "SELECT * FROM ALUNO";
+
+        try (Connection con = gc.conectar()) {
+            try (Statement stm = con.createStatement()) {
+                ResultSet rs = stm.executeQuery(sql);
+                while (rs.next()) {
+                    alun = new Aluno();
+                    alun.setMatricula(rs.getInt("aluno_matricula"));
+                    alun.setIdCurso(rs.getInt("aluno_curso_codigo"));
+                    alun.setIdDept(rs.getInt("aluno_dep_codigo"));
+                    alun.setNome(rs.getString("aluno_nome"));
+                    alun.setRua(rs.getString("aluno_rua"));
+                    alun.setCpf(rs.getString("aluno_CPF"));
+                    alun.setCep(rs.getString("aluno_CEP"));
+                    alun.setCidade(rs.getString("aluno_cidade"));
+                    alun.setDatnasc(rs.getDate("aluno_datanasc"));
+                    alun.setSexo(rs.getString("aluno_sexo"));
+                    alun.setTelefone1(rs.getString("aluno_telefone1"));
+                    alun.setTelefone2(rs.getString("aluno_telefone2"));
+                    alun.setIdCurso(rs.getInt("aluno_curso_codigo"));
+                    alun.setIdCurso(rs.getInt("aluno_dep_codigo"));
+                    lista.add(alun);
+                }
+
+                return lista;
+            }
+
+        } catch (Exception e) {
+            throw new DAOException();
+        }
+
     }
 
     @Override
-    public Aluno buscarPorId(Integer id) throws ConexaoException {
+    public Aluno buscarPorId(Integer id) throws ConexaoException, DAOException {
         GerenciadorConexao gc;
         gc = GerenciarConexao.getInstancia();
         Aluno al;
@@ -135,13 +172,14 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
                     al.setSexo(rs.getString("aluno_sexo"));
                     al.setTelefone1(rs.getString("aluno_telefone1"));
                     al.setTelefone2(rs.getString("aluno_telefone2"));
+                    al.setIdCurso(rs.getInt("aluno_curso_codigo"));
+                    al.setIdCurso(rs.getInt("aluno_dep_codigo"));
                     return al;
                 }
             }
 
         } catch (SQLException ex) {
-            ex.getMessage();
-
+          throw new DAOException();
         }
         return al;
 

@@ -1,6 +1,7 @@
 package br.com.grupo02.negocio.aluno;
 
-import br.com.grupo02.negocio.error.ConexaoException;
+import br.com.grupo02.negocio.curso.Curso;
+import br.com.grupo02.negocio.departamento.Departamento;
 import java.sql.Date;
 
 /**
@@ -10,8 +11,8 @@ import java.sql.Date;
 public class Aluno {
 
     private int matricula;
-    private int idCurso;
-    private int idDept;
+    private Curso idCurso;
+    private Departamento idDept;
     private String nome;
     private String cpf;
     private String rua;
@@ -176,17 +177,20 @@ public class Aluno {
     }
 
     public void setIdCurso(int idCurso) {
-        this.idCurso = idCurso;
+        this.idCurso = new Curso();
+        this.idCurso.setCodigo(idCurso);
     }
 
     public void setIdDept(int idDept) {
-        this.idDept = idDept;
+        this.idDept = new Departamento();
+        this.idDept.setIdDept(idDept);
     }
 
     public int getIdCurso() {
-        return idCurso;
+        return idCurso.getCodigo();
     }
-
-   
+     public int getIdDept() {
+        return idDept.getIdDept();
+    }
 
 }
