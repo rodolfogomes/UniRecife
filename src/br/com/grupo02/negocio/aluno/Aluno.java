@@ -1,8 +1,7 @@
 package br.com.grupo02.negocio.aluno;
 
 import br.com.grupo02.negocio.error.ConexaoException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Date;
 
 /**
  *
@@ -20,14 +19,14 @@ public class Aluno {
     private String cep;
     private String telefone1;
     private String telefone2;
-    private String datnasc;
+    private Date datnasc;
     private String sexo;
 
     public Aluno() {
 
     }
 
-    public Aluno(String nome, String cpf, String rua, String cidade, String cep, String telefone1, String telefone2, String datnasc) {
+    public Aluno(String nome, String cpf, String rua, String cidade, String cep, String telefone1, String telefone2, Date datnasc) {
 
         this.nome = nome;
         this.cpf = cpf;
@@ -147,14 +146,14 @@ public class Aluno {
     /**
      * @return the datnasc
      */
-    public String getDatnasc() {
+    public Date getDatnasc() {
         return datnasc;
     }
 
     /**
      * @param datnasc the datnasc to set
      */
-    public void setDatnasc(String datnasc) {
+    public void setDatnasc(Date datnasc) {
         this.datnasc = datnasc;
     }
 
@@ -188,25 +187,6 @@ public class Aluno {
         return idCurso;
     }
 
-    public Aluno bucarAluno(Aluno al) {
-        AlunoDAO aldao = new AlunoDAO();
-        try {
-            al = aldao.buscarPorId(al.getMatricula());
-           
-            return al;
-        } catch (NullPointerException | ConexaoException e) {
-           throw new NullPointerException();
-        }
-
-    }
-    public void salvarAluno (Aluno al) {
-        AlunoDAO aldao = new AlunoDAO();
-        try {
-            aldao.inserir(al);
-        } catch (NullPointerException | ConexaoException e) {
-           throw new NullPointerException();
-        }
-
-    }
+   
 
 }
