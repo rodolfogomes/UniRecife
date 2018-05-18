@@ -1,5 +1,7 @@
 package br.com.grupo02.negocio.aluno;
 
+import br.com.grupo02.negocio.curso.Curso;
+import br.com.grupo02.negocio.departamento.Departamento;
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.negocio.error.DAOException;
 import br.com.grupo02.persistencia.GerenciadorConexao;
@@ -45,12 +47,12 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
             pst.setString(i++, aluno.getTelefone2());
             pst.setDate(i++, aluno.getDatnasc());
             pst.setString(i++, aluno.getSexo());
-            pst.setInt(i++, aluno.getIdDept()); // id dpt
-            pst.setInt(i++, aluno.getIdCurso()); // id curso
+            pst.setInt(i++, aluno.getDepartamento().getIdDept()); // id dpt
+            pst.setInt(i++, aluno.getCurso().getCodigo()); // id curso
             pst.executeUpdate();
 
         } catch (Exception e) {
-           throw new DAOException();
+            throw new DAOException();
         } finally {
             sb.delete(0, sb.length());
             sb = null;
@@ -59,7 +61,7 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
     }
 
     @Override
-    public void atualizar(Aluno aluno) throws ConexaoException , DAOException{
+    public void atualizar(Aluno aluno) throws ConexaoException, DAOException {
         GerenciadorConexao gc;
         gc = GerenciarConexao.getInstancia();
         StringBuilder sb = new StringBuilder();
@@ -83,13 +85,13 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
             pst.setString(i++, aluno.getTelefone2());
             pst.setDate(i++, aluno.getDatnasc());
             pst.setString(i++, aluno.getSexo());
-            pst.setInt(i++, aluno.getIdDept()); // id dpt
-            pst.setInt(i++, aluno.getIdCurso()); // id curso
+            pst.setInt(i++, aluno.getDepartamento().getIdDept()); // id dpt
+            pst.setInt(i++, aluno.getCurso().getCodigo()); // id curso
             pst.setInt(i++, aluno.getMatricula());
             pst.executeUpdate();
 
         } catch (Exception e) {
-           throw new DAOException();
+            throw new DAOException();
         } finally {
             sb.delete(0, sb.length());
             sb = null;
@@ -111,21 +113,19 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
     }
 
     @Override
-    public List<Aluno> listarTodos() throws ConexaoException , DAOException{
+    public List<Aluno> listarTodos() throws ConexaoException, DAOException {
         GerenciadorConexao gc;
         gc = GerenciarConexao.getInstancia();
         List<Aluno> lista = new ArrayList();
         Aluno alun = null;
         String sql = "SELECT * FROM ALUNO";
-
         try (Connection con = gc.conectar()) {
             try (Statement stm = con.createStatement()) {
                 ResultSet rs = stm.executeQuery(sql);
                 while (rs.next()) {
+                    //montando o objeto aluno com o resultado da consulta do banco
                     alun = new Aluno();
                     alun.setMatricula(rs.getInt("aluno_matricula"));
-                    alun.setIdCurso(rs.getInt("aluno_curso_codigo"));
-                    alun.setIdDept(rs.getInt("aluno_dep_codigo"));
                     alun.setNome(rs.getString("aluno_nome"));
                     alun.setRua(rs.getString("aluno_rua"));
                     alun.setCpf(rs.getString("aluno_CPF"));
@@ -135,8 +135,14 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
                     alun.setSexo(rs.getString("aluno_sexo"));
                     alun.setTelefone1(rs.getString("aluno_telefone1"));
                     alun.setTelefone2(rs.getString("aluno_telefone2"));
-                    alun.setIdCurso(rs.getInt("aluno_curso_codigo"));
-                    alun.setIdCurso(rs.getInt("aluno_dep_codigo"));
+                    // passando obj departamento 
+                    Departamento dpt = new Departamento();
+                    dpt.setIdDept(rs.getInt("aluno_dep_codigo"));
+                    alun.setDepartamento(dpt);
+                     //passando obj curso 
+                    Curso crs = new Curso();
+                    crs.setCodigo(rs.getInt("aluno_curso_codigo"));
+                    alun.setCurso(crs);
                     lista.add(alun);
                 }
 
@@ -160,9 +166,8 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
             try (Statement st = con.createStatement()) {
                 ResultSet rs = st.executeQuery(sql);
                 if (rs.next()) {
+                    //montando o objeto aluno com o resultado da consulta do banco
                     al.setMatricula(rs.getInt("aluno_matricula"));
-                    al.setIdCurso(rs.getInt("aluno_curso_codigo"));
-                    al.setIdDept(rs.getInt("aluno_dep_codigo"));
                     al.setNome(rs.getString("aluno_nome"));
                     al.setRua(rs.getString("aluno_rua"));
                     al.setCpf(rs.getString("aluno_CPF"));
@@ -172,14 +177,22 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
                     al.setSexo(rs.getString("aluno_sexo"));
                     al.setTelefone1(rs.getString("aluno_telefone1"));
                     al.setTelefone2(rs.getString("aluno_telefone2"));
-                    al.setIdCurso(rs.getInt("aluno_curso_codigo"));
-                    al.setIdCurso(rs.getInt("aluno_dep_codigo"));
+                    // passando obj departamento 
+                    Departamento dpt = new Departamento();
+                    dpt.setIdDept(rs.getInt("aluno_dep_codigo"));
+                    al.setDepartamento(dpt);
+                    //passando obj curso 
+                    Curso crs = new Curso();
+                    crs.setCodigo(rs.getInt("aluno_curso_codigo"));
+                    al.setCurso(crs);
+                    
+                    
                     return al;
                 }
             }
 
         } catch (SQLException ex) {
-          throw new DAOException();
+            throw new DAOException();
         }
         return al;
 
