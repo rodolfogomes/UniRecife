@@ -6,12 +6,13 @@
 package br.com.grupo02.negocio.disciplina;
 
 
+import br.com.grupo02.negocio.departamento.Departamento;
 import br.com.grupo02.negocio.error.ConexaoException;
 
 import java.util.*;
 
 /**
- *
+ * Classe básica Disciplina com atributos encapsulados
  * @author Bruno Rodrigues /Git: @Brunojgrc
  */
 public class Disciplina {
@@ -19,18 +20,26 @@ public class Disciplina {
     private int idDisciplina;
     private String nome;
     private String descricao;
-    private int idDept;  
+    Departamento departamento;
+    
        
 
     public Disciplina(){
     }
     
-    
-    public Disciplina (int idDisciplina, String nome, String descricao, int idDept){
+    /**
+ * Classe básica Disciplina com atributos e métodos
+ * @author Bruno Rodrigues /Git: @Brunojgrc
+     * @param idDisciplina
+     * @param nome
+     * @param descricao
+     * @param departamento
+     */
+    public Disciplina (int idDisciplina, String nome, String descricao, Departamento departamento){
         this.idDisciplina = idDisciplina;
         this.nome = nome;
         this.descricao = descricao;
-        this.idDept = idDept;
+        this.departamento = departamento; 
     
     }
     
@@ -77,19 +86,23 @@ public class Disciplina {
     }
 
     /**
-     * @return the idDept
+     * @return the departamento
      */
-    public int getIdDept() {
-        return idDept;
+    public Departamento getDepartamento() {
+        return departamento;
     }
 
     /**
-     * @param idDept the idDept to set
+     * @param departamento the departamento to set
      */
-    public void setIdDept(int idDept) {
-        this.idDept = idDept;
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
     }
     
+     /**
+     * 
+     * @Método buscarDisciplina para retorno de disciplina por ID
+     */
     public Disciplina buscarDisciplina (Disciplina disc){
         
         DisciplinaDAO discDao = new DisciplinaDAO ();
@@ -101,6 +114,7 @@ public class Disciplina {
         } catch (NullPointerException | ConexaoException e) {
             System.out.println("1aa"+e.getMessage());
             e.getMessage();
+            
             return disc;
         } 
     }  
