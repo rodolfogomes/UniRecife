@@ -6,6 +6,7 @@
 package br.com.grupo02.persistencia;
 
 import br.com.grupo02.negocio.error.ConexaoException;
+import br.com.grupo02.negocio.error.DAOException;
 import java.util.List;
 
 /**
@@ -15,10 +16,10 @@ import java.util.List;
  */
 public interface IGerenciarDados<objeto> {
     
-    void inserir(objeto obj)throws ConexaoException;
-    void atualizar(objeto obj)throws ConexaoException;
-    void deletar(Integer id)throws ConexaoException;
-    List<objeto> listarTodos()throws ConexaoException;
-    objeto buscarPorId(Integer id)throws ConexaoException;
+    void inserir(objeto obj)throws ConexaoException,DAOException;
+    void atualizar(objeto obj)throws ConexaoException,DAOException;
+    void deletar(Integer id)throws ConexaoException,DAOException;
+    List<objeto> listarTodos()throws ConexaoException,DAOException;
+    objeto buscarPorId(Integer id)throws ConexaoException,DAOException;
     
 }

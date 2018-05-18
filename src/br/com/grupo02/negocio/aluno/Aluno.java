@@ -1,8 +1,8 @@
 package br.com.grupo02.negocio.aluno;
 
-import br.com.grupo02.negocio.error.ConexaoException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import br.com.grupo02.negocio.curso.Curso;
+import br.com.grupo02.negocio.departamento.Departamento;
+import java.sql.Date;
 
 /**
  *
@@ -11,8 +11,8 @@ import java.util.logging.Logger;
 public class Aluno {
 
     private int matricula;
-    private int idCurso;
-    private int idDept;
+    private Curso idCurso;
+    private Departamento idDept;
     private String nome;
     private String cpf;
     private String rua;
@@ -20,14 +20,14 @@ public class Aluno {
     private String cep;
     private String telefone1;
     private String telefone2;
-    private String datnasc;
+    private Date datnasc;
     private String sexo;
 
     public Aluno() {
 
     }
 
-    public Aluno(String nome, String cpf, String rua, String cidade, String cep, String telefone1, String telefone2, String datnasc) {
+    public Aluno(String nome, String cpf, String rua, String cidade, String cep, String telefone1, String telefone2, Date datnasc) {
 
         this.nome = nome;
         this.cpf = cpf;
@@ -147,14 +147,14 @@ public class Aluno {
     /**
      * @return the datnasc
      */
-    public String getDatnasc() {
+    public Date getDatnasc() {
         return datnasc;
     }
 
     /**
      * @param datnasc the datnasc to set
      */
-    public void setDatnasc(String datnasc) {
+    public void setDatnasc(Date datnasc) {
         this.datnasc = datnasc;
     }
 
@@ -177,29 +177,20 @@ public class Aluno {
     }
 
     public void setIdCurso(int idCurso) {
-        this.idCurso = idCurso;
+        this.idCurso = new Curso();
+        this.idCurso.setCodigo(idCurso);
     }
 
     public void setIdDept(int idDept) {
-        this.idDept = idDept;
+        this.idDept = new Departamento();
+        this.idDept.setIdDept(idDept);
     }
 
     public int getIdCurso() {
-        return idCurso;
+        return idCurso.getCodigo();
     }
-
-    public Aluno bucarAluno(Aluno al) {
-        AlunoDAO aldao = new AlunoDAO();
-        try {
-            al = aldao.buscarPorId(al.getMatricula());
-           
-            return al;
-        } catch (NullPointerException | ConexaoException e) {
-            System.out.println("1aa"+e.getMessage());
-            e.getMessage();
-            return al;
-        }
-
+     public int getIdDept() {
+        return idDept.getIdDept();
     }
 
 }
