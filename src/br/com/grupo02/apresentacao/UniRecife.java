@@ -9,6 +9,12 @@ package br.com.grupo02.apresentacao;
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.persistencia.GerenciarConexao;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -16,9 +22,12 @@ import java.sql.Connection;
  * @author Rodolfo Gomes
  */
 public class UniRecife {
+    
 
     public static void main(String[] args) {
-
+    testaConexao();
+    }
+        public static void testaConexao(){
         try {
             Connection con =GerenciarConexao.getInstancia().conectar();
             System.out.println("Conexão Funciona!");

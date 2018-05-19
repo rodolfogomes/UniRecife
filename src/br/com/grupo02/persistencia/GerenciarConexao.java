@@ -52,7 +52,7 @@ public class GerenciarConexao implements GerenciadorConexao {
         
         try {
             Connection c;
-            return  c = DriverManager.getConnection(URL, USU, SEN);
+            return  c = DriverManager.getConnection(URL,USU,SEN);
         } catch (SQLException ex) {
           throw new ConexaoException();
         }
