@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -76,7 +77,49 @@ public class CursoDAO  implements IGerenciarDados<Curso> {
 
     @Override
     public List<Curso> listarTodos() throws ConexaoException {
-        return null;
+        ArrayList<Curso> listaCurso = new ArrayList();
+        StringBuilder sb = null;
+        PreparedStatement ps=null;
+        sb.append("select * from UniRecife.dbo.curso");
+        
+         try (Connection con = GerenciarConexao.getInstancia().conectar()){
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sb.toString());
+             while(rs.next()){
+                     // Montando uma referência coordenador do tipo professor
+                Professor coordenador = new Professor();
+                coordenador.setCpf(rs.getString("cpf_coor"));
+                coordenador.setNome(rs.getString("nome_prof"));
+                coordenador.setDnumero(rs.getInt("dep_prof"));
+                coordenador.setTelefone(rs.getString("tel_prof"));
+                coordenador.setSalario(rs.getFloat("sal_prof"));
+                
+                // Montando uma referência viceCoordenador do tipo professor
+                Professor viceCoordenador = new Professor();
+                viceCoordenador.setCpf(rs.getString("cpf_Vice"));
+                coordenador.setNome(rs.getString("nome_prof"));
+                coordenador.setDnumero(rs.getInt("dep_prof"));
+                coordenador.setTelefone(rs.getString("tel_prof"));
+                coordenador.setSalario(rs.getFloat("sal_prof"));
+                
+                // Montando uma referência curso
+                Curso curso = new Curso();
+                curso.setCodigo(rs.getInt("curso_codigo"));
+                curso.setTipo(rs.getString("curso_tipo"));
+                curso.setCoordenador(coordenador);
+                curso.setViceCoordenador(viceCoordenador);
+               
+                listaCurso.add(curso);
+                
+            }
+            
+            ps.execute();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        
+        return listaCurso;
 
     }
     /**
@@ -100,6 +143,8 @@ public class CursoDAO  implements IGerenciarDados<Curso> {
           try (Connection con = GerenciarConexao.getInstancia().conectar()){
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
+            
+           
             
             if(rs.next()){
                 // Montando uma referência coordenador do tipo professor

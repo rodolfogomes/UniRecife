@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Daniel/Documents/NetBeansProjects/Unibratec/ProjPOO/UniRecife/src/br/com/grupo02/negocio/aluno/Aluno.java</file>
-            <file>file:/C:/Users/Daniel/Documents/NetBeansProjects/Unibratec/ProjPOO/UniRecife/src/br/com/grupo02/negocio/aluno/AlunoBO.java</file>
-            <file>file:/C:/Users/Daniel/Documents/NetBeansProjects/Unibratec/ProjPOO/UniRecife/src/br/com/grupo02/persistencia/DataBase.properties</file>
-            <file>file:/C:/Users/Daniel/Documents/NetBeansProjects/Unibratec/ProjPOO/UniRecife/src/br/com/grupo02/apresentacao/UniRecife.java</file>
-            <file>file:/C:/Users/Daniel/Documents/NetBeansProjects/Unibratec/ProjPOO/UniRecife/src/br/com/grupo02/negocio/aluno/AlunoDAO.java</file>
+            <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/negocio/aluno/AlunoDAO.java</file>
+            <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/negocio/curso/CursoDAO.java</file>
+            <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/apresentacao/UniRecife.java</file>
+            <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/persistencia/DataBase.properties</file>
+            <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/negocio/curso/Curso.java</file>
         </group>
     </open-files>
 </project-private>
