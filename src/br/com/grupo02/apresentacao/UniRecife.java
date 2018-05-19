@@ -6,8 +6,9 @@
 package br.com.grupo02.apresentacao;
 
 
-import br.com.grupo02.negocio.aluno.Aluno;
-import br.com.grupo02.negocio.aluno.AlunoBO;
+import br.com.grupo02.negocio.error.ConexaoException;
+import br.com.grupo02.persistencia.GerenciarConexao;
+import java.sql.Connection;
 
 
 /**
@@ -18,15 +19,13 @@ public class UniRecife {
 
     public static void main(String[] args) {
 
-        Aluno al = new Aluno();
-        AlunoBO albo = new AlunoBO();
-        al.setMatricula(3);
-        al.setNome("AAAAAAAAAAAAAAAAA");
-        al.setTelefone2("3333433-22222");
-        albo.salvarAluno("atualizar",al);
-        System.out.println("Aluno Nome "+ al.getNome());
-        
-        
+        try {
+            Connection con =GerenciarConexao.getInstancia().conectar();
+            System.out.println("Conexão Funciona!");
+        } catch (ConexaoException ex) {
+            System.out.println("Erro na conexão: " + ex.getMessage());
+           ex.printStackTrace();
+        }
 
     }
 }
