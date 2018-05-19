@@ -5,11 +5,12 @@
  */
 package br.com.grupo02.negocio.departamento;
 
+import br.com.grupo02.negocio.error.ConexaoException;
 import java.util.*;
 
 /**
  *
- * @author Bruno Rodrigues / Github: @brunojgrc
+ * @author Wallison
  */
 public class Departamento {
 
@@ -81,6 +82,22 @@ public class Departamento {
      */
     public void setCentro(String centro) {
         this.centro = centro;
+    }
+    public Departamento buscarDisciplina (Departamento dept) {
+        DepartamentoDAO deptDao =  new DepartamentoDAO();
+        try {
+            dept = deptDao.buscarPorId(dept.getIdDept());
+           
+            return dept;
+        } catch (NullPointerException | ConexaoException e) {
+            System.out.println("1aa"+e.getMessage());
+            e.getMessage();
+            return dept;
+        }
+    }
+
+    void setCentroDept(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
