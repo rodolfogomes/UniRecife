@@ -11,7 +11,7 @@ import java.util.*;
 
 /**
  *
- * @author Wallison        
+ * @author Wallison          
  */
 public class Departamento {
 
