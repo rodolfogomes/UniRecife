@@ -4,32 +4,41 @@
  * and open the template in the editor.
  */
 package br.com.grupo02.negocio.professor;
+import br.com.grupo02.negocio.departamento.Departamento;
 
-import br.com.grupo02.negocio.error.ConexaoException;
 
 /**
  *
  * @author ADM
  */
 public class Professor {
+    private Integer id;
     private String cpf;
     private String nome;
-    private int dnumero;
     private String telefone;
     private float salario;
+    private Departamento departamento;
     
-    public Professor(){
-        
+ public Professor(){
+ departamento = new Departamento();
+     
+ }   
+           
+      /**
+     * @return the id
+     */
+    public String getId(){
+        return Integer.toString(id);
     }
     
-    public Professor(String cpf,String nome,int dnumero,String telefone,float salario){
-        this.cpf = cpf;
-        this.nome = nome;
-        this.dnumero = dnumero;
-        this.telefone = telefone;
-        this.salario = salario;
-        
+     /**
+     * @param id the professor to set
+     */
+    public void setId(Integer id){
+        this.id = id;
     }
+    
+          
       /**
      * @return the cpf
      */
@@ -61,16 +70,16 @@ public class Professor {
      /**
      * @return the dnumero
      */
-    public int getDnumero(){
-        return dnumero;
+    public Departamento getDepartamento(){
+       return departamento;
     }
     
        /**
-     * @param dnumero the sexo to set
+     * @param dnumero the numero to set
      */
     
-    public void setDnumero (int dnumero){
-        this.dnumero = dnumero;
+    public void setDepartamento (Departamento departamento){
+        this.departamento = departamento;
     }
       /**
      * @return the telefone
@@ -79,7 +88,7 @@ public class Professor {
         return telefone;
     }
       /**
-     * @param telefone the sexo to set
+     * @param telefone the telefone to set
      */
     public void setTelefone(String telefone){
         this.telefone = telefone;
@@ -93,22 +102,10 @@ public class Professor {
     }
     
        /**
-     * @param salario the sexo to set
+     * @param salario the salario to set
      */
     public void setSalario (float salario){
         this.salario = salario;
     }
-    
-    public Professor bucarProfessor(Professor pl) {
-        ProfessorDAO pldao = new ProfessorDAO();
-        try {
-            pl = pldao.buscarPorId(Integer.parseInt(pl.getCpf()));
-           
-            return pl;
-        } catch (NullPointerException | ConexaoException e) {
-            System.out.println("1aa"+e.getMessage());
-            e.getMessage();
-            return pl;}
-    }
-    
+       
    }

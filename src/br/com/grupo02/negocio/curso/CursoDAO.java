@@ -151,7 +151,7 @@ public class CursoDAO  implements IGerenciarDados<Curso> {
                 Professor coordenador = new Professor();
                 coordenador.setCpf(rs.getString("cpf_coor"));
                 coordenador.setNome(rs.getString("nome_prof"));
-                coordenador.setDnumero(rs.getInt("dep_prof"));
+                coordenador.getDepartamento().setIdDept(rs.getInt("dep_codigo"));
                 coordenador.setTelefone(rs.getString("tel_prof"));
                 coordenador.setSalario(rs.getFloat("sal_prof"));
                 
@@ -159,7 +159,7 @@ public class CursoDAO  implements IGerenciarDados<Curso> {
                 Professor viceCoordenador = new Professor();
                 viceCoordenador.setCpf(rs.getString("cpf_Vice"));
                 coordenador.setNome(rs.getString("nome_prof"));
-                coordenador.setDnumero(rs.getInt("dep_prof"));
+                coordenador.getDepartamento().setIdDept(rs.getInt("dep_codigo"));
                 coordenador.setTelefone(rs.getString("tel_prof"));
                 coordenador.setSalario(rs.getFloat("sal_prof"));
                 
