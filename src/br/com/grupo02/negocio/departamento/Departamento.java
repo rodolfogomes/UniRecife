@@ -5,68 +5,74 @@
  */
 package br.com.grupo02.negocio.departamento;
 
+import br.com.grupo02.negocio.error.ConexaoException;
+import br.com.grupo02.negocio.error.DAOException;
 import java.util.*;
 
 /**
  *
- * @author Bruno Rodrigues / Github: @brunojgrc
+ * @author Wallison          
  */
 public class Departamento {
 
      
-    private int idDept;
-    private String nomeDept;
-    private String telefoneDept;
+    private int id;
+    private String nome;
+    private String telefone;
     private String centro;
     
     public Departamento(){
     
     }
     
-    public Departamento(int idDept, String nomeDept, String telefoneDept, String centro){
+    public Departamento(int id, String nome, String telefone, String centro){
+        this.id = id;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.centro = centro;
     
     }
     
      /**
-     * @return the idDept
+     * @return the id
      */
-    public int getIdDept() {
-        return idDept;
+    public int getId() {
+        return id;
     }
 
     /**
-     * @param idDept the idDept to set
+     * @param id the id to set
      */
-    public void setIdDept(int idDept) {
-        this.idDept = idDept;
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
-     * @return the nomeDept
+     * @return the nome
      */
-    public String getNomeDept() {
-        return nomeDept;
+    public String getNome() {
+        return nome;
     }
 
     /**
-     * @param nomeDept the nomeDept to set
+     * @param nome the nome to set
      */
-    public void setNomeDept(String nomeDept) {
-        this.nomeDept = nomeDept;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     /**
-     * @return the telefoneDept
+     * @return the telefone
      */
-    public String getTelefoneDept() {
-        return telefoneDept;
+    public String getTelefone() {
+        return telefone;
     }
 
     /**
-     * @param telefoneDept the telefoneDept to set
+     * @param telefone the telefone to set
      */
-    public void setTelefoneDept(String telefoneDept) {
-        this.telefoneDept = telefoneDept;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     /**
@@ -82,5 +88,20 @@ public class Departamento {
     public void setCentro(String centro) {
         this.centro = centro;
     }
-    
+    public Departamento buscarDepartamento (Departamento dept) throws ConexaoException, DAOException {
+        DepartamentoDAO deptDao =  new DepartamentoDAO();
+        try {
+            dept = deptDao.buscarPorId(dept.getId());
+           
+            return dept;
+        } catch (NullPointerException e) {
+            System.out.println("1aa"+e.getMessage());
+            e.getMessage();
+            return dept;
+        }
+    }
+
+    public void setIdDept(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
