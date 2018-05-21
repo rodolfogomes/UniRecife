@@ -11,8 +11,8 @@ import java.sql.Date;
 public class Aluno {
 
     private int matricula;
-    private Curso idCurso;
-    private Departamento idDept;
+    private Curso curso;
+    private Departamento departamento;
     private String nome;
     private String cpf;
     private String rua;
@@ -176,21 +176,24 @@ public class Aluno {
         this.matricula = matricula;
     }
 
-    public void setIdCurso(int idCurso) {
-        this.idCurso = new Curso();
-        this.idCurso.setCodigo(idCurso);
+    public Curso getCurso() {
+        return curso;
     }
 
-    public void setIdDept(int idDept) {
-        this.idDept = new Departamento();
-        this.idDept.setIdDept(idDept);
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 
-    public int getIdCurso() {
-        return idCurso.getCodigo();
+    public Departamento getDepartamento() {
+        return departamento;
     }
-     public int getIdDept() {
-        return idDept.getIdDept();
+
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
     }
+    
+    
+
+
 
 }
