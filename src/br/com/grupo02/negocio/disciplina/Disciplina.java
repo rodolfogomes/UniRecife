@@ -7,9 +7,6 @@ package br.com.grupo02.negocio.disciplina;
 
 
 import br.com.grupo02.negocio.departamento.Departamento;
-import br.com.grupo02.negocio.error.ConexaoException;
-
-import java.util.*;
 
 /**
  * Classe básica Disciplina com atributos encapsulados
@@ -99,25 +96,7 @@ public class Disciplina {
         this.departamento = departamento;
     }
     
-     /**
-     * 
-     * @Método buscarDisciplina para retorno de disciplina por ID
-     */
-    public Disciplina buscarDisciplina (Disciplina disc){
-        
-        DisciplinaDAO discDao = new DisciplinaDAO ();
-        try {
-             disc = discDao.buscarPorId(disc.getIdDisciplina());
-                
-             return disc;     
-             
-        } catch (NullPointerException | ConexaoException e) {
-            System.out.println("1aa"+e.getMessage());
-            e.getMessage();
-            
-            return disc;
-        } 
-    }  
+     
 }
 
 
