@@ -7,6 +7,7 @@ package br.com.grupo02.negocio.disciplina;
 
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.persistencia.GerenciadorConexao;
+import br.com.grupo02.negocio.error.DAOException;
 import br.com.grupo02.negocio.departamento.Departamento;
 import br.com.grupo02.persistencia.GerenciarConexao;
 import br.com.grupo02.persistencia.IGerenciarDados;
@@ -20,135 +21,144 @@ import java.util.List;
 
 
 /**
- * Implementação dos métodos CRUD
- * @author Bruno Rodrigues
+ * Implementação dos métodos CRUD com otimizacao utlizando stringBuilder
+ * @author Bruno Rodrigues /Git: @Brunojgrc
  */
 public class DisciplinaDAO implements IGerenciarDados <Disciplina> {
     
     
     @Override
-    public void inserir(Disciplina disciplina) throws ConexaoException {
-        String sql = "insert into UniRecife.dbo.disciplina (id,"
-                + "nome, descricao, id_dept)"
-                + "values(?,?,?,?)";
-        int index = 0;
-        try (Connection con = GerenciarConexao.getInstancia().conectar()) {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(++index, disciplina.getIdDisciplina());
-            ps.setString(++index, disciplina.getNome());
-            ps.setString(++index, disciplina.getDescricao());
-            ps.setInt(++index, disciplina.getDepartamento().getId());
-            ps.execute();
-            ps.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new ConexaoException();
+    public void inserir(Disciplina disciplina) throws ConexaoException,DAOException {
+        GerenciadorConexao gc;
+        gc = GerenciarConexao.getInstancia();
+        StringBuilder sb = new StringBuilder();
+        sb.append("INSERT DISCIPLINA");
+        sb.append("((id, nome, descricao, id_dept");
+        sb.append("VALUES");
+        sb.append("(?,?,?,?,)");
+        String sql = sb.toString().trim();
+        PreparedStatement pst;
+        int i = 1;
+        try (Connection con = gc.conectar()) {
+            pst = con.prepareStatement(sql);
+            pst.setInt(i++, disciplina.getIdDisciplina());
+            pst.setString(i++, disciplina.getNome());
+            pst.setString(i++, disciplina.getDescricao());
+            pst.setInt(i++, disciplina.getDepartamento().getId()); //id departamento
+            pst.executeUpdate();
+            
+        } catch (Exception e) {
+            throw new DAOException();
+        } finally {
+            sb.delete(0, sb.length());
+            sb = null;     
         }
-     }
+    }
     
       
     @Override
-     public void atualizar(Disciplina disciplina) throws ConexaoException {
-     String sql = "update UniRecife.dbo.disciplina set nome = ?,"
-                + "descricao = ?, id_dept=?"
-                + "where id=?";
-        int index = 0;
-        try (Connection con = GerenciarConexao.getInstancia().conectar()) {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(++index, disciplina.getNome());
-            ps.setString(++index, disciplina.getDescricao());
-            ps.setInt(++index, disciplina.getDepartamento().getId());
-            ps.setInt(++index, disciplina.getIdDisciplina());
-            ps.execute();
-            ps.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new ConexaoException();
-        }
-    }
-    
-    @Override
-    public void deletar(Integer id) throws ConexaoException {
-        String sql = "delete from UniRecife.dbo.disciplina where id ="+id;
-        
-        try (Connection con = GerenciarConexao.getInstancia().conectar()){
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.execute();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    /**
-     * @param id
-     * @return
-     * @throws ConexaoException
-     * Consulta da disciplima por ID
-     */
-    @Override
-    public Disciplina buscarPorId(Integer id) throws ConexaoException {
-        String sql ="d.id AS Códido,"
-                    + "d.nome AS Nome,"
-                    + "d.descricao AS Descrição,"
-                    + "dt.id_detp AS Departamento"
-                    + "from Unirecife.dbo.disciplina AS d left join departamento AS dt"
-                        + "on d.id_depto=dt.id_depto"
-                    + "where d.id"+id;   
-        
-            Disciplina disciplina = null;
-            Departamento departamento = null;
+     public void atualizar(Disciplina disciplina) throws ConexaoException, DAOException {
+        GerenciadorConexao gc;
+        gc = GerenciarConexao.getInstancia();
+        StringBuilder sb = new StringBuilder();
+        sb.append("UPDATE DISCIPLINA SET ");
+        sb.append("(nome=?, descricao=?, id_dept=?)");
+        sb.append("(WHERE");
+        sb.append(" id=?");
+        String sql = sb.toString().trim();
+        PreparedStatement pst;
+        int i = 1;
+        try (Connection con = gc.conectar()) {
+            pst = con.prepareStatement(sql);
+            pst.setString(i++, disciplina.getNome());
+            pst.setString(i++, disciplina.getDescricao());
+            pst.setInt(i++, disciplina.getDepartamento().getId());
+            pst.setInt(i++, disciplina.getIdDisciplina());
+            pst.execute();
+            pst.close();
+        pst.executeUpdate();
             
-             try (Connection con = GerenciarConexao.getInstancia().conectar()){
-                Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery(sql);
-                
-                if(rs.next()){
-                  //Montando ref. disciplina
-                   disciplina = new Disciplina();
-                   disciplina.setIdDisciplina(rs.getInt("id"));
-                   disciplina.setNome(rs.getString("nome"));
-                   disciplina.setDescricao(rs.getString("descricao"));
-                   disciplina.setDepartamento(departamento);
-                }
-                return disciplina;
-             }catch (SQLException ex){
-                 ex.printStackTrace();
-             }
-             
-             return disciplina;
+        } catch (Exception e) {
+            throw new DAOException();
+        } finally {
+            sb.delete(0, sb.length());
+            sb = null;    
+        }
     }
+    
     @Override
-    public List<Disciplina> listarTodos() throws ConexaoException {
+    public void deletar(Integer id) throws ConexaoException, DAOException {
+        GerenciadorConexao gc;
+        gc = GerenciarConexao.getInstancia();
+        String sql = "DELETE FROM DISCIPLINA WHERE id=?";
+        PreparedStatement pst;
+        try (Connection con = gc.conectar()) {
+            pst = con.prepareStatement(sql);
+            pst.setInt(1, id);
+        } catch (Exception e) {
+            throw new DAOException();
+        }
+    }
+    
 
-        Connection c = GerenciarConexao.getInstancia().conectar();
-         Departamento departamento = null;
-         Disciplina disc = new Disciplina();
-         
-        ArrayList<Disciplina> lista = new ArrayList();
-        String sql = "SELECT id,"
-                + "nome, descricao, id_dept FROM disciplina";
-        
-        Statement stm;
-        try{
-            stm = c.createStatement();
-            ResultSet rs = stm.executeQuery(sql);
-            
-            while(rs.next()){
-             
-                disc.setIdDisciplina(rs.getInt("id") );
-                disc.setNome( rs.getString("nome") );
-                disc.setDescricao( rs.getString("descrição") );
-                disc.setDepartamento(departamento);
-                lista.add(disc);
+    @Override
+    public Disciplina buscarPorId(Integer id) throws ConexaoException, DAOException {
+        GerenciadorConexao gc;
+        gc = GerenciarConexao.getInstancia();
+        Disciplina disc = null;
+        String sql = "SELECT * FROM DISCIPLINA WHERE id=" + id;
+        try (Connection con = gc.conectar()) {
+            try (Statement st = con.createStatement()) {
+                ResultSet rs = st.executeQuery(sql);          
+                if(rs.next()){
+                  //Montando objeto disciplina com consulta no BD
+                   disc = new Disciplina(); 
+                   disc.setIdDisciplina(rs.getInt("id"));
+                   disc.setNome(rs.getString("nome"));
+                   disc.setDescricao(rs.getString("descricao"));
+                   // passando obj departamento
+                   Departamento dept = new Departamento();
+                   dept.setIdDept(rs.getInt("id_dept"));
+                   disc.setDepartamento(dept);
+                 return disc;
+                }
             }
+
+        } catch (SQLException ex) {
+            throw new DAOException();
+        }
+        return disc;
+    }   
+
+
+    @Override
+    public List<Disciplina> listarTodos() throws ConexaoException, DAOException {
+        GerenciadorConexao gc;
+        gc = GerenciarConexao.getInstancia();
+        List<Disciplina> lista = new ArrayList();
+        Disciplina disciplina = null;
+        String sql = "SELECT * FROM DISCIPLINA";
+        try (Connection con = gc.conectar()) {
+            try (Statement stm = con.createStatement()) {
+                ResultSet rs = stm.executeQuery(sql);
+                while (rs.next()) {
+                    //montando o objeto disciplina com o resultado da consulta do banco
+                disciplina = new Disciplina ();
+                disciplina.setIdDisciplina(rs.getInt("id") );
+                disciplina.setNome( rs.getString("nome") );
+                disciplina.setDescricao( rs.getString("descrição"));
+                Departamento dept = new Departamento();
+                dept.setIdDept(rs.getInt("id"));
+                disciplina.setDepartamento(dept);
+                lista.add(disciplina);
+                }   
             return lista;
-        }catch(SQLException ex){
-             ex.getMessage();
-        }finally{
-            GerenciarConexao.getInstancia().desconectar(c);
-        }        
-           return lista;  
+            }
+
+        } catch (Exception e) {
+            throw new DAOException();
+        }
+
     }
-   
+
 }
