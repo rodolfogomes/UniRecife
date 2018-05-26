@@ -47,7 +47,7 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
             pst.setString(i++, aluno.getTelefone2());
             pst.setDate(i++, aluno.getDatnasc());
             pst.setString(i++, aluno.getSexo());
-            pst.setInt(i++, aluno.getDepartamento().getIdDept()); // id dpt
+            //pst.setInt(i++, aluno.getDepartamento().getIdDept()); // id dpt
             pst.setInt(i++, aluno.getCurso().getCodigo()); // id curso
             pst.executeUpdate();
 
@@ -85,7 +85,7 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
             pst.setString(i++, aluno.getTelefone2());
             pst.setDate(i++, aluno.getDatnasc());
             pst.setString(i++, aluno.getSexo());
-            pst.setInt(i++, aluno.getDepartamento().getIdDept()); // id dpt
+            pst.setInt(i++, aluno.getDepartamento().getId()); // id dpt
             pst.setInt(i++, aluno.getCurso().getCodigo()); // id curso
             pst.setInt(i++, aluno.getMatricula());
             pst.executeUpdate();

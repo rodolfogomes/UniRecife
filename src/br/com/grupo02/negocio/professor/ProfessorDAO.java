@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package br.com.grupo02.negocio.professor;
-import br.com.grupo02.negocio.departamento.Departamento;
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.persistencia.GerenciarConexao;
 import br.com.grupo02.persistencia.IGerenciarDados;
@@ -15,8 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -38,7 +36,7 @@ public class ProfessorDAO implements IGerenciarDados<Professor>{
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(++index, prf.getCpf());
             ps.setString(++index, prf.getNome());
-            ps.setInt(++index, prf.getDepartamento().getIdDept());
+            ps.setInt(++index, prf.getDepartamento().getId());
             ps.setFloat(++index, prf.getSalario());
             ps.setString(++index, prf.getTelefone());
             ps.execute();
@@ -66,7 +64,7 @@ public class ProfessorDAO implements IGerenciarDados<Professor>{
         PreparedStatement ps = con.prepareStatement(sql);
        ps.setString(++index, prf.getCpf());
             ps.setString(++index, prf.getNome());
-            ps.setInt(++index, prf.getDepartamento().getIdDept());
+            ps.setInt(++index, prf.getDepartamento().getId());
             ps.setString(++index, prf.getTelefone());
             ps.setFloat(++index, prf.getSalario());
             ps.execute();
