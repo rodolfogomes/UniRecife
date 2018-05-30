@@ -78,13 +78,10 @@ CREATE TABLE aluno (
 CREATE TABLE alunoposgrad (
    id INT  identity NOT NULL,
    id_orientador INT NOT NULL,
-   id_aluno_bolsa INT NOT NULL,
-  PRIMARY KEY (id),
-  CONSTRAINT fk_apg_prof
-    FOREIGN KEY (id_orientador)
-    REFERENCES professor (id),
-    CONSTRAINT FK_MAT_ALUNO FOREIGN KEY (id_aluno_bolsa) 
-    REFERENCES ALUNO(id));
+   bolsa decimal(6,2) NOT NULL,
+   PRIMARY KEY (id),
+   CONSTRAINT fk_apg_prof
+     FOREIGN KEY (id_orientador));
 
 
 -- -----------------------------------------------------
