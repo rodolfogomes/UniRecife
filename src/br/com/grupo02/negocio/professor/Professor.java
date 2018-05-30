@@ -27,8 +27,8 @@ public class Professor {
       /**
      * @return the id
      */
-    public String getId(){
-        return Integer.toString(id);
+    public Integer getId(){
+        return id;
     }
     
      /**
