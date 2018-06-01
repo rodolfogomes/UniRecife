@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  * @author Rodolfo Gomes
  */
 public class UniRecife {
-    
+    // Para realizar os testes criem seus métodos e chamem no main como no exempo abaixo.
 
     public static void main(String[] args) {
     testaConexao();
