@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.grupo02.persistencia;
+package br.com.grupo02.negocio;
 
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.negocio.error.DAOException;

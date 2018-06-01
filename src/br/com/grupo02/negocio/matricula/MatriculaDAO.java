@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 package br.com.grupo02.negocio.matricula;
-import br.com.grupo02.negocio.oferta.Oferta;
+import br.com.grupo02.negocio.IGerenciarDados;
 import br.com.grupo02.negocio.error.ConexaoException;
+import br.com.grupo02.negocio.error.DAOException;
 import br.com.grupo02.persistencia.GerenciarConexao;
-import br.com.grupo02.persistencia.IGerenciarDados;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,8 +15,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -29,7 +27,7 @@ public class MatriculaDAO implements IGerenciarDados<Matricula>{
     * @param Matricula objeto que será inserido quando esse método for chamado;
    */
     @Override
-    public void inserir(Matricula mat) throws ConexaoException {
+    public void inserir(Matricula mat) throws ConexaoException, DAOException {
       
     String sql = "insert into UniRecife.dbo.matricula ( id, id_oferta)values(?,?)";
     
@@ -51,7 +49,7 @@ public class MatriculaDAO implements IGerenciarDados<Matricula>{
     * @param matricula objeto que será inserido quando esse método for chamado;
    */
     @Override
-    public void atualizar(Matricula mat) throws ConexaoException {
+    public void atualizar(Matricula mat) throws ConexaoException, DAOException {
         
     String sql = "update matricula set id_oferta = ?" + "where id = ?";
     
@@ -72,7 +70,7 @@ public class MatriculaDAO implements IGerenciarDados<Matricula>{
     * @param matricula objeto que será inserido quando esse método for chamado;
    */
     @Override
-    public void deletar(Integer id) throws ConexaoException {
+    public void deletar(Integer id) throws ConexaoException, DAOException {
        
         String sql = "delete from matricula where id = ?"+id;
          try (Connection con = GerenciarConexao.getInstancia().conectar()){
@@ -91,7 +89,7 @@ public class MatriculaDAO implements IGerenciarDados<Matricula>{
     * @param matricula objeto que será inserido quando esse método for chamado;
    */
      @Override
-     public Matricula buscarPorId(Integer id) throws ConexaoException {
+     public Matricula buscarPorId(Integer id) throws ConexaoException, DAOException {
          
         String sql = "SELECT * FROM matricula WHERE id=" + id;
         try (Connection con = GerenciarConexao.getInstancia().conectar()) {
@@ -123,7 +121,7 @@ public class MatriculaDAO implements IGerenciarDados<Matricula>{
     * @param matricula objeto que será inserido quando esse método for chamado;
    */
         @Override
-        public List<Matricula> listarTodos() throws ConexaoException {
+        public List<Matricula> listarTodos() throws ConexaoException, DAOException {
 
         Connection c = GerenciarConexao.getInstancia().conectar();
         

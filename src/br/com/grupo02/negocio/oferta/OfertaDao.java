@@ -4,11 +4,10 @@
  * and open the template in the editor.
  */
 package br.com.grupo02.negocio.oferta;
-import br.com.grupo02.negocio.disciplina.Disciplina;
-import br.com.grupo02.negocio.professor.Professor;
+import br.com.grupo02.negocio.IGerenciarDados;
 import br.com.grupo02.negocio.error.ConexaoException;
+import br.com.grupo02.negocio.error.DAOException;
 import br.com.grupo02.persistencia.GerenciarConexao;
-import br.com.grupo02.persistencia.IGerenciarDados;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,8 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -31,7 +29,7 @@ public class OfertaDao implements IGerenciarDados<Oferta> {
    */
     
     @Override
-    public void inserir (Oferta ofr) throws ConexaoException {
+    public void inserir (Oferta ofr) throws ConexaoException,DAOException {
         String sql = "insert into UniRecife.dbo.oferta (horario, id_professor, id_disciplina)values (?,?,?)";
         int index = 0;
         
@@ -55,7 +53,7 @@ public class OfertaDao implements IGerenciarDados<Oferta> {
     * @param oferta objeto que será inserido quando esse método for chamado;
    */
     @Override
-    public void atualizar(Oferta ofr) throws ConexaoException {
+    public void atualizar(Oferta ofr) throws ConexaoException,DAOException {
     String sql = "update UniRecife.dbo.oferta set horario = ?,Id_professor = ?,id_disciplina = ?"
                   + "where id = ?";
     
@@ -80,7 +78,7 @@ public class OfertaDao implements IGerenciarDados<Oferta> {
     * @param oferta objeto que será inserido quando esse método for chamado;
    */
     @Override
-    public void deletar(Integer id) throws ConexaoException {
+    public void deletar(Integer id) throws ConexaoException,DAOException {
        
         String sql = "delete from UniRecife.dbo.ofertar where id = ?"+id;
          try (Connection con = GerenciarConexao.getInstancia().conectar()){
@@ -98,7 +96,7 @@ public class OfertaDao implements IGerenciarDados<Oferta> {
     * @param oferta objeto que será inserido quando esse método for chamado;
    */
      @Override
-     public Oferta buscarPorId(Integer id) throws ConexaoException {
+     public Oferta buscarPorId(Integer id) throws ConexaoException,DAOException {
          
         String sql = "SELECT * FROM oferta WHERE id=" + id;
         try (Connection con = GerenciarConexao.getInstancia().conectar()) {
@@ -132,7 +130,7 @@ public class OfertaDao implements IGerenciarDados<Oferta> {
     * @param oferta objeto que será inserido quando esse método for chamado;
    */
         @Override
-        public List<Oferta> listarTodos() throws ConexaoException {
+        public List<Oferta> listarTodos() throws ConexaoException,DAOException {
 
         Connection c = GerenciarConexao.getInstancia().conectar();
         

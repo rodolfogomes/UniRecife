@@ -8,7 +8,7 @@ package br.com.grupo02.negocio.curso;
 import br.com.grupo02.negocio.departamento.Departamento;
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.negocio.professor.Professor;
-import br.com.grupo02.persistencia.IGerenciarDados;
+import br.com.grupo02.negocio.IGerenciarDados;
 import br.com.grupo02.persistencia.GerenciarConexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
