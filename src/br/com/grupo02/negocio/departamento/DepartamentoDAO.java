@@ -16,102 +16,135 @@ import java.util.List;
 
 /**
  *
- * @author Wallison   
+ * @author Wallison     
  */
 public class DepartamentoDAO implements IGerenciarDados<Departamento> {
     private Departamento dept;
     
     @Override
-    public void inserir(Departamento departamento) throws ConexaoException {
-        String sql = " insert into UniRecife.dbo.departamento (id,nome,telefone,centro)"
-                +"values (?,?,?,?)";
-        int index = 0;
-        try (Connection con = GerenciarConexao.getInstancia().conectar()) {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(++index, departamento.getId());
-            ps.setString(++index, departamento.getNome());
-            ps.setString(++index, departamento.getTelefone());
-            ps.setString(++index, departamento.getCentro());
-            ps.execute();
-            ps.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new ConexaoException();
-        }
-    }
-     
-    @Override
-    public void atualizar (Departamento departamento) throws ConexaoException {
-        String sql = "update into UniRecife.dbo.departamento set nome = ?,telefone=?,"
-                + "centro=?"+"Where id=?";
-        int index = 0;
-        try (Connection con = GerenciarConexao.getInstancia().conectar()) {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(++index, departamento.getNome());
-            ps.setString(++index, departamento.getTelefone());
-            ps.setString(++index, departamento.getCentro());
-            ps.setInt(++index, departamento.getId());
-            ps.execute();
-            ps.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new ConexaoException();
-        }
-    }
-    
-    @Override
-    public void deletar(Integer id) throws ConexaoException {
-        String sql = "delete from UniRecife.dbo.departamento where id ="+id;
-        
-        try (Connection con = GerenciarConexao.getInstancia().conectar()){
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.execute();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    public ArrayList<Departamento> listar()throws ConexaoException,DAOException{
+    public void inserir(Departamento departamento) throws ConexaoException,DAOException {
         GerenciadorConexao gc;
         gc = GerenciarConexao.getInstancia();
-        Connection con = gc.conectar();
-        
-        ArrayList<Departamento> lista = new ArrayList();
-        Departamento dept = null;
-        
-        String sql = "SELECT id,nome,telefone,centro FROM departamento";
-        
-        Statement stm;
-        try{
-            stm = con.createStatement();
-            ResultSet rs = stm.executeQuery(sql);
+        StringBuilder sb = new StringBuilder();
+        sb.append("INSERT DEPARTAMENTO");
+        sb.append("((id, nome, telefone, centro");
+        sb.append("VALUES");
+        sb.append("(?,?,?,?,)");
+        String sql = sb.toString().trim();
+        PreparedStatement pst;
+        int i = 1;
+        try (Connection con = gc.conectar()) {
+            pst = con.prepareStatement(sql);
+            pst.setInt(i++, departamento.getId());
+            pst.setString(i++, departamento.getNome());
+            pst.setString(i++, departamento.getTelefone());
+            pst.setString(i++, departamento.getCentro()); 
+            pst.executeUpdate();
             
-            while(rs.next()){
-                dept = new Departamento();
-                dept.setId(  rs.getInt("idDepartamento") );
-                dept.setNome( rs.getString("NomeDepartamento") );
-                dept.setTelefone( rs.getString("Telefone") );
-                dept.setCentro( rs.getString("Centro") );
-                lista.add(dept);
-            }
-            
-            return lista;
-            
-        }catch(SQLException e){
+        } catch (Exception e) {
             throw new DAOException();
-        }finally{
-            gc.desconectar(con);
-        }          
+        } finally {
+            sb.delete(0, sb.length());
+            sb = null;     
+        }
     }
-
+    
+      
     @Override
-    public List<Departamento> listarTodos() throws ConexaoException, DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     public void atualizar(Departamento departamento) throws ConexaoException, DAOException {
+        GerenciadorConexao gc;
+        gc = GerenciarConexao.getInstancia();
+        StringBuilder sb = new StringBuilder();
+        sb.append("UPDATE DEPARTAMENTO SET ");
+        sb.append("(nome=?, telefone=?, centro=?)");
+        sb.append("(WHERE");
+        sb.append(" id=?");
+        String sql = sb.toString().trim();
+        PreparedStatement pst;
+        int i = 1;
+        try (Connection con = gc.conectar()) {
+            pst = con.prepareStatement(sql);
+            pst.setString(i++, departamento.getNome());
+            pst.setString(i++, departamento.getTelefone());
+            pst.setString(i++, departamento.getCentro());
+            pst.setInt(i++, departamento.getId());
+            pst.execute();
+            pst.close();
+        pst.executeUpdate();
+            
+        } catch (Exception e) {
+            throw new DAOException();
+        } finally {
+            sb.delete(0, sb.length());
+            sb = null;    
+        }
+        
     }
+    
+    @Override
+    public void deletar(Integer id) throws ConexaoException, DAOException {
+        GerenciadorConexao gc;
+        gc = GerenciarConexao.getInstancia();
+        String sql = "DELETE FROM DEPARTAMENTO WHERE id=?";
+        PreparedStatement pst;
+        try (Connection con = gc.conectar()) {
+            pst = con.prepareStatement(sql);
+            pst.setInt(1, id);
+        } catch (Exception e) {
+            throw new DAOException();
+        }
+    }
+    
 
     @Override
     public Departamento buscarPorId(Integer id) throws ConexaoException, DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        GerenciadorConexao gc;
+        gc = GerenciarConexao.getInstancia();
+        Departamento dept = null;
+        String sql = "SELECT * FROM DEPARTAMENTO WHERE id=" + id;
+        try (Connection con = gc.conectar()) {
+            try (Statement st = con.createStatement()) {
+                ResultSet rs = st.executeQuery(sql);          
+                if(rs.next()){
+                   dept = new Departamento(); 
+                   dept.setId(rs.getInt("id"));
+                   dept.setNome(rs.getString("nome"));
+                   dept.setTelefone(rs.getString("telefone"));
+                   dept.setCentro(rs.getString("Centro"));
+                 return dept;
+                }
+            }
+
+        } catch (SQLException ex) {
+            throw new DAOException();
+        }
+        return dept;
+    }   
+
+
+    @Override
+    public List<Departamento> listarTodos() throws ConexaoException, DAOException {
+        GerenciadorConexao gc;
+        gc = GerenciarConexao.getInstancia();
+        List<Departamento> lista = new ArrayList();
+        Departamento departamento = null;
+        String sql = "SELECT * FROM DEPARTAMENTO";
+        try (Connection con = gc.conectar()) {
+            try (Statement stm = con.createStatement()) {
+                ResultSet rs = stm.executeQuery(sql);
+                while (rs.next()) {
+                departamento = new Departamento ();
+                departamento.setId(rs.getInt("id") );
+                departamento.setNome( rs.getString("nome") );
+                departamento.setTelefone( rs.getString("telefone"));
+                departamento.setCentro(rs.getString("Centro"));
+                lista.add(departamento);
+                }   
+            return lista;
+            }
+
+        } catch (Exception e) {
+            throw new DAOException();
+        }
     }
 }
