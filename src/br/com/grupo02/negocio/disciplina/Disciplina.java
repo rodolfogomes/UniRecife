@@ -14,7 +14,7 @@ import br.com.grupo02.negocio.departamento.Departamento;
  */
 public class Disciplina {
     
-    private int idDisciplina;
+    private int id;
     private String nome;
     private String descricao;
     Departamento departamento;
@@ -27,13 +27,13 @@ public class Disciplina {
     /**
  * Classe básica Disciplina com atributos e métodos
  * @author Bruno Rodrigues /Git: @Brunojgrc
-     * @param idDisciplina
+     * @param id
      * @param nome
      * @param descricao
      * @param departamento
      */
-    public Disciplina (int idDisciplina, String nome, String descricao, Departamento departamento){
-        this.idDisciplina = idDisciplina;
+    public Disciplina (int id, String nome, String descricao, Departamento departamento){
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.departamento = departamento; 
@@ -43,15 +43,15 @@ public class Disciplina {
         /**
      * @return the idDisciplina
      */
-    public int getIdDisciplina() {
-        return idDisciplina;
+    public int getId() {
+        return id;
     }
 
     /**
      * @param idDisciplina the idDisciplina to set
      */
-    public void setIdDisciplina(int idDisciplina) {
-        this.idDisciplina = idDisciplina;
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
