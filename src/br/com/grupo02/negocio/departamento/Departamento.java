@@ -7,7 +7,6 @@ package br.com.grupo02.negocio.departamento;
 
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.negocio.error.DAOException;
-import java.util.*;
 
 /**
  *
@@ -101,7 +100,4 @@ public class Departamento {
         }
     }
 
-    public void setIdDept(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
