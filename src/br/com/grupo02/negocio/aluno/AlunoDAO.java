@@ -137,7 +137,7 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
                     alun.setTelefone2(rs.getString("aluno_telefone2"));
                     // passando obj departamento 
                     Departamento dpt = new Departamento();
-                    dpt.setIdDept(rs.getInt("aluno_dep_codigo"));
+                    dpt.setId(rs.getInt("aluno_dep_codigo"));
                     alun.setDepartamento(dpt);
                      //passando obj curso 
                     Curso crs = new Curso();
@@ -179,7 +179,7 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
                     al.setTelefone2(rs.getString("aluno_telefone2"));
                     // passando obj departamento 
                     Departamento dpt = new Departamento();
-                    dpt.setIdDept(rs.getInt("aluno_dep_codigo"));
+                    dpt.setId(rs.getInt("aluno_dep_codigo"));
                     al.setDepartamento(dpt);
                     //passando obj curso 
                     Curso crs = new Curso();

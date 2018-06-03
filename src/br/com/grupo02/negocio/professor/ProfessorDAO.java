@@ -110,7 +110,7 @@ public class ProfessorDAO implements IGerenciarDados<Professor>{
                 Professor pl = new Professor();
                 pl.setCpf(rs.getString("cpf"));
                 pl.setNome(rs.getString("nome"));
-                pl.getDepartamento().setIdDept(rs.getInt("dep_codigo"));
+                pl.getDepartamento().setId(rs.getInt("dep_codigo"));
                 pl.setSalario(rs.getFloat("salario"));
                 pl.setTelefone(rs.getString("telefone"));
                 return pl;
@@ -151,7 +151,7 @@ public class ProfessorDAO implements IGerenciarDados<Professor>{
                 ps.setId(rs.getInt("id"));
                 ps.setCpf(  rs.getString("cpf") );
                 ps.setNome( rs.getString("nome") );
-                ps.getDepartamento().setIdDept(rs.getInt("dep_codigo"));
+                ps.getDepartamento().setId(rs.getInt("dep_codigo"));
                 ps.setTelefone(rs.getString("telefone"));
                 ps.setSalario( rs.getFloat("salario") );
                 lista.add(ps);

@@ -29,26 +29,25 @@ public class DisciplinaDAO implements IGerenciarDados <Disciplina> {
     
     @Override
     public void inserir(Disciplina disciplina) throws ConexaoException,DAOException {
-        GerenciadorConexao gc;
-        gc = GerenciarConexao.getInstancia();
+        
         StringBuilder sb = new StringBuilder();
-        sb.append("INSERIR DISCIPLINA");
-        sb.append("((id, nome, descricao, id_dept");
-        sb.append("VALUES");
-        sb.append("(?,?,?,?,)");
-        String sql = sb.toString().trim();
-        PreparedStatement pst;
+        sb.append("INSERT INTO Disciplina ")
+        .append("(nome, descricao, id_dept)")
+        .append("VALUES")
+        .append("(?,?,?)");
+        
         int i = 1;
-        try (Connection con = gc.conectar()) {
-            pst = con.prepareStatement(sql);
-            pst.setInt(i++, disciplina.getId());
+        try (Connection con = GerenciarConexao.getInstancia().conectar()) {
+            PreparedStatement pst;    
+            pst = con.prepareStatement(sb.toString());
             pst.setString(i++, disciplina.getNome());
             pst.setString(i++, disciplina.getDescricao());
             pst.setInt(i++, disciplina.getDepartamento().getId()); //id departamento
             pst.executeUpdate();
             
         } catch (Exception e) {
-            throw new DAOException();
+            e.getMessage();
+            e.printStackTrace();
         } finally {
             sb.delete(0, sb.length());
             sb = null;     
@@ -62,8 +61,8 @@ public class DisciplinaDAO implements IGerenciarDados <Disciplina> {
         gc = GerenciarConexao.getInstancia();
         StringBuilder sb = new StringBuilder();
         sb.append("UPDATE DISCIPLINA SET ");
-        sb.append("(nome=?, descricao=?, id_dept=?)");
-        sb.append("(WHERE");
+        sb.append("nome=?, descricao=?, id_dept=?");
+        sb.append("WHERE");
         sb.append(" id=?");
         String sql = sb.toString().trim();
         PreparedStatement pst;
@@ -88,13 +87,16 @@ public class DisciplinaDAO implements IGerenciarDados <Disciplina> {
     
     @Override
     public void deletar(Integer id) throws ConexaoException, DAOException {
+        
         GerenciadorConexao gc;
         gc = GerenciarConexao.getInstancia();
-        String sql = "DELETE FROM DISCIPLINA WHERE id=?";
-        PreparedStatement pst;
+        String sql = "DELETE FROM DISCIPLINA WHERE id =? ";
+        PreparedStatement pst = null;
         try (Connection con = gc.conectar()) {
             pst = con.prepareStatement(sql);
-            pst.setInt(1, id);
+            pst.setInt(1,id);
+            pst.execute();
+            pst.close();
         } catch (Exception e) {
             throw new DAOException();
         }
@@ -118,7 +120,7 @@ public class DisciplinaDAO implements IGerenciarDados <Disciplina> {
                    disc.setDescricao(rs.getString("descricao"));
                    // passando obj departamento
                    Departamento dept = new Departamento();
-                   dept.setIdDept(rs.getInt("id_dept"));
+                   dept.setId(rs.getInt("id_dept"));
                    disc.setDepartamento(dept);
                  return disc;
                 }
@@ -146,9 +148,9 @@ public class DisciplinaDAO implements IGerenciarDados <Disciplina> {
                 disciplina = new Disciplina ();
                 disciplina.setId(rs.getInt("id") );
                 disciplina.setNome( rs.getString("nome") );
-                disciplina.setDescricao( rs.getString("descrição"));
+                disciplina.setDescricao( rs.getString("descricao"));
                 Departamento dept = new Departamento();
-                dept.setIdDept(rs.getInt("id"));
+                dept.setId(rs.getInt("id_dept"));
                 disciplina.setDepartamento(dept);
                 lista.add(disciplina);
                 }   

@@ -37,7 +37,7 @@ public class OfertaDao implements IGerenciarDados<Oferta> {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(++index, ofr.getHorario());
             ps.setInt(++index, ofr.getIdProfessor().getId());   
-            ps.setInt(++index, ofr.getIDisciplina().getIdDisciplina());
+            ps.setInt(++index, ofr.getIDisciplina().getId());
             ps.execute();
             ps.close(); 
     }catch (SQLException ex) {
@@ -63,7 +63,7 @@ public class OfertaDao implements IGerenciarDados<Oferta> {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(++index, ofr.getHorario());
             ps.setInt(++index, ofr.getIdProfessor().getId());   
-            ps.setInt(++index, ofr.getIDisciplina().getIdDisciplina());
+            ps.setInt(++index, ofr.getIDisciplina().getId());
             ps.execute();
             ps.close(); 
     }catch (SQLException ex) {
@@ -108,7 +108,7 @@ public class OfertaDao implements IGerenciarDados<Oferta> {
                 Oferta of = new Oferta();
                 of.setHorario(rs.getString("horario"));
                 of.getIdProfessor().setId(rs.getInt("id_professor"));
-                of.getIDisciplina().setIdDisciplina(rs.getInt("id_disciplina"));
+                of.getIDisciplina().setId(rs.getInt("id_disciplina"));
                 return of;
 
             
@@ -146,7 +146,7 @@ public class OfertaDao implements IGerenciarDados<Oferta> {
              Oferta   oft = new Oferta();
                 oft.setId(rs.getInt("id"));
                 oft.getIdProfessor().setId(rs.getInt("id_professor"));
-                oft.getIDisciplina().setIdDisciplina(rs.getInt("id_disciplina"));
+                oft.getIDisciplina().setId(rs.getInt("id_disciplina"));
                 oft.setHorario(rs.getString("horario"));
                 lista.add(oft);
             }
