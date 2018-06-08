@@ -30,8 +30,9 @@ public class UniRecife {
     public static void main(String[] args) {
 
         //inserirCurso();
-       // atualizarCurso();
-        excluirCurso();
+        //atualizarCurso();
+        //excluirCurso();
+       buscarCursoId(); 
 
     }
 
@@ -131,9 +132,9 @@ public class UniRecife {
 
             ProfessorDAO daoP = new ProfessorDAO();
             Curso curso = new Curso();
-            curso.setTipo("teste");
-            curso.getCoordenador().setId(1);
-            curso.getViceCoordenador().setId(3);
+            curso.setTipo("curso02");
+            curso.getCoordenador().setId(3);
+            curso.getViceCoordenador().setId(1);
 
             CursoDAO dao = new CursoDAO();
             dao.inserir(curso);
@@ -174,5 +175,15 @@ public class UniRecife {
         }
     
     }
-
+    
+    public static void buscarCursoId(){
+        CursoDAO dao = new CursoDAO();
+        try {
+            Curso curso = dao.buscarPorId(2);
+            System.out.println("Coordenador: ".concat(curso.getCoordenador().getNome()));
+        } catch (ConexaoException ex) {
+            Logger.getLogger(UniRecife.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
 }
