@@ -14,8 +14,15 @@ public class Curso {
     
     private int codigo;
     private String tipo;
-    Professor coordenador;
-    Professor viceCoordenador;
+    private Professor coordenador;
+    private Professor viceCoordenador;
+
+    public Curso() {
+        coordenador = new Professor();
+        viceCoordenador = new Professor();
+    }
+        
+    
 
     public int getCodigo() {
         return codigo;

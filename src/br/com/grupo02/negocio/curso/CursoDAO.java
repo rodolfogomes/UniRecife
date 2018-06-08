@@ -26,14 +26,14 @@ public class CursoDAO implements IGerenciarDados<Curso> {
 
     @Override
     public void inserir(Curso curso) throws ConexaoException {
-        String sql = "insert into UniRecife.dbo.curso (curso_tipo,curso_cpf_coordenador,curso_cpf_vicecoordenador)"
+        String sql = "insert into curso (descricao,id_coordenador,id_vicecoordenador)"
                 + "values(?,?,?)";
         int index = 0;
         try (Connection con = GerenciarConexao.getInstancia().conectar()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(++index, curso.getTipo());
-            ps.setString(++index, curso.getCoordenador().getCpf());
-            ps.setString(++index, curso.getViceCoordenador().getCpf());
+            ps.setInt(++index, curso.getCoordenador().getId());
+            ps.setInt(++index, curso.getViceCoordenador().getId());
             ps.execute();
             ps.close();
         } catch (SQLException ex) {
@@ -44,14 +44,14 @@ public class CursoDAO implements IGerenciarDados<Curso> {
 
     @Override
     public void atualizar(Curso curso) throws ConexaoException {
-        String sql = "update UniRecife.dbo.curso set curso_tipo = ?,curso_cpf_coordenador=?,curso_cpf_vicecoordenador=?"
-                + "where curso_codigo=?";
+        String sql = "update curso set descricao = ?,id_coordenador=?,id_vicecoordenador=?"
+                + "where id=?";
         int index = 0;
         try (Connection con = GerenciarConexao.getInstancia().conectar()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(++index, curso.getTipo());
-            ps.setString(++index, curso.getCoordenador().getCpf());
-            ps.setString(++index, curso.getViceCoordenador().getCpf());
+            ps.setInt(++index, curso.getCoordenador().getId());
+            ps.setInt(++index, curso.getViceCoordenador().getId());
             ps.setInt(++index, curso.getCodigo());
             ps.execute();
             ps.close();
@@ -63,7 +63,7 @@ public class CursoDAO implements IGerenciarDados<Curso> {
 
     @Override
     public void deletar(Integer id) throws ConexaoException {
-        String sql = "delete from UniRecife.dbo.curso where curso_codigo =" + id;
+        String sql = "delete from curso where id = ?";
 
         try (Connection con = GerenciarConexao.getInstancia().conectar()) {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -133,10 +133,10 @@ public class CursoDAO implements IGerenciarDados<Curso> {
     @Override
     public Curso buscarPorId(Integer id) throws ConexaoException {
          StringBuilder sb = new StringBuilder(); 
-               sb.append("select c.curso_codigo,c.curso_tipo,c.curso_cpf_coordenador AS cpf_coor,")
+               sb.append("select c.curso_codigo,p.id as p_id,c.curso_tipo,c.curso_cpf_coordenador AS cpf_coor,")
                 .append("c.curso_cpf_vicecoordenador AS cpf_Vice,p.professor_nome AS nome_prof,p.professor_dep_codigo AS dep_prof,")
                 .append("p.professor_telefone AS tel_prof,p.professor_salario AS sal_prof")        
-                .append(" from  UniRecife.dbo.curso c left join professor p")
+                .append(" from curso c left join professor p")
                 .append("on c.curso_cpf_coordenador= p.professor_cpf  ")
                 .append("or c.curso_cpf_vicecoordenador= p.professor_cpf ")
                 .append("where c.curso_codigo =").append(id);
@@ -151,6 +151,7 @@ public class CursoDAO implements IGerenciarDados<Curso> {
             if (rs.next()) {
                 // Montando uma referência coordenador do tipo professor
                 Professor coordenador = new Professor();
+                coordenador.setId(rs.getInt("p_id"));
                 coordenador.setCpf(rs.getString("cpf_coor"));
                 coordenador.setNome(rs.getString("nome_prof"));
                 coordenador.getDepartamento().setId(rs.getInt("dep_codigo"));
@@ -159,6 +160,7 @@ public class CursoDAO implements IGerenciarDados<Curso> {
 
                 // Montando uma referência viceCoordenador do tipo professor
                 Professor viceCoordenador = new Professor();
+                coordenador.setId(rs.getInt("p_id"));
                 viceCoordenador.setCpf(rs.getString("cpf_Vice"));
                 coordenador.setNome(rs.getString("nome_prof"));
                 coordenador.getDepartamento().setId(rs.getInt("dep_codigo"));
