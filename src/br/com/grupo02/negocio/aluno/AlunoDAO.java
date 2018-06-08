@@ -6,7 +6,7 @@ import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.negocio.error.DAOException;
 import br.com.grupo02.persistencia.GerenciadorConexao;
 import br.com.grupo02.persistencia.GerenciarConexao;
-import br.com.grupo02.persistencia.IGerenciarDados;
+import br.com.grupo02.negocio.IGerenciarDados;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,7 +47,7 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
             pst.setString(i++, aluno.getTelefone2());
             pst.setDate(i++, aluno.getDatnasc());
             pst.setString(i++, aluno.getSexo());
-            pst.setInt(i++, aluno.getDepartamento().getIdDept()); // id dpt
+            //pst.setInt(i++, aluno.getDepartamento().getIdDept()); // id dpt
             pst.setInt(i++, aluno.getCurso().getCodigo()); // id curso
             pst.executeUpdate();
 
@@ -85,7 +85,7 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
             pst.setString(i++, aluno.getTelefone2());
             pst.setDate(i++, aluno.getDatnasc());
             pst.setString(i++, aluno.getSexo());
-            pst.setInt(i++, aluno.getDepartamento().getIdDept()); // id dpt
+            pst.setInt(i++, aluno.getDepartamento().getId()); // id dpt
             pst.setInt(i++, aluno.getCurso().getCodigo()); // id curso
             pst.setInt(i++, aluno.getMatricula());
             pst.executeUpdate();
@@ -137,7 +137,7 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
                     alun.setTelefone2(rs.getString("aluno_telefone2"));
                     // passando obj departamento 
                     Departamento dpt = new Departamento();
-                    dpt.setIdDept(rs.getInt("aluno_dep_codigo"));
+                    dpt.setId(rs.getInt("aluno_dep_codigo"));
                     alun.setDepartamento(dpt);
                      //passando obj curso 
                     Curso crs = new Curso();
@@ -179,7 +179,7 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
                     al.setTelefone2(rs.getString("aluno_telefone2"));
                     // passando obj departamento 
                     Departamento dpt = new Departamento();
-                    dpt.setIdDept(rs.getInt("aluno_dep_codigo"));
+                    dpt.setId(rs.getInt("aluno_dep_codigo"));
                     al.setDepartamento(dpt);
                     //passando obj curso 
                     Curso crs = new Curso();

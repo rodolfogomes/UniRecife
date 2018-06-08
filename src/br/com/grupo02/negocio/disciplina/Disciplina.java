@@ -6,46 +6,52 @@
 package br.com.grupo02.negocio.disciplina;
 
 
-import br.com.grupo02.negocio.error.ConexaoException;
-
-import java.util.*;
+import br.com.grupo02.negocio.departamento.Departamento;
 
 /**
- *
+ * Classe básica Disciplina com atributos encapsulados
  * @author Bruno Rodrigues /Git: @Brunojgrc
  */
 public class Disciplina {
     
-    private int idDisciplina;
+    private int id;
     private String nome;
     private String descricao;
-    private int idDept;  
+    Departamento departamento;
+    
        
 
     public Disciplina(){
     }
     
-    
-    public Disciplina (int idDisciplina, String nome, String descricao, int idDept){
-        this.idDisciplina = idDisciplina;
+    /**
+ * Classe básica Disciplina com atributos e métodos
+ * @author Bruno Rodrigues /Git: @Brunojgrc
+     * @param id
+     * @param nome
+     * @param descricao
+     * @param departamento
+     */
+    public Disciplina (int id, String nome, String descricao, Departamento departamento){
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        this.idDept = idDept;
+        this.departamento = departamento; 
     
     }
     
         /**
      * @return the idDisciplina
      */
-    public int getIdDisciplina() {
-        return idDisciplina;
+    public int getId() {
+        return id;
     }
 
     /**
      * @param idDisciplina the idDisciplina to set
      */
-    public void setIdDisciplina(int idDisciplina) {
-        this.idDisciplina = idDisciplina;
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -77,33 +83,20 @@ public class Disciplina {
     }
 
     /**
-     * @return the idDept
+     * @return the departamento
      */
-    public int getIdDept() {
-        return idDept;
+    public Departamento getDepartamento() {
+        return departamento;
     }
 
     /**
-     * @param idDept the idDept to set
+     * @param departamento the departamento to set
      */
-    public void setIdDept(int idDept) {
-        this.idDept = idDept;
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
     }
     
-    public Disciplina buscarDisciplina (Disciplina disc){
-        
-        DisciplinaDAO discDao = new DisciplinaDAO ();
-        try {
-             disc = discDao.buscarPorId(disc.getIdDisciplina());
-                
-             return disc;     
-             
-        } catch (NullPointerException | ConexaoException e) {
-            System.out.println("1aa"+e.getMessage());
-            e.getMessage();
-            return disc;
-        } 
-    }  
+     
 }
 
 
