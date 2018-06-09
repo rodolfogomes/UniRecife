@@ -20,6 +20,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 
+
+
+
 /**
  *
  * @author Rodolfo Gomes
@@ -49,6 +52,7 @@ janela.setVisible(true);
 
             Connection con = GerenciarConexao.getInstancia().conectar();
             System.out.println("Conexão Funciona!");
+            GerenciarConexao.getInstancia().desconectar(con);
         } catch (ConexaoException ex) {
             System.out.println("Erro na conexão: " + ex.getMessage());
             ex.printStackTrace();
@@ -139,7 +143,7 @@ janela.setVisible(true);
 
             ProfessorDAO daoP = new ProfessorDAO();
             Curso curso = new Curso();
-            curso.setTipo("curso02");
+            curso.setDescricao("curso02");
             curso.getCoordenador().setId(3);
             curso.getViceCoordenador().setId(1);
 
@@ -156,7 +160,7 @@ janela.setVisible(true);
         
             Curso curso = new Curso();
             curso.setCodigo(1);
-            curso.setTipo("teste update");
+            curso.setDescricao("teste update");
             curso.getCoordenador().setId(1);
             curso.getViceCoordenador().setId(3);
 

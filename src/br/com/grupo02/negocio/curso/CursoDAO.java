@@ -31,9 +31,9 @@ public class CursoDAO implements IGerenciarDados<Curso> {
         int index = 0;
         try (Connection con = GerenciarConexao.getInstancia().conectar()) {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(++index, curso.getTipo());
-            ps.setInt(++index, curso.getCoordenador().getId());
-            ps.setInt(++index, curso.getViceCoordenador().getId());
+            ps.setString(++index, curso.getDescricao());
+            ps.setString(++index, curso.getCoordenador().getCpf());
+            ps.setString(++index, curso.getViceCoordenador().getCpf());
             ps.execute();
             ps.close();
         } catch (SQLException ex) {
@@ -44,14 +44,14 @@ public class CursoDAO implements IGerenciarDados<Curso> {
 
     @Override
     public void atualizar(Curso curso) throws ConexaoException {
-        String sql = "update curso set descricao = ?,id_coordenador=?,id_vicecoordenador=?"
-                + "where id=?";
+        String sql = "update curso set curso_tipo = ?,curso_cpf_coordenador=?,curso_cpf_vicecoordenador=?"
+                + "where curso_codigo=?";
         int index = 0;
         try (Connection con = GerenciarConexao.getInstancia().conectar()) {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(++index, curso.getTipo());
-            ps.setInt(++index, curso.getCoordenador().getId());
-            ps.setInt(++index, curso.getViceCoordenador().getId());
+            ps.setString(++index, curso.getDescricao());
+            ps.setString(++index, curso.getCoordenador().getCpf());
+            ps.setString(++index, curso.getViceCoordenador().getCpf());
             ps.setInt(++index, curso.getCodigo());
             ps.execute();
             ps.close();
@@ -88,8 +88,8 @@ public class CursoDAO implements IGerenciarDados<Curso> {
             while (rs.next()) {
                 // Montando uma referência curso
                 Curso curso = new Curso();
-                curso.setCodigo(rs.getInt("id"));
-                curso.setTipo(rs.getString("descicao"));
+                curso.setCodigo(rs.getInt("curso_codigo"));
+                curso.setDescricao(rs.getString("curso_tipo"));
                 curso.getCoordenador().setId(rs.getInt("id_coordenador"));
                 curso.getViceCoordenador().setId(rs.getInt("id_vicecoordenador"));
 
@@ -133,7 +133,7 @@ public class CursoDAO implements IGerenciarDados<Curso> {
                 // Montando uma referência curso
                 curso = new Curso();
                 curso.setCodigo(rs.getInt("id"));
-                curso.setTipo(rs.getString("descricao"));
+                curso.setDescricao(rs.getString("descricao"));
                 curso.getCoordenador().setId(rs.getInt("id_coordenador"));
                 curso.getViceCoordenador().setId(rs.getInt("id_vicecoordenador"));
             }
