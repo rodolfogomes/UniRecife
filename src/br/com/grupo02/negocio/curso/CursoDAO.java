@@ -168,7 +168,7 @@ public class CursoDAO implements IGerenciarDados<Curso> {
                 // Montando uma referência curso
                 curso = new Curso();
                 curso.setCodigo(rs.getInt("curso_codigo"));
-                curso.setTipo(rs.getString("curso_tipo"));
+                curso.setDescricao(rs.getString("curso_tipo"));
                 curso.setCoordenador(coordenador);
                 curso.setViceCoordenador(viceCoordenador);
             }
