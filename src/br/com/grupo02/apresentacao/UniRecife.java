@@ -12,13 +12,13 @@ import br.com.grupo02.negocio.disciplina.Disciplina;
 import br.com.grupo02.negocio.disciplina.DisciplinaDAO;
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.negocio.error.DAOException;
-import br.com.grupo02.negocio.professor.Professor;
 import br.com.grupo02.negocio.professor.ProfessorDAO;
 import br.com.grupo02.persistencia.GerenciarConexao;
 import java.sql.Connection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 /**
  *
@@ -32,7 +32,14 @@ public class UniRecife {
         //inserirCurso();
         //atualizarCurso();
         //excluirCurso();
-       buscarCursoId(); 
+      // buscarCursoId(); 
+      
+        TAluno janela = new TAluno();
+//janela.add(janela);
+janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+janela.pack();
+janela.setVisible(true);
+      
 
     }
 

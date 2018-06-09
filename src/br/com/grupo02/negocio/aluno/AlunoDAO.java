@@ -160,7 +160,7 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
         GerenciadorConexao gc;
         gc = GerenciarConexao.getInstancia();
         Aluno al;
-        String sql = "SELECT * FROM ALUNO WHERE matricula=" + id;
+        String sql = "SELECT * FROM ALUNO WHERE id=" + id;
         al = new Aluno();
         try (Connection con = gc.conectar()) {
             try (Statement st = con.createStatement()) {
