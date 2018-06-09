@@ -9,12 +9,6 @@ package br.com.grupo02.apresentacao;
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.persistencia.GerenciarConexao;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -31,6 +25,7 @@ public class UniRecife {
         try {
             Connection con =GerenciarConexao.getInstancia().conectar();
             System.out.println("Conexão Funciona!");
+            GerenciarConexao.getInstancia().desconectar(con);
         } catch (ConexaoException ex) {
             System.out.println("Erro na conexão: " + ex.getMessage());
            ex.printStackTrace();

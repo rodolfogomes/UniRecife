@@ -31,7 +31,7 @@ public class CursoDAO implements IGerenciarDados<Curso> {
         int index = 0;
         try (Connection con = GerenciarConexao.getInstancia().conectar()) {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(++index, curso.getTipo());
+            ps.setString(++index, curso.getDescricao());
             ps.setString(++index, curso.getCoordenador().getCpf());
             ps.setString(++index, curso.getViceCoordenador().getCpf());
             ps.execute();
@@ -44,12 +44,12 @@ public class CursoDAO implements IGerenciarDados<Curso> {
 
     @Override
     public void atualizar(Curso curso) throws ConexaoException {
-        String sql = "update UniRecife.dbo.curso set curso_tipo = ?,curso_cpf_coordenador=?,curso_cpf_vicecoordenador=?"
+        String sql = "update curso set curso_tipo = ?,curso_cpf_coordenador=?,curso_cpf_vicecoordenador=?"
                 + "where curso_codigo=?";
         int index = 0;
         try (Connection con = GerenciarConexao.getInstancia().conectar()) {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(++index, curso.getTipo());
+            ps.setString(++index, curso.getDescricao());
             ps.setString(++index, curso.getCoordenador().getCpf());
             ps.setString(++index, curso.getViceCoordenador().getCpf());
             ps.setInt(++index, curso.getCodigo());
@@ -107,7 +107,7 @@ public class CursoDAO implements IGerenciarDados<Curso> {
                 // Montando uma referência curso
                 Curso curso = new Curso();
                 curso.setCodigo(rs.getInt("curso_codigo"));
-                curso.setTipo(rs.getString("curso_tipo"));
+                curso.setDescricao(rs.getString("curso_tipo"));
                 curso.setCoordenador(coordenador);
                 curso.setViceCoordenador(viceCoordenador);
 
