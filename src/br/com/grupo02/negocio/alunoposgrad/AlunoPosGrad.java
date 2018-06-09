@@ -14,7 +14,7 @@ import br.com.grupo02.negocio.professor.Professor;
  */
 public class AlunoPosGrad extends Aluno{
 
-    private Integer id;
+    private int id;
     private Float valorBolsa;
     private Professor idOrientador;
     
@@ -28,14 +28,14 @@ public class AlunoPosGrad extends Aluno{
       /**
      * @return the id
      */
-    public Integer getId(){
+    public int getId(){
         return id;
     }
     
      /**
      * @param id the alunoPosGrad to set
      */
-    public void setId(Integer id){
+    public void setId(int id){
         this.id = id;
     }
     
