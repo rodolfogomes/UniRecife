@@ -5,8 +5,12 @@
  */
 package br.com.grupo02.apresentacao;
 
+import br.com.grupo02.fachada.FachadaCurso;
 import br.com.grupo02.negocio.curso.Curso;
+import br.com.grupo02.negocio.error.ConexaoException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,12 +18,32 @@ import java.util.ArrayList;
  */
 public class FormCurso extends javax.swing.JDialog {
 
+    FachadaCurso fachada = new FachadaCurso();
+
+    public void atualizaTabelaCurso() {
+        listaCurso.clear();
+        try {
+            listaCurso.addAll(fachada.listaCursos());
+            int linha = listaCurso.size()-1 ;
+            if (linha >= 0) {
+                tblCurso.setRowSelectionInterval(linha, linha);
+                tblCurso.scrollRectToVisible(
+                        tblCurso.getCellRect(linha, linha, true)
+                );
+            }
+        } catch (ConexaoException ex) {
+            Logger.getLogger(FormCurso.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     /**
      * Creates new form FormCurso
      */
     public FormCurso(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        atualizaTabelaCurso();
     }
 
     /**
@@ -124,6 +148,11 @@ public class FormCurso extends javax.swing.JDialog {
         painelAcoes.setLayout(new java.awt.GridLayout(1, 0));
 
         btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
         painelAcoes.add(btnNovo);
 
         btnEditar.setText("Editar");
@@ -147,11 +176,23 @@ public class FormCurso extends javax.swing.JDialog {
 
         jTextField1.setEditable(false);
 
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblCurso, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.codigo}"), jTextField1, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
         jLabel1.setText("Descricao:");
 
         jLabel2.setText("Coordenador");
 
         jLabel3.setText("Vice-Coordenador");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblCurso, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.descricao}"), txtDescricao, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblCurso, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.coordenador.cpf}"), txtCoordenador, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblCurso, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.viceCoordenador.cpf}"), txtViceCoordenador, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout abaDadosLayout = new javax.swing.GroupLayout(abaDados);
         abaDados.setLayout(abaDadosLayout);
@@ -210,8 +251,22 @@ public class FormCurso extends javax.swing.JDialog {
     }//GEN-LAST:event_btnFecharActionPerformed
 
     private void btnsalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalvarActionPerformed
-        // TODO add your handling code here:
+        try {
+            int linhaSelecionada = tblCurso.getSelectedRow();
+            Curso curso = listaCurso.get(linhaSelecionada);
+            fachada.salvarCurso(curso);
+            atualizaTabelaCurso();
+        } catch (ConexaoException ex) {
+            Logger.getLogger(FormCurso.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnsalvarActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        listaCurso.add((Curso) new Curso());
+        int linha = listaCurso.size()-1;
+        tblCurso.setRowSelectionInterval(linha, linha);
+        txtDescricao.requestFocus();
+    }//GEN-LAST:event_btnNovoActionPerformed
 
     /**
      * @param args the command line arguments

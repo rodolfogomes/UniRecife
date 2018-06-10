@@ -70,17 +70,17 @@ public class CursoDAO implements IGerenciarDados<Curso> {
             ps.setInt(1, id);
             ps.execute();
         } catch (SQLException ex) {
-            ex.printStackTrace(); 
+            ex.printStackTrace();
         }
 
     }
 
     @Override
     public List<Curso> listarTodos() throws ConexaoException {
-        ArrayList<Curso> listaCurso = new ArrayList();
+        List<Curso> listaCurso = new ArrayList();
         String sql;
         PreparedStatement ps = null;
-        sql ="select * from curso";
+        sql = "select * from curso";
 
         try (Connection con = GerenciarConexao.getInstancia().conectar()) {
             Statement st = con.createStatement();
@@ -88,22 +88,19 @@ public class CursoDAO implements IGerenciarDados<Curso> {
             while (rs.next()) {
                 // Montando uma referência curso
                 Curso curso = new Curso();
-                curso.setCodigo(rs.getInt("curso_codigo"));
-                curso.setDescricao(rs.getString("curso_tipo"));
+                curso.setCodigo(rs.getInt("id"));
+                curso.setDescricao(rs.getString("Descricao"));
                 curso.getCoordenador().setId(rs.getInt("id_coordenador"));
                 curso.getViceCoordenador().setId(rs.getInt("id_vicecoordenador"));
 
                 listaCurso.add(curso);
-
             }
+            
 
-            ps.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
         return listaCurso;
-
     }
 
     /**
@@ -114,14 +111,13 @@ public class CursoDAO implements IGerenciarDados<Curso> {
      */
     @Override
     public Curso buscarPorId(Integer id) throws ConexaoException {
-         StringBuilder sb = new StringBuilder(); 
-               sb.append("select c.id as id,p.id as p_id,c.descricao as descricao,c.id_coordenador AS cpf_coor,")
+        StringBuilder sb = new StringBuilder();
+        sb.append("select c.id as id,p.id as p_id,c.descricao as descricao,c.id_coordenador AS cpf_coor,")
                 .append("c.id_vicecoordenador AS cpf_Vice,p.nome AS nome_prof,p.dep_codigo AS dep_prof,")
-                .append("p.telefone AS tel_prof,p.salario AS sal_prof")        
+                .append("p.telefone AS tel_prof,p.salario AS sal_prof")
                 .append(" from curso c  join professor p")
                 .append("on (c.id_coordenador = p.id) ")
                 .append("where c.id = ").append(id);
-                
 
         Curso curso = null;
 
@@ -140,7 +136,7 @@ public class CursoDAO implements IGerenciarDados<Curso> {
             return curso;
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }finally{
+        } finally {
             sb.delete(0, sb.length());
             sb = null;
         }
