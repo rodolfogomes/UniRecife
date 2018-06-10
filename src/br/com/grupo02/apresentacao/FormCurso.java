@@ -5,11 +5,42 @@
  */
 package br.com.grupo02.apresentacao;
 
+import br.com.grupo02.fachada.FachadaCurso;
+import br.com.grupo02.negocio.curso.Curso;
+import br.com.grupo02.negocio.error.ConexaoException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author ADM
  */
 public class FormCurso extends javax.swing.JDialog {
+    
+    FachadaCurso fachada = new FachadaCurso();
+    /**
+     * 
+     */
+    public void atualizarTabela(){
+        listaCurso.clear();
+        try {
+            listaCurso.addAll(fachada.listaCursos());
+            int linha = listaCurso.size() -1;
+            if(linha >= 0){
+                // seleciona a ultima linha.
+             tblCurso.setRowSelectionInterval(linha, linha);
+             tblCurso.scrollRectToVisible(
+                     tblCurso.getCellRect(linha, linha, true)
+             );
+            }
+        } catch (ConexaoException ex) {
+            Logger.getLogger(FormCurso.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    
 
     /**
      * Creates new form FormCurso
@@ -17,6 +48,7 @@ public class FormCurso extends javax.swing.JDialog {
     public FormCurso(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        atualizarTabela();
     }
 
     /**
@@ -27,7 +59,10 @@ public class FormCurso extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        listaCurso = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Curso>())
+        ;
         painelNav = new javax.swing.JPanel();
         btnPrimeiro = new javax.swing.JButton();
         btnAnterior = new javax.swing.JButton();
@@ -45,6 +80,14 @@ public class FormCurso extends javax.swing.JDialog {
         btnCancelar = new javax.swing.JButton();
         btnsalvar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
+        txtDescricao = new javax.swing.JTextField();
+        txtCoordenador = new javax.swing.JTextField();
+        txtViceCoordenador = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de cursos");
@@ -78,17 +121,25 @@ public class FormCurso extends javax.swing.JDialog {
         abaListagem.setName("Listagem"); // NOI18N
         abaListagem.setLayout(new java.awt.BorderLayout());
 
-        tblCurso.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listaCurso, tblCurso);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigo}"));
+        columnBinding.setColumnName("Codigo");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${descricao}"));
+        columnBinding.setColumnName("Descricao");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${coordenador}"));
+        columnBinding.setColumnName("Coordenador");
+        columnBinding.setColumnClass(br.com.grupo02.negocio.professor.Professor.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${viceCoordenador}"));
+        columnBinding.setColumnName("Vice Coordenador");
+        columnBinding.setColumnClass(br.com.grupo02.negocio.professor.Professor.class);
+        columnBinding.setEditable(false);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
         jScrollPane2.setViewportView(tblCurso);
 
         abaListagem.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -99,9 +150,14 @@ public class FormCurso extends javax.swing.JDialog {
         abaDados.setName("Dados"); // NOI18N
 
         painelAcoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Ações"));
-        painelAcoes.setLayout(new java.awt.GridLayout());
+        painelAcoes.setLayout(new java.awt.GridLayout(1, 0));
 
         btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
         painelAcoes.add(btnNovo);
 
         btnEditar.setText("Editar");
@@ -121,22 +177,78 @@ public class FormCurso extends javax.swing.JDialog {
         btnExcluir.setText("Excluir");
         painelAcoes.add(btnExcluir);
 
+        jLabel1.setText("id:");
+
+        jLabel2.setText("Descricao:");
+
+        jLabel3.setText("Coordenador:");
+
+        jLabel4.setText("Vice-Coordenador:");
+
+        txtId.setEditable(false);
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblCurso, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.codigo}"), txtId, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblCurso, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.descricao}"), txtDescricao, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblCurso, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.coordenador.cpf}"), txtCoordenador, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        txtViceCoordenador.setToolTipText("");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblCurso, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.viceCoordenador.cpf}"), txtViceCoordenador, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
         javax.swing.GroupLayout abaDadosLayout = new javax.swing.GroupLayout(abaDados);
         abaDados.setLayout(abaDadosLayout);
         abaDadosLayout.setHorizontalGroup(
             abaDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelAcoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(painelAcoes, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
+            .addGroup(abaDadosLayout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addGroup(abaDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(abaDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                    .addComponent(txtDescricao)
+                    .addComponent(txtCoordenador)
+                    .addComponent(txtViceCoordenador))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         abaDadosLayout.setVerticalGroup(
             abaDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(abaDadosLayout.createSequentialGroup()
                 .addComponent(painelAcoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 367, Short.MAX_VALUE))
+                .addGap(54, 54, 54)
+                .addGroup(abaDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtId))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(abaDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(abaDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtCoordenador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(abaDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtViceCoordenador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(207, 207, 207))
         );
 
         abas.addTab("Dados", abaDados);
 
         getContentPane().add(abas, java.awt.BorderLayout.CENTER);
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -146,8 +258,23 @@ public class FormCurso extends javax.swing.JDialog {
     }//GEN-LAST:event_btnFecharActionPerformed
 
     private void btnsalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalvarActionPerformed
-        // TODO add your handling code here:
+        
+        
+        try {
+            int linhaSelecionada = tblCurso.getSelectedRow();
+            Curso curso = listaCurso.get(linhaSelecionada);
+            fachada.salvarCurso(curso);
+        } catch (ConexaoException ex) {
+            Logger.getLogger(FormCurso.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnsalvarActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        listaCurso.add((Curso) new Curso());
+        int linha = listaCurso.size() - 1;
+        tblCurso.setRowSelectionInterval(linha, linha);
+        
+    }//GEN-LAST:event_btnNovoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,9 +332,19 @@ public class FormCurso extends javax.swing.JDialog {
     private javax.swing.JButton btnProximo;
     private javax.swing.JButton btnUltimo;
     private javax.swing.JButton btnsalvar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
+    private java.util.List<Curso> listaCurso;
     private javax.swing.JPanel painelAcoes;
     private javax.swing.JPanel painelNav;
     private javax.swing.JTable tblCurso;
+    private javax.swing.JTextField txtCoordenador;
+    private javax.swing.JTextField txtDescricao;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtViceCoordenador;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

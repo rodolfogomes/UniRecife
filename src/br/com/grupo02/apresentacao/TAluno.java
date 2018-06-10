@@ -99,7 +99,7 @@ public class TAluno extends javax.swing.JFrame {
                     for (Aluno aluno : alList) {
                 
                  String nome = aluno.getNome();
-                        ListaAlunos.
+//                        ListaAlunos.
             }
                     
                     } catch (ConexaoException ex) {

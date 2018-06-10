@@ -70,7 +70,7 @@ public class CursoDAO implements IGerenciarDados<Curso> {
             ps.setInt(1, id);
             ps.execute();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(); 
         }
 
     }
