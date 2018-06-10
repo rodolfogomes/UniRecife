@@ -19,30 +19,34 @@ import java.util.List;
  * @author Wallison     
  */
 public class DepartamentoDAO implements IGerenciarDados<Departamento> {
-    private Departamento dept;
     
+/**
+ * Inserir dados no Banco de Dados
+ * @throws ConexaoException
+ * @throws DAOException 
+ */
     @Override
     public void inserir(Departamento departamento) throws ConexaoException,DAOException {
-        GerenciadorConexao gc;
-        gc = GerenciarConexao.getInstancia();
+       
+        
         StringBuilder sb = new StringBuilder();
-        sb.append("INSERT DEPARTAMENTO");
-        sb.append("((id, nome, telefone, centro");
-        sb.append("VALUES");
-        sb.append("(?,?,?,?,)");
-        String sql = sb.toString().trim();
-        PreparedStatement pst;
+        sb.append("INSERT into DEPARTAMENTO")
+        .append("( nome, telefone, centro)")
+        .append("VALUES")
+        .append("(?,?,?)");
+       
         int i = 1;
-        try (Connection con = gc.conectar()) {
-            pst = con.prepareStatement(sql);
-            pst.setInt(i++, departamento.getId());
+        try (Connection con = GerenciarConexao.getInstancia().conectar()) {
+            PreparedStatement pst;
+            pst = con.prepareStatement(sb.toString());
             pst.setString(i++, departamento.getNome());
             pst.setString(i++, departamento.getTelefone());
             pst.setString(i++, departamento.getCentro()); 
             pst.executeUpdate();
             
         } catch (Exception e) {
-            throw new DAOException();
+            e.getMessage();
+            e.printStackTrace();
         } finally {
             sb.delete(0, sb.length());
             sb = null;     
