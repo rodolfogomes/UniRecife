@@ -6,6 +6,7 @@
 package br.com.grupo02.negocio.oferta;
 import br.com.grupo02.negocio.professor.Professor;
 import br.com.grupo02.negocio.disciplina.Disciplina;
+import java.sql.Date;
 
 /**
  *
@@ -14,7 +15,7 @@ import br.com.grupo02.negocio.disciplina.Disciplina;
 public class Oferta {
     
     private Integer id;
-    private String horario;
+    private Date horario;
     private Professor idProfessor;
     private Disciplina iDisciplina;
     
@@ -44,13 +45,13 @@ public class Oferta {
     /**
      * @return the horario
      */
-    public String getHorario(){
+    public Date getHorario(){
         return horario;
     }
    /**
      * @param horario the oferta to set
      */ 
-    public void setHorario(String horario){
+    public void setHorario(Date horario){
         this.horario = horario;
     }
     
@@ -80,6 +81,8 @@ public class Oferta {
     public void setIDisciplina(Disciplina iDisciplina){
         this.iDisciplina = iDisciplina;
     }
+
+ 
     
   }
         
