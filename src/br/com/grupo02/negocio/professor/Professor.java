@@ -12,7 +12,7 @@ import br.com.grupo02.negocio.departamento.Departamento;
  * @author ADM
  */
 public class Professor {
-    private Integer id;
+    private int id;
     private String cpf;
     private String nome;
     private String telefone;
@@ -23,20 +23,16 @@ public class Professor {
  departamento = new Departamento();
      
  }   
-           
-      /**
-     * @return the id
-     */
-    public Integer getId(){
+
+    public int getId() {
         return id;
     }
-    
-     /**
-     * @param id the professor to set
-     */
-    public void setId(Integer id){
+
+    public void setId(int id) {
         this.id = id;
     }
+           
+    
     
           
       /**

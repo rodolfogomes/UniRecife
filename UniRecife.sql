@@ -81,7 +81,8 @@ CREATE TABLE alunoposgrad (
    bolsa decimal(6,2) NOT NULL,
    PRIMARY KEY (id),
    CONSTRAINT fk_apg_prof
-     FOREIGN KEY (id_orientador));
+     FOREIGN KEY (id_orientador) 
+	REFERENCES professor (id));
 
 
 -- -----------------------------------------------------

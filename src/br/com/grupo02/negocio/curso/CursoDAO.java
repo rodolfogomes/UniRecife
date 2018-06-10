@@ -26,7 +26,7 @@ public class CursoDAO implements IGerenciarDados<Curso> {
 
     @Override
     public void inserir(Curso curso) throws ConexaoException {
-        String sql = "insert into UniRecife.dbo.curso (curso_tipo,curso_cpf_coordenador,curso_cpf_vicecoordenador)"
+        String sql = "insert into curso (descricao,id_coordenador,id_vicecoordenador)"
                 + "values(?,?,?)";
         int index = 0;
         try (Connection con = GerenciarConexao.getInstancia().conectar()) {
@@ -63,14 +63,14 @@ public class CursoDAO implements IGerenciarDados<Curso> {
 
     @Override
     public void deletar(Integer id) throws ConexaoException {
-        String sql = "delete from UniRecife.dbo.curso where curso_codigo =" + id;
+        String sql = "delete from curso where id = ?";
 
         try (Connection con = GerenciarConexao.getInstancia().conectar()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ps.execute();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(); 
         }
 
     }
@@ -80,36 +80,18 @@ public class CursoDAO implements IGerenciarDados<Curso> {
         ArrayList<Curso> listaCurso = new ArrayList();
         String sql;
         PreparedStatement ps = null;
-        sql ="select * from UniRecife.dbo.curso";
+        sql ="select * from curso";
 
         try (Connection con = GerenciarConexao.getInstancia().conectar()) {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-
-                Departamento dep = new Departamento();
-                dep.setId(rs.getInt("dep_prof"));
-
-                Professor coordenador = new Professor();
-                coordenador.setCpf(rs.getString("cpf_coor"));
-                coordenador.setNome(rs.getString("nome_prof"));
-                coordenador.getDepartamento().setId(dep.getId());
-                coordenador.setTelefone(rs.getString("tel_prof"));
-                coordenador.setSalario(rs.getFloat("sal_prof"));
-
-                Professor viceCoordenador = new Professor();
-                viceCoordenador.setCpf(rs.getString("cpf_Vice"));
-                viceCoordenador.setNome(rs.getString("nome_prof"));
-                viceCoordenador.getDepartamento().setId(dep.getId());
-                viceCoordenador.setTelefone(rs.getString("tel_prof"));
-                viceCoordenador.setSalario(rs.getFloat("sal_prof"));
-
                 // Montando uma referência curso
                 Curso curso = new Curso();
                 curso.setCodigo(rs.getInt("curso_codigo"));
                 curso.setDescricao(rs.getString("curso_tipo"));
-                curso.setCoordenador(coordenador);
-                curso.setViceCoordenador(viceCoordenador);
+                curso.getCoordenador().setId(rs.getInt("id_coordenador"));
+                curso.getViceCoordenador().setId(rs.getInt("id_vicecoordenador"));
 
                 listaCurso.add(curso);
 
@@ -133,13 +115,12 @@ public class CursoDAO implements IGerenciarDados<Curso> {
     @Override
     public Curso buscarPorId(Integer id) throws ConexaoException {
          StringBuilder sb = new StringBuilder(); 
-               sb.append("select c.curso_codigo,c.curso_tipo,c.curso_cpf_coordenador AS cpf_coor,")
-                .append("c.curso_cpf_vicecoordenador AS cpf_Vice,p.professor_nome AS nome_prof,p.professor_dep_codigo AS dep_prof,")
-                .append("p.professor_telefone AS tel_prof,p.professor_salario AS sal_prof")        
-                .append(" from  UniRecife.dbo.curso c left join professor p")
-                .append("on c.curso_cpf_coordenador= p.professor_cpf  ")
-                .append("or c.curso_cpf_vicecoordenador= p.professor_cpf ")
-                .append("where c.curso_codigo =").append(id);
+               sb.append("select c.id as id,p.id as p_id,c.descricao as descricao,c.id_coordenador AS cpf_coor,")
+                .append("c.id_vicecoordenador AS cpf_Vice,p.nome AS nome_prof,p.dep_codigo AS dep_prof,")
+                .append("p.telefone AS tel_prof,p.salario AS sal_prof")        
+                .append(" from curso c  join professor p")
+                .append("on (c.id_coordenador = p.id) ")
+                .append("where c.id = ").append(id);
                 
 
         Curso curso = null;
@@ -149,28 +130,12 @@ public class CursoDAO implements IGerenciarDados<Curso> {
             ResultSet rs = st.executeQuery(sb.toString());
 
             if (rs.next()) {
-                // Montando uma referência coordenador do tipo professor
-                Professor coordenador = new Professor();
-                coordenador.setCpf(rs.getString("cpf_coor"));
-                coordenador.setNome(rs.getString("nome_prof"));
-                coordenador.getDepartamento().setIdDept(rs.getInt("dep_codigo"));
-                coordenador.setTelefone(rs.getString("tel_prof"));
-                coordenador.setSalario(rs.getFloat("sal_prof"));
-
-                // Montando uma referência viceCoordenador do tipo professor
-                Professor viceCoordenador = new Professor();
-                viceCoordenador.setCpf(rs.getString("cpf_Vice"));
-                coordenador.setNome(rs.getString("nome_prof"));
-                coordenador.getDepartamento().setIdDept(rs.getInt("dep_codigo"));
-                coordenador.setTelefone(rs.getString("tel_prof"));
-                coordenador.setSalario(rs.getFloat("sal_prof"));
-
                 // Montando uma referência curso
                 curso = new Curso();
-                curso.setCodigo(rs.getInt("curso_codigo"));
-                curso.setDescricao(rs.getString("curso_tipo"));
-                curso.setCoordenador(coordenador);
-                curso.setViceCoordenador(viceCoordenador);
+                curso.setCodigo(rs.getInt("id"));
+                curso.setDescricao(rs.getString("descricao"));
+                curso.getCoordenador().setId(rs.getInt("id_coordenador"));
+                curso.getViceCoordenador().setId(rs.getInt("id_vicecoordenador"));
             }
             return curso;
         } catch (SQLException ex) {

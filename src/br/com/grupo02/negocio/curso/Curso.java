@@ -17,6 +17,15 @@ public class Curso {
     Professor coordenador;
     Professor viceCoordenador;
 
+
+    public Curso() {
+        coordenador = new Professor();
+        viceCoordenador = new Professor();
+    }
+        
+    
+
+
     public int getCodigo() {
         return codigo;
     }

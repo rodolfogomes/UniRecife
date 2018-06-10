@@ -137,9 +137,9 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
                     alun.setTelefone2(rs.getString("aluno_telefone2"));
                     // passando obj departamento 
                     Departamento dpt = new Departamento();
-                    dpt.setIdDept(rs.getInt("aluno_dep_codigo"));
+                    dpt.setId(rs.getInt("aluno_dep_codigo"));
                     alun.setDepartamento(dpt);
-                     //passando obj curso 
+                    //passando obj curso 
                     Curso crs = new Curso();
                     crs.setCodigo(rs.getInt("aluno_curso_codigo"));
                     alun.setCurso(crs);
@@ -160,7 +160,7 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
         GerenciadorConexao gc;
         gc = GerenciarConexao.getInstancia();
         Aluno al;
-        String sql = "SELECT * FROM ALUNO WHERE matricula=" + id;
+        String sql = "SELECT * FROM ALUNO WHERE id=" + id;
         al = new Aluno();
         try (Connection con = gc.conectar()) {
             try (Statement st = con.createStatement()) {
@@ -179,14 +179,13 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
                     al.setTelefone2(rs.getString("aluno_telefone2"));
                     // passando obj departamento 
                     Departamento dpt = new Departamento();
-                    dpt.setIdDept(rs.getInt("aluno_dep_codigo"));
+                    dpt.setId(rs.getInt("aluno_dep_codigo"));
                     al.setDepartamento(dpt);
                     //passando obj curso 
                     Curso crs = new Curso();
                     crs.setCodigo(rs.getInt("aluno_curso_codigo"));
                     al.setCurso(crs);
-                    
-                    
+
                     return al;
                 }
             }
@@ -196,5 +195,43 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
         }
         return al;
 
+    }
+
+    public boolean filtrarAluno(Aluno al, String atributo) throws ConexaoException, DAOException {
+        GerenciadorConexao gc;
+        gc = GerenciarConexao.getInstancia();
+
+        String sql = "SELECT * FROM ALUNO WHERE ? = ?";
+        try (Connection con = gc.conectar()) {
+            PreparedStatement pstm;
+            pstm = con.prepareStatement(sql);
+            switch (atributo) {
+                case "nome":
+                    pstm.setString(1, atributo);
+                    pstm.setString(2, al.getNome());
+                    break;
+                case "cpf":
+                    pstm.setString(1, atributo);
+                    pstm.setString(2, al.getCpf());
+                    break;
+                case "matricula":
+                    pstm.setString(1, atributo);
+                    pstm.setInt(2, al.getMatricula());
+                    break;
+                default:
+                    pstm.setString(1, "id");
+                    pstm.setInt(2, al.getId());
+            }
+            try (Statement st = con.createStatement()) {
+                ResultSet rs = st.executeQuery(sql);
+                if (rs.next()) {
+                    return true;
+                }
+            }
+
+        } catch (SQLException ex) {
+            throw new DAOException();
+        }
+        return false;
     }
 }

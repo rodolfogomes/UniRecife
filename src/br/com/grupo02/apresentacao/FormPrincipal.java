@@ -111,6 +111,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         form.setLocationRelativeTo(null);
         form.setResizable(false);
         form.setVisible(true);
+        
     }//GEN-LAST:event_menuCursoActionPerformed
 
     /**
