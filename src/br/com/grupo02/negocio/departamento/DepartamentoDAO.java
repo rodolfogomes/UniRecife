@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Wallison     
+ *   
+ * @author Wallison           
  */
 public class DepartamentoDAO implements IGerenciarDados<Departamento> {
     
@@ -150,5 +150,44 @@ public class DepartamentoDAO implements IGerenciarDados<Departamento> {
         } catch (Exception e) {
             throw new DAOException();
         }
+    }
+    
+    
+    public boolean filtrarDepartamento(Departamento dept, String atributo) throws ConexaoException, DAOException {
+        GerenciadorConexao gc;
+        gc = GerenciarConexao.getInstancia();
+
+        String sql = "SELECT * FROM DEPARTAMENTO WHERE ? = ?";
+        try (Connection con = gc.conectar()) {
+            PreparedStatement pstm;
+            pstm = con.prepareStatement(sql);
+            switch (atributo) {
+                case "nome":
+                    pstm.setString(1, atributo);
+                    pstm.setString(2, dept.getNome());
+                    break;
+                case "telefone":
+                    pstm.setString(1, atributo);
+                    pstm.setString(2, dept.getTelefone());
+                    break;
+                case "centro":
+                    pstm.setString(1, atributo);
+                    pstm.setString(2, dept.getCentro());
+                    break;
+                default:
+                    pstm.setString(1, "id");
+                    pstm.setInt(2, dept.getId());
+            }
+            try (Statement st = con.createStatement()) {
+                ResultSet rs = st.executeQuery(sql);
+                if (rs.next()) {
+                    return true;
+                }
+            }
+
+        } catch (SQLException ex) {
+            throw new DAOException();
+        }
+        return false;
     }
 }
