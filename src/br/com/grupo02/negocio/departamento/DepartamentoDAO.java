@@ -152,7 +152,7 @@ public class DepartamentoDAO implements IGerenciarDados<Departamento> {
         }
     }
     
-    
+       
     public boolean filtrarDepartamento(Departamento dept, String atributo) throws ConexaoException, DAOException {
         GerenciadorConexao gc;
         gc = GerenciarConexao.getInstancia();
