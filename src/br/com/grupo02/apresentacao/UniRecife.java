@@ -18,7 +18,6 @@ import br.com.grupo02.negocio.oferta.Oferta;
 import br.com.grupo02.negocio.oferta.OfertaDao;
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.negocio.error.DAOException;
-import br.com.grupo02.negocio.professor.Professor;
 import br.com.grupo02.negocio.professor.ProfessorDAO;
 import br.com.grupo02.negocio.professor.ProfessorBO;
 import br.com.grupo02.persistencia.GerenciarConexao;
@@ -32,6 +31,11 @@ import java.util.logging.Level;
 import static java.util.logging.Level.parse;
 import java.util.logging.Logger;
 import static jdk.nashorn.internal.objects.Global.getDate;
+import javax.swing.JFrame;
+
+
+
+
 
 /**
  *
@@ -45,6 +49,7 @@ public class UniRecife {
         //inserirCurso();
         //atualizarCurso();
         //excluirCurso();
+
 //       buscarCursoId(); 
        //inserirProfessor();
        atualizarProfessor();
@@ -67,12 +72,25 @@ public class UniRecife {
         //  listarTodosPorAlunoPosGrad();
            }
 
+      // buscarCursoId(); 
+      
+        TAluno janela = new TAluno();
+//janela.add(janela);
+janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+janela.pack();
+janela.setVisible(true);
+      
+
+    }
+
+
     public static void testaConexao() {
 
         try {
 
             Connection con = GerenciarConexao.getInstancia().conectar();
             System.out.println("Conexão Funciona!");
+            GerenciarConexao.getInstancia().desconectar(con);
         } catch (ConexaoException ex) {
             System.out.println("Erro na conexão: " + ex.getMessage());
             ex.printStackTrace();
@@ -161,11 +179,19 @@ public class UniRecife {
 
         try {
 
+
            ProfessorDAO daoP = new ProfessorDAO();
            Curso curso = new Curso();
            curso.setTipo("curso02");
            curso.getCoordenador().setId(3);
            curso.getViceCoordenador().setId(1);
+
+            ProfessorDAO daoP = new ProfessorDAO();
+            Curso curso = new Curso();
+            curso.setDescricao("curso02");
+            curso.getCoordenador().setId(3);
+            curso.getViceCoordenador().setId(1);
+
 
            CursoDAO dao = new CursoDAO();
            dao.inserir(curso);
@@ -180,7 +206,7 @@ public class UniRecife {
         
           Curso curso = new Curso();
             curso.setCodigo(1);
-            curso.setTipo("teste update");
+            curso.setDescricao("teste update");
             curso.getCoordenador().setId(1);
             curso.getViceCoordenador().setId(3);
 

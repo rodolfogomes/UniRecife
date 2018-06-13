@@ -10,6 +10,7 @@ import java.sql.Date;
  */
 public class Aluno {
 
+    private int id;
     private int matricula;
     private Curso curso;
     private Departamento departamento;
@@ -190,6 +191,14 @@ public class Aluno {
 
     public void setDepartamento(Departamento departamento) {
         this.departamento = departamento;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     
