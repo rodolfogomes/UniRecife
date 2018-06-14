@@ -7,8 +7,6 @@ package br.com.grupo02.negocio.curso;
 
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.negocio.error.GeralException;
-import br.com.grupo02.negocio.professor.Professor;
-import br.com.grupo02.negocio.professor.ProfessorDAO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;

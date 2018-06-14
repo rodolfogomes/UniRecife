@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author ADM
+* @author ADM
  */
 public class FormCurso extends javax.swing.JDialog {
 
