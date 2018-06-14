@@ -144,8 +144,7 @@ janela.setVisible(true);
             ProfessorDAO daoP = new ProfessorDAO();
             Curso curso = new Curso();
             curso.setDescricao("curso02");
-            curso.getCoordenador().setId(3);
-            curso.getViceCoordenador().setId(1);
+            
 
             CursoDAO dao = new CursoDAO();
             dao.inserir(curso);
@@ -161,8 +160,7 @@ janela.setVisible(true);
             Curso curso = new Curso();
             curso.setCodigo(1);
             curso.setDescricao("teste update");
-            curso.getCoordenador().setId(1);
-            curso.getViceCoordenador().setId(3);
+            
 
             CursoDAO dao = new CursoDAO();
         try {
@@ -191,7 +189,7 @@ janela.setVisible(true);
         CursoDAO dao = new CursoDAO();
         try {
             Curso curso = dao.buscarPorId(2);
-            System.out.println("Coordenador: ".concat(curso.getCoordenador().getNome()));
+            
         } catch (ConexaoException ex) {
             Logger.getLogger(UniRecife.class.getName()).log(Level.SEVERE, null, ex);
         }

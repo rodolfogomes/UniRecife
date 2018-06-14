@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package br.com.grupo02.negocio.matricula;
-import br.com.grupo02.negocio.IGerenciarDados;
+import br.com.grupo02.persistencia.IGerenciarDados;
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.negocio.error.DAOException;
 import br.com.grupo02.persistencia.GerenciarConexao;

@@ -6,8 +6,12 @@
 package br.com.grupo02.negocio.curso;
 
 import br.com.grupo02.negocio.error.ConexaoException;
+import br.com.grupo02.negocio.error.GeralException;
+import br.com.grupo02.negocio.professor.Professor;
+import br.com.grupo02.negocio.professor.ProfessorDAO;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,10 +26,39 @@ public class CursoBO {
         lista = dao.listarTodos();
         return lista;
     }
+//null value in column "descricao" violates not-null constraint
+    public boolean validaCampos(Curso c) throws GeralException {
+        if (c == null) {
+            JOptionPane.showMessageDialog(null, "A descrição é obrigatória.");
+            return false;
+        }
 
-    public void salvarCurso(Curso c)throws ConexaoException {
+        return true;
+    }
+
+    public void salvarCurso(Curso c) throws ConexaoException {
         CursoDAO dao = new CursoDAO();
-        dao.inserir(c);
+        try {
+            if(c.getCodigo() == 0){
+                dao.inserir(c);
+            }else{
+                dao.atualizar(c);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void remove(int id) throws ConexaoException {
+        CursoDAO dao = new CursoDAO();
+        dao.deletar(id);
+    }
+
+    public void editar(Curso curso) throws ConexaoException {
+        CursoDAO dao = new CursoDAO();
+        dao.atualizar(curso);
     }
 
 }

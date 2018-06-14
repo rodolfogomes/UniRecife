@@ -10,7 +10,7 @@ import br.com.grupo02.persistencia.GerenciadorConexao;
 import br.com.grupo02.negocio.error.DAOException;
 import br.com.grupo02.negocio.departamento.Departamento;
 import br.com.grupo02.persistencia.GerenciarConexao;
-import br.com.grupo02.negocio.IGerenciarDados;
+import br.com.grupo02.persistencia.IGerenciarDados;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

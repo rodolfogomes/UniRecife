@@ -8,6 +8,7 @@ package br.com.grupo02.apresentacao;
 import br.com.grupo02.fachada.FachadaCurso;
 import br.com.grupo02.negocio.curso.Curso;
 import br.com.grupo02.negocio.error.ConexaoException;
+import br.com.grupo02.negocio.error.GeralException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +37,21 @@ public class FormCurso extends javax.swing.JDialog {
         }
 
     }
+    
+     private void isEditar(boolean editando){
+         btnCancelar.setEnabled(editando);
+         btnsalvar.setEnabled(editando);
+         btnEditar.setEnabled(!editando);
+         btnExcluir.setEnabled(!editando);
+         btnNovo.setEnabled(!editando);
+         btnFechar.setEnabled(!editando);
+         btnPrimeiro.setEnabled(!editando);
+         btnProximo.setEnabled(!editando);
+         btnAnterior.setEnabled(!editando);
+         btnUltimo.setEnabled(!editando);
+         txtDescricao.setEditable(editando);
+         tblCurso.setEnabled(!editando);
+     }
 
     /**
      * Creates new form FormCurso
@@ -44,6 +60,7 @@ public class FormCurso extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         atualizaTabelaCurso();
+        isEditar(false);
     }
 
     /**
@@ -76,30 +93,46 @@ public class FormCurso extends javax.swing.JDialog {
         btnsalvar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         lbId = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtId = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         txtDescricao = new javax.swing.JTextField();
-        txtCoordenador = new javax.swing.JTextField();
-        txtViceCoordenador = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Cadastro de cursos");
 
         painelNav.setBorder(javax.swing.BorderFactory.createTitledBorder("Navegação"));
         painelNav.setLayout(new java.awt.GridLayout(1, 0));
 
         btnPrimeiro.setText("Primeiro");
+        btnPrimeiro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrimeiroActionPerformed(evt);
+            }
+        });
         painelNav.add(btnPrimeiro);
 
         btnAnterior.setText("Anterior");
+        btnAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnteriorActionPerformed(evt);
+            }
+        });
         painelNav.add(btnAnterior);
 
         btnProximo.setText("Proximo");
+        btnProximo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProximoActionPerformed(evt);
+            }
+        });
         painelNav.add(btnProximo);
 
         btnUltimo.setText("Ultimo");
+        btnUltimo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUltimoActionPerformed(evt);
+            }
+        });
         painelNav.add(btnUltimo);
 
         btnFechar.setText("Fechar");
@@ -120,19 +153,9 @@ public class FormCurso extends javax.swing.JDialog {
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigo}"));
         columnBinding.setColumnName("Codigo");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${descricao}"));
-        columnBinding.setColumnName("Descricao");
+        columnBinding.setColumnName("Nome do curso");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${coordenador}"));
-        columnBinding.setColumnName("Coordenador");
-        columnBinding.setColumnClass(br.com.grupo02.negocio.professor.Professor.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${viceCoordenador}"));
-        columnBinding.setColumnName("Vice Coordenador");
-        columnBinding.setColumnClass(br.com.grupo02.negocio.professor.Professor.class);
-        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         jScrollPane2.setViewportView(tblCurso);
@@ -156,9 +179,19 @@ public class FormCurso extends javax.swing.JDialog {
         painelAcoes.add(btnNovo);
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
         painelAcoes.add(btnEditar);
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
         painelAcoes.add(btnCancelar);
 
         btnsalvar.setText("Salvar");
@@ -170,48 +203,39 @@ public class FormCurso extends javax.swing.JDialog {
         painelAcoes.add(btnsalvar);
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
         painelAcoes.add(btnExcluir);
 
         lbId.setText("id:");
 
-        jTextField1.setEditable(false);
+        txtId.setEditable(false);
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblCurso, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.codigo}"), jTextField1, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblCurso, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.codigo}"), txtId, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         jLabel1.setText("Descricao:");
 
-        jLabel2.setText("Coordenador");
-
-        jLabel3.setText("Vice-Coordenador");
-
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblCurso, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.descricao}"), txtDescricao, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblCurso, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.coordenador.cpf}"), txtCoordenador, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblCurso, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.viceCoordenador.cpf}"), txtViceCoordenador, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout abaDadosLayout = new javax.swing.GroupLayout(abaDados);
         abaDados.setLayout(abaDadosLayout);
         abaDadosLayout.setHorizontalGroup(
             abaDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelAcoes, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
+            .addComponent(painelAcoes, javax.swing.GroupLayout.DEFAULT_SIZE, 893, Short.MAX_VALUE)
             .addGroup(abaDadosLayout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addGroup(abaDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbId)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGap(53, 53, 53)
+                    .addComponent(jLabel1))
+                .addGap(95, 95, 95)
                 .addGroup(abaDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                    .addComponent(txtDescricao)
-                    .addComponent(txtCoordenador)
-                    .addComponent(txtViceCoordenador))
+                    .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                    .addComponent(txtDescricao))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         abaDadosLayout.setVerticalGroup(
@@ -221,20 +245,12 @@ public class FormCurso extends javax.swing.JDialog {
                 .addGap(35, 35, 35)
                 .addGroup(abaDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbId)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(abaDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(abaDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(txtCoordenador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(abaDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(txtViceCoordenador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 53, Short.MAX_VALUE))
+                .addGap(0, 137, Short.MAX_VALUE))
         );
 
         abas.addTab("Dados", abaDados);
@@ -255,8 +271,9 @@ public class FormCurso extends javax.swing.JDialog {
             int linhaSelecionada = tblCurso.getSelectedRow();
             Curso curso = listaCurso.get(linhaSelecionada);
             fachada.salvarCurso(curso);
+            isEditar(false);
             atualizaTabelaCurso();
-        } catch (ConexaoException ex) {
+        } catch (ConexaoException | GeralException ex) {
             Logger.getLogger(FormCurso.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnsalvarActionPerformed
@@ -265,8 +282,69 @@ public class FormCurso extends javax.swing.JDialog {
         listaCurso.add((Curso) new Curso());
         int linha = listaCurso.size()-1;
         tblCurso.setRowSelectionInterval(linha, linha);
+        isEditar(true);
         txtDescricao.requestFocus();
     }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        isEditar(false);
+        atualizaTabelaCurso();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        isEditar(true);
+        int linhaSelecionada = tblCurso.getSelectedRow();
+        Curso curso = listaCurso.get(linhaSelecionada);
+        try {
+            fachada.edtidar(curso);
+            atualizaTabelaCurso();
+        } catch (ConexaoException ex) {
+            ex.printStackTrace();
+        }
+        txtDescricao.requestFocus();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int linhaSelecionada = tblCurso.getSelectedRow();
+        Curso curso = listaCurso.get(linhaSelecionada);
+        try {
+            fachada.remover(curso.getCodigo());
+            atualizaTabelaCurso();
+        } catch (ConexaoException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnPrimeiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimeiroActionPerformed
+        tblCurso.setRowSelectionInterval(0, 0);
+        tblCurso.scrollRectToVisible(tblCurso.getCellRect(0, 0, true));
+    }//GEN-LAST:event_btnPrimeiroActionPerformed
+
+    private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
+        int linha = tblCurso.getSelectedRow();
+        if((linha - 1) >=0){
+            linha--; 
+        
+        }
+        tblCurso.setRowSelectionInterval(linha, linha);
+        tblCurso.scrollRectToVisible(tblCurso.getCellRect(linha, 0, true));
+    }//GEN-LAST:event_btnAnteriorActionPerformed
+
+    private void btnProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoActionPerformed
+        int linha = tblCurso.getSelectedRow();
+        if((linha + 1) <= (tblCurso.getRowCount() -1)){
+            linha++;
+        
+        }
+        tblCurso.setRowSelectionInterval(linha,linha);
+        tblCurso.scrollRectToVisible(tblCurso.getCellRect(linha, 0, true));
+    }//GEN-LAST:event_btnProximoActionPerformed
+
+    private void btnUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoActionPerformed
+        int linha = tblCurso.getRowCount() -1;
+        tblCurso.setRowSelectionInterval(linha, linha);
+        tblCurso.scrollRectToVisible(tblCurso.getCellRect(linha, linha, true));
+    }//GEN-LAST:event_btnUltimoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -298,7 +376,7 @@ public class FormCurso extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FormCurso dialog = new FormCurso(new javax.swing.JFrame(), true);
+                FormCurso dialog = new FormCurso(new javax.swing.JFrame(),true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -325,18 +403,14 @@ public class FormCurso extends javax.swing.JDialog {
     private javax.swing.JButton btnUltimo;
     private javax.swing.JButton btnsalvar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbId;
     private java.util.List<Curso> listaCurso;
     private javax.swing.JPanel painelAcoes;
     private javax.swing.JPanel painelNav;
     private javax.swing.JTable tblCurso;
-    private javax.swing.JTextField txtCoordenador;
     private javax.swing.JTextField txtDescricao;
-    private javax.swing.JTextField txtViceCoordenador;
+    private javax.swing.JTextField txtId;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

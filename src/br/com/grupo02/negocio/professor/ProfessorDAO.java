@@ -6,7 +6,7 @@
 package br.com.grupo02.negocio.professor;
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.persistencia.GerenciarConexao;
-import br.com.grupo02.negocio.IGerenciarDados;
+import br.com.grupo02.persistencia.IGerenciarDados;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

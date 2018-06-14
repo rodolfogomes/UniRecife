@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package br.com.grupo02.negocio.oferta;
-import br.com.grupo02.negocio.IGerenciarDados;
+import br.com.grupo02.persistencia.IGerenciarDados;
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.negocio.error.DAOException;
 import br.com.grupo02.persistencia.GerenciarConexao;
@@ -30,7 +30,7 @@ public class OfertaDao implements IGerenciarDados<Oferta> {
     
     @Override
     public void inserir (Oferta ofr) throws ConexaoException,DAOException {
-        String sql = "insert into UniRecife.dbo.oferta (horario, id_professor, id_disciplina)values (?,?,?)";
+        String sql = "insert into oferta (horario, id_professor, id_disciplina)values (?,?,?)";
         int index = 0;
         
          try (Connection con = GerenciarConexao.getInstancia().conectar()){
@@ -54,7 +54,7 @@ public class OfertaDao implements IGerenciarDados<Oferta> {
    */
     @Override
     public void atualizar(Oferta ofr) throws ConexaoException,DAOException {
-    String sql = "update UniRecife.dbo.oferta set horario = ?,Id_professor = ?,id_disciplina = ?"
+    String sql = "update oferta set horario = ?,Id_professor = ?,id_disciplina = ?"
                   + "where id = ?";
     
     int index = 0;
@@ -80,7 +80,7 @@ public class OfertaDao implements IGerenciarDados<Oferta> {
     @Override
     public void deletar(Integer id) throws ConexaoException,DAOException {
        
-        String sql = "delete from UniRecife.dbo.ofertar where id = ?"+id;
+        String sql = "delete from ofertar where id = ?"+id;
          try (Connection con = GerenciarConexao.getInstancia().conectar()){
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -147,7 +147,7 @@ public class OfertaDao implements IGerenciarDados<Oferta> {
                 oft.setId(rs.getInt("id"));
                 oft.getIdProfessor().setId(rs.getInt("id_professor"));
                 oft.getIDisciplina().setId(rs.getInt("id_disciplina"));
-                oft.setHorario(rs.getString("horario"));
+                oft.setHorario(rs.getString("horario")); 
                 lista.add(oft);
             }
             return lista;
