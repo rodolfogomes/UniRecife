@@ -1,7 +1,5 @@
 package br.com.grupo02.negocio.aluno;
 
-import br.com.grupo02.negocio.curso.Curso;
-import br.com.grupo02.negocio.departamento.Departamento;
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.negocio.error.DAOException;
 import br.com.grupo02.persistencia.GerenciadorConexao;
@@ -27,11 +25,10 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
         gc = GerenciarConexao.getInstancia();
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO ALUNO");
-        sb.append("(aluno_matricula,aluno_nome,aluno_CPF,aluno_rua,aluno_cidade,");
-        sb.append("aluno_CEP,aluno_telefone1,aluno_telefone2,aluno_datanasc,aluno_sexo,");
-        sb.append("aluno_dep_codigo,aluno_curso_codigo)");
+        sb.append("(matricula,nome,CPF,rua,cidade,");
+        sb.append("CEP,telefone,datanasc,sexo,");
         sb.append("VALUES");
-        sb.append("(?,?,?,?,?,?,?,?,?,?,?,?)");
+        sb.append("(?,?,?,?,?,?,?,?,?)");
         String sql = sb.toString().trim();
         PreparedStatement pst;
         int i = 1;
@@ -44,11 +41,8 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
             pst.setString(i++, aluno.getCidade());
             pst.setString(i++, aluno.getCep());
             pst.setString(i++, aluno.getTelefone1());
-            pst.setString(i++, aluno.getTelefone2());
             pst.setDate(i++, aluno.getDatnasc());
             pst.setString(i++, aluno.getSexo());
-            //pst.setInt(i++, aluno.getDepartamento().getIdDept()); // id dpt
-            pst.setInt(i++, aluno.getCurso().getCodigo()); // id curso
             pst.executeUpdate();
 
         } catch (Exception e) {
@@ -66,11 +60,10 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
         gc = GerenciarConexao.getInstancia();
         StringBuilder sb = new StringBuilder();
         sb.append("UPDATE ALUNO SET ");
-        sb.append("aluno_nome=?,aluno_CPF=?,aluno_rua=?,aluno_cidade=?,");
-        sb.append("aluno_CEP=?,aluno_telefone1=?,aluno_telefone2=?,aluno_datanasc=?,aluno_sexo=?,");
-        sb.append("aluno_dep_codigo=?,aluno_curso_codigo=?");
+        sb.append("nome=?,CPF=?,rua=?,cidade=?,");
+        sb.append("CEP=?,telefone=?,datanasc=?,sexo=?,");
         sb.append(" WHERE");
-        sb.append(" aluno_matricula=?");
+        sb.append(" matricula=?");
         String sql = sb.toString().trim();
         PreparedStatement pst;
         int i = 1;
@@ -82,11 +75,8 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
             pst.setString(i++, aluno.getCidade());
             pst.setString(i++, aluno.getCep());
             pst.setString(i++, aluno.getTelefone1());
-            pst.setString(i++, aluno.getTelefone2());
             pst.setDate(i++, aluno.getDatnasc());
             pst.setString(i++, aluno.getSexo());
-            pst.setInt(i++, aluno.getDepartamento().getId()); // id dpt
-            pst.setInt(i++, aluno.getCurso().getCodigo()); // id curso
             pst.setInt(i++, aluno.getMatricula());
             pst.executeUpdate();
 
@@ -102,7 +92,7 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
     public void deletar(Integer id) throws ConexaoException, DAOException {
         GerenciadorConexao gc;
         gc = GerenciarConexao.getInstancia();
-        String sql = "DELETE FROM ALUNO WHERE aluno_matricula=?";
+        String sql = "DELETE FROM ALUNO WHERE matricula=?";
         PreparedStatement pstm;
         try (Connection con = gc.conectar()) {
             pstm = con.prepareStatement(sql);
@@ -125,24 +115,15 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
                 while (rs.next()) {
                     //montando o objeto aluno com o resultado da consulta do banco
                     alun = new Aluno();
-                    alun.setMatricula(rs.getInt("aluno_matricula"));
-                    alun.setNome(rs.getString("aluno_nome"));
-                    alun.setRua(rs.getString("aluno_rua"));
-                    alun.setCpf(rs.getString("aluno_CPF"));
-                    alun.setCep(rs.getString("aluno_CEP"));
-                    alun.setCidade(rs.getString("aluno_cidade"));
-                    alun.setDatnasc(rs.getDate("aluno_datanasc"));
-                    alun.setSexo(rs.getString("aluno_sexo"));
-                    alun.setTelefone1(rs.getString("aluno_telefone1"));
-                    alun.setTelefone2(rs.getString("aluno_telefone2"));
-                    // passando obj departamento 
-                    Departamento dpt = new Departamento();
-                    dpt.setId(rs.getInt("aluno_dep_codigo"));
-                    alun.setDepartamento(dpt);
-                    //passando obj curso 
-                    Curso crs = new Curso();
-                    crs.setCodigo(rs.getInt("aluno_curso_codigo"));
-                    alun.setCurso(crs);
+                    alun.setMatricula(rs.getInt("matricula"));
+                    alun.setNome(rs.getString("nome"));
+                    alun.setRua(rs.getString("rua"));
+                    alun.setCpf(rs.getString("CPF"));
+                    alun.setCep(rs.getString("CEP"));
+                    alun.setCidade(rs.getString("cidade"));
+                    alun.setDatnasc(rs.getDate("datanasc"));
+                    alun.setSexo(rs.getString("sexo"));
+                    alun.setTelefone1(rs.getString("telefone"));
                     lista.add(alun);
                 }
 
@@ -167,24 +148,15 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
                 ResultSet rs = st.executeQuery(sql);
                 if (rs.next()) {
                     //montando o objeto aluno com o resultado da consulta do banco
-                    al.setMatricula(rs.getInt("aluno_matricula"));
-                    al.setNome(rs.getString("aluno_nome"));
-                    al.setRua(rs.getString("aluno_rua"));
-                    al.setCpf(rs.getString("aluno_CPF"));
-                    al.setCep(rs.getString("aluno_CEP"));
-                    al.setCidade(rs.getString("aluno_cidade"));
-                    al.setDatnasc(rs.getDate("aluno_datanasc"));
-                    al.setSexo(rs.getString("aluno_sexo"));
-                    al.setTelefone1(rs.getString("aluno_telefone1"));
-                    al.setTelefone2(rs.getString("aluno_telefone2"));
-                    // passando obj departamento 
-                    Departamento dpt = new Departamento();
-                    dpt.setId(rs.getInt("aluno_dep_codigo"));
-                    al.setDepartamento(dpt);
-                    //passando obj curso 
-                    Curso crs = new Curso();
-                    crs.setCodigo(rs.getInt("aluno_curso_codigo"));
-                    al.setCurso(crs);
+                    al.setMatricula(rs.getInt("matricula"));
+                    al.setNome(rs.getString("nome"));
+                    al.setRua(rs.getString("rua"));
+                    al.setCpf(rs.getString("CPF"));
+                    al.setCep(rs.getString("CEP"));
+                    al.setCidade(rs.getString("cidade"));
+                    al.setDatnasc(rs.getDate("datanasc"));
+                    al.setSexo(rs.getString("sexo"));
+                    al.setTelefone1(rs.getString("telefone"));
 
                     return al;
                 }
