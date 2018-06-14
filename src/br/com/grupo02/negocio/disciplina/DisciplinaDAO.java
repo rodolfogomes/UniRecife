@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Implementação dos métodos CRUD com otimizacao utlizando stringBuilder
  *
@@ -153,7 +152,6 @@ public class DisciplinaDAO implements IGerenciarDados<Disciplina> {
     boolean save(Disciplina disc) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
     public boolean filtrarDisciplina(Disciplina disciplina, String atributo) throws ConexaoException, DAOException {
 
         String sql = "SELECT * FROM DISCIPLINA WHERE ? = ?";
@@ -185,5 +183,4 @@ public class DisciplinaDAO implements IGerenciarDados<Disciplina> {
         }
         return false;
     }
-
 }

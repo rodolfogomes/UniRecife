@@ -92,5 +92,4 @@ public class DisciplinaBO {
         DisciplinaDAO discdao = new DisciplinaDAO();
         return discdao.listarTodos();
     }
-
 }

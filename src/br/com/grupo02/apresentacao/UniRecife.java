@@ -5,32 +5,9 @@
  */
 package br.com.grupo02.apresentacao;
 
-import br.com.grupo02.negocio.curso.Curso;
-import br.com.grupo02.negocio.curso.CursoDAO;
-import br.com.grupo02.negocio.departamento.Departamento;
-import br.com.grupo02.negocio.disciplina.Disciplina;
-import br.com.grupo02.negocio.disciplina.DisciplinaDAO;
-import br.com.grupo02.negocio.matricula.Matricula;
-import br.com.grupo02.negocio.matricula.MatriculaDAO;
-import br.com.grupo02.negocio.alunoposgrad.AlunoPosGrad;
-import br.com.grupo02.negocio.alunoposgrad.AlunoPosGradDAO;
-import br.com.grupo02.negocio.oferta.Oferta;
-import br.com.grupo02.negocio.oferta.OfertaDao;
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.negocio.error.DAOException;
-import br.com.grupo02.negocio.professor.ProfessorDAO;
-import br.com.grupo02.negocio.professor.ProfessorBO;
-import br.com.grupo02.persistencia.GerenciarConexao;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import static java.util.Date.parse;
-import java.util.List;
-import java.util.logging.Level;
-import static java.util.logging.Level.parse;
-import java.util.logging.Logger;
-import static jdk.nashorn.internal.objects.Global.getDate;
 import javax.swing.JFrame;
 
 
@@ -52,10 +29,10 @@ public class UniRecife {
 
 //       buscarCursoId(); 
        //inserirProfessor();
-       atualizarProfessor();
-       buscarPorIdOferta();
-       listarTodosOferta();
-       atualizarOferta();
+      // atualizarProfessor();
+     //  buscarPorIdOferta();
+     //  listarTodosOferta();
+     //  atualizarOferta();
        // deletarProfessor();
        // buscarPorIdProfessor();
        // listarTodosProfessor();

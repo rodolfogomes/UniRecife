@@ -29,7 +29,6 @@ public class FachadaDisciplina {
     public void salvar(Disciplina disc) throws DAOException, GeralException, ConexaoException {
 
         discbo.salvarDisciplina(disc);
-
     }
 
     public void deletar(Disciplina disc) throws ConexaoException, DAOException, GeralException {
