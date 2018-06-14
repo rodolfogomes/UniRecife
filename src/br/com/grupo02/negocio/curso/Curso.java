@@ -13,9 +13,10 @@ import br.com.grupo02.negocio.professor.Professor;
 public class Curso {
     
     private int codigo;
-    private String tipo;
-    private Professor coordenador;
-    private Professor viceCoordenador;
+    private String descricao;
+    Professor coordenador;
+    Professor viceCoordenador;
+
 
     public Curso() {
         coordenador = new Professor();
@@ -23,6 +24,7 @@ public class Curso {
     }
         
     
+
 
     public int getCodigo() {
         return codigo;
@@ -32,13 +34,15 @@ public class Curso {
         this.codigo = codigo;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
+
+    
 
     public Professor getCoordenador() {
         return coordenador;

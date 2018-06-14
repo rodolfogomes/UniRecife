@@ -10,5 +10,5 @@ package br.com.grupo02.negocio.error;
  * @author Daniel
  */
 public class DAOException extends Exception{
-    
+
 }

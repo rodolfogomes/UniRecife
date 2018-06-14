@@ -75,7 +75,7 @@ public class DisciplinaDAO implements IGerenciarDados <Disciplina> {
             pst.setInt(i++, disciplina.getId());
             pst.execute();
             pst.close();
-        pst.executeUpdate();
+            pst.executeUpdate();
             
         } catch (Exception e) {
             throw new DAOException();
