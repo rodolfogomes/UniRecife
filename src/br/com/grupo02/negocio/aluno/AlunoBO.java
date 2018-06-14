@@ -81,7 +81,13 @@ public class AlunoBO {
     public void deletarAluno(Aluno al) throws ConexaoException, DAOException, GeralException{
         AlunoDAO aldao = new AlunoDAO();
         if(al!=null){
+           if(aldao.filtrarAluno(al, "id")){
             aldao.deletar(al.getId());
+           
+           }else{
+               throw new GeralException("Usuario invalido!");
+           }
+            
         }else{
             throw new GeralException("Selecione ao menos um Aluno para ser excluido.");
         }
