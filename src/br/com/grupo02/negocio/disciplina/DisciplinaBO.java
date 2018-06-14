@@ -51,6 +51,7 @@ public class DisciplinaBO {
         }
         if (discdao.filtrarDisciplina(disc, "descricao")) {
             throw new GeralException("Já existe uma disciplina com esta descricao!");
+            
         }
 
     }
