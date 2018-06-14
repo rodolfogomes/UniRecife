@@ -5,42 +5,41 @@
  */
 package br.com.grupo02.negocio.disciplina;
 
-
 import br.com.grupo02.negocio.departamento.Departamento;
 
 /**
  * Classe básica Disciplina com atributos encapsulados
+ *
  * @author Bruno Rodrigues /Git: @Brunojgrc
  */
 public class Disciplina {
-    
+
     private int id;
     private String nome;
     private String descricao;
-    Departamento departamento;
-    
-       
+    //Departamento departamento;
 
-    public Disciplina(){
+    public Disciplina() {
     }
-    
+
     /**
- * Classe básica Disciplina com atributos e métodos
- * @author Bruno Rodrigues /Git: @Brunojgrc
+     * Classe básica Disciplina com atributos e métodos
+     *
+     * @author Bruno Rodrigues /Git: @Brunojgrc
      * @param id
      * @param nome
      * @param descricao
      * @param departamento
      */
-    public Disciplina (int id, String nome, String descricao, Departamento departamento){
+    public Disciplina(int id, String nome, String descricao, Departamento departamento) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        this.departamento = departamento; 
-    
+       // this.departamento = departamento;
+
     }
-    
-        /**
+
+    /**
      * @return the idDisciplina
      */
     public int getId() {
@@ -85,19 +84,40 @@ public class Disciplina {
     /**
      * @return the departamento
      */
-    public Departamento getDepartamento() {
-        return departamento;
+    /* public Departamento getDepartamento() {
+    return departamento;
     }
 
     /**
      * @param departamento the departamento to set
-     */
-    public void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
+     *//*
+        public void setDepartamento(Departamento departamento) {
+         this.departamento = departamento;
+        }*/
+        
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + this.id;
+        return hash;
     }
-    
-     
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Disciplina other = (Disciplina) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+
 }
-
-
-
