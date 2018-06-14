@@ -24,6 +24,7 @@ public class AlunoDAO implements IGerenciarDados<Aluno> {
     @Override
     public void inserir(Aluno aluno) throws ConexaoException, DAOException {
         GerenciadorConexao gc;
+        
         gc = GerenciarConexao.getInstancia();
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO ALUNO");
