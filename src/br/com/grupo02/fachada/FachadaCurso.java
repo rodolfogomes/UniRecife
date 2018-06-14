@@ -27,9 +27,15 @@ public class FachadaCurso {
     }
     
     public void salvarCurso(Curso c) throws GeralException, ConexaoException{
+        try {
         CursoBO bo = new CursoBO();
         bo.validaCampos(c);
         bo.salvarCurso(c);
+        } catch (Exception e) {
+            throw  new GeralException();
+            
+        }
+        
     }
 
     public void remover(int id) throws ConexaoException {

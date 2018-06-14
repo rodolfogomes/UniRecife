@@ -8,11 +8,12 @@ package br.com.grupo02.negocio.departamento;
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.negocio.error.DAOException;
 import br.com.grupo02.negocio.error.GeralException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *          
+ *           
  * @author Wallison
  */
 public class DepartamentoBO {
@@ -22,27 +23,24 @@ public class DepartamentoBO {
 
     public boolean isValidaBranco(String str) {
 
-        if (str.trim().isEmpty()) {
-            return true;
-        }
 
-        return false;
+        return str.trim().isEmpty();
     }
 
     public void validarCamposDepartamento(Departamento dept) throws GeralException {
 
-        if (dept.getNome() == null || isValidaBranco(dept.getNome())) {
+        if (dept.getNome().isEmpty() || isValidaBranco(dept.getNome())) {
             throw new GeralException("Nome é um campo de preenchimento obrigatorio!");
         }
         if (dept == null) {
 
             throw new GeralException("Não é possivel salvar vazio!");
         }
-        if (dept.getTelefone() == null || isValidaBranco(dept.getTelefone())) {
+        if (dept.getTelefone().isEmpty() || isValidaBranco(dept.getTelefone())) {
             throw new GeralException("Telefone é um campo de preenchimento obrigatorio!");
 
         }
-        if (dept.getCentro() == null || isValidaBranco(dept.getCentro())) {
+        if (dept.getCentro().isEmpty() || isValidaBranco(dept.getCentro())) {
             throw new GeralException("O Campo de centro é de preenchimento obrigatorio!");
         }
 
@@ -70,8 +68,8 @@ public class DepartamentoBO {
 
     public void salvarDepartamento(Departamento dept) throws DAOException, GeralException, ConexaoException {
         DepartamentoDAO deptdao = new DepartamentoDAO();
-        validarCamposDepartamento(dept);
-        verificarDuplicidade(dept, deptdao);
+        //validarCamposDepartamento(dept);
+        //verificarDuplicidade(dept, deptdao);
         deptdao.inserir(dept);
 
     }

@@ -3,12 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/apresentacao/FormCurso.java</file>
             <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/negocio/curso/CursoDAO.java</file>
             <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/apresentacao/FormPrincipal.java</file>
             <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/negocio/curso/Curso.java</file>
             <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/fachada/FachadaCurso.java</file>
             <file>file:/C:/Users/ADM/Documents/NetBeansProjects/UniRecife/src/br/com/grupo02/negocio/professor/ProfessorDAO.java</file>
+=======
+            <file>file:/C:/Users/Valeria/Desktop/projetosJava/UniRecife/UniRecife/src/br/com/grupo02/fachada/FachadaAluno.java</file>
+>>>>>>> e162693bc8154d514248cb77f87615c3ba446501
         </group>
     </open-files>
 </project-private>

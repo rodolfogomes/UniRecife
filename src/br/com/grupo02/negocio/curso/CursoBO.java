@@ -25,6 +25,7 @@ public class CursoBO {
         return lista;
     }
 //null value in column "descricao" violates not-null constraint
+
     public boolean validaCampos(Curso c) throws GeralException {
         if (c == null) {
             JOptionPane.showMessageDialog(null, "A descrição é obrigatória.");
@@ -34,19 +35,21 @@ public class CursoBO {
         return true;
     }
 
-    public void salvarCurso(Curso c) throws ConexaoException {
+    public void salvarCurso(Curso c) throws ConexaoException, GeralException {
         CursoDAO dao = new CursoDAO();
         try {
-            if(c.getCodigo() == 0){
+            if (c.getCodigo() == 0) {
                 dao.inserir(c);
-            }else{
+            } else {
                 dao.atualizar(c);
             }
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
+        } catch (Exception e) {
+            if (e.getMessage().contains("null value in column \"descricao\" violates not-null constraint")) {
+                throw new GeralException("A descricao é campo obrigatório.");
+            }
+
+        }
     }
 
     public void remove(int id) throws ConexaoException {

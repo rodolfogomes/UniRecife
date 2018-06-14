@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package br.com.grupo02.negocio.professor;
-import br.com.grupo02.negocio.departamento.Departamento;
-
 
 /**
  *
@@ -17,12 +15,10 @@ public class Professor {
     private String nome;
     private String telefone;
     private float salario;
-    private Departamento departamento;
+
     
- public Professor(){
- departamento = new Departamento();
-     
- }   
+    
+ 
 
     public int getId() {
         return id;
@@ -63,20 +59,6 @@ public class Professor {
         this.nome = nome;
     }
     
-     /**
-     * @return the dnumero
-     */
-    public Departamento getDepartamento(){
-       return departamento;
-    }
-    
-       /**
-     * @param dnumero the numero to set
-     */
-    
-    public void setDepartamento (Departamento departamento){
-        this.departamento = departamento;
-    }
       /**
      * @return the telefone
      */
