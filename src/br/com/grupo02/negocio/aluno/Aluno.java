@@ -12,15 +12,12 @@ public class Aluno {
 
     private int id;
     private int matricula;
-    private Curso curso;
-    private Departamento departamento;
     private String nome;
     private String cpf;
     private String rua;
     private String cidade;
     private String cep;
     private String telefone1;
-    private String telefone2;
     private Date datnasc;
     private String sexo;
 
@@ -28,7 +25,7 @@ public class Aluno {
 
     }
 
-    public Aluno(String nome, String cpf, String rua, String cidade, String cep, String telefone1, String telefone2, Date datnasc) {
+    public Aluno(String nome, String cpf, String rua, String cidade, String cep, String telefone1,  Date datnasc) {
 
         this.nome = nome;
         this.cpf = cpf;
@@ -36,7 +33,6 @@ public class Aluno {
         this.cidade = cidade;
         this.cep = cep;
         this.telefone1 = telefone1;
-        this.telefone2 = telefone2;
         this.datnasc = datnasc;
     }
 
@@ -131,19 +127,7 @@ public class Aluno {
         this.telefone1 = telefone1;
     }
 
-    /**
-     * @return the telefone2
-     */
-    public String getTelefone2() {
-        return telefone2;
-    }
 
-    /**
-     * @param telefone2 the telefone2 to set
-     */
-    public void setTelefone2(String telefone2) {
-        this.telefone2 = telefone2;
-    }
 
     /**
      * @return the datnasc
@@ -177,22 +161,8 @@ public class Aluno {
         this.matricula = matricula;
     }
 
-    public Curso getCurso() {
-        return curso;
-    }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
-    }
-
-    public Departamento getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
-    }
-
+ 
     public int getId() {
         return id;
     }
