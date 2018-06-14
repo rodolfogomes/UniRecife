@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class DisciplinaBO {
 
-    public boolean isValidaBranco(String str) {
+        public boolean isValidaBranco(String str) {
 
         return str.trim().isEmpty();
     }
@@ -80,17 +80,17 @@ public class DisciplinaBO {
     }
 
     public void deletarDisciplina(Disciplina disc) throws ConexaoException, DAOException, GeralException {
-        DisciplinaDAO aldao = new DisciplinaDAO();
+        DisciplinaDAO discdao = new DisciplinaDAO();
         if (disc != null) {
-            aldao.deletar(disc.getId());
+            discdao.deletar(disc.getId());
         } else {
             throw new GeralException("Selecione ao menos uma disciplina para ser excluida.");
         }
     }
 
     public List<Disciplina> listarDisciplina() throws ConexaoException, DAOException {
-        DisciplinaDAO aldao = new DisciplinaDAO();
-        return aldao.listarTodos();
+        DisciplinaDAO discdao = new DisciplinaDAO();
+        return discdao.listarTodos();
     }
 
 }

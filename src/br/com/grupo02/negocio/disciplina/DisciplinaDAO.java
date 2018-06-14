@@ -29,7 +29,7 @@ public class DisciplinaDAO implements IGerenciarDados<Disciplina> {
 
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO Disciplina ")
-                .append("(nome, descricao,)")
+                .append("(nome, descricao)")
                 .append("VALUES")
                 .append("(?,?)");
 
