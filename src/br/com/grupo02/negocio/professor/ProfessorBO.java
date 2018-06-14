@@ -100,7 +100,10 @@ public class ProfessorBO {
         ProfessorDAO prfdao = new ProfessorDAO();
         //validarCamposProfessor(prf);
         //verificarDuplicidade(prf, prfdao);
-        prfdao.inserir(prf);
+        if(prf.getId() ==0)
+            prfdao.inserir(prf);
+        else
+            prfdao.atualizar(prf);
      
 
     }

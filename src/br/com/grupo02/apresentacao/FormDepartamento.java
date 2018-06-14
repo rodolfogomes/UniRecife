@@ -5,7 +5,7 @@
  */
 package br.com.grupo02.apresentacao;
 
-//import br.com.grupo02.fachada.FachadaDepartamento;
+import br.com.grupo02.fachada.FachadaDepartamento;
 import br.com.grupo02.negocio.departamento.Departamento;
 import br.com.grupo02.negocio.departamento.DepartamentoDAO;
 import br.com.grupo02.negocio.error.ConexaoException;
@@ -21,18 +21,24 @@ import javax.swing.JOptionPane;
  * @author Wallison
  */
 public class FormDepartamento extends javax.swing.JDialog {
-  //   FachadaDepartamento fachada = new FachadaDepartamento();
+     FachadaDepartamento fachada = new FachadaDepartamento();
      
     public void atualizaTabela(){
         listObjetos.clear();
-        //listObjetos.addAll(fachada.listaDepartamento());
-        int linha = listObjetos.size()-1 ;
-        if (linha >= 0) {
-            tblObjetos.setRowSelectionInterval(linha, linha);
-            tblObjetos.scrollRectToVisible(
-                    tblObjetos.getCellRect(linha, linha, true)
-            );
-        }
+        try{
+        listObjetos.addAll(fachada.listaDepartamento());
+            int linha = listObjetos.size()-1 ;
+            if (linha >= 0) {
+                tblObjetos.setRowSelectionInterval(linha, linha);
+                tblObjetos.scrollRectToVisible(
+                        tblObjetos.getCellRect(linha, linha, true)
+                );
+            }
+    }catch (ConexaoException ex) {
+            Logger.getLogger(FormDepartamento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DAOException ex) {
+             Logger.getLogger(FormDepartamento.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }
     
     private void trataEdicao (boolean editando){
@@ -347,7 +353,15 @@ public class FormDepartamento extends javax.swing.JDialog {
         if (validaCampos()) {
             int linhaSelecionada = tblObjetos.getSelectedRow();
             Departamento dept = listObjetos.get(linhaSelecionada);
-//            fachada.salvarDepartamento(dept);
+            try {
+                fachada.salvarDepartamento(dept);
+            } catch (ConexaoException ex) {
+                Logger.getLogger(FormDepartamento.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DAOException ex) {
+                Logger.getLogger(FormDepartamento.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (GeralException ex) {
+                Logger.getLogger(FormDepartamento.class.getName()).log(Level.SEVERE, null, ex);
+            }
             trataEdicao(false);
             atualizaTabela();
         }
@@ -366,7 +380,7 @@ public class FormDepartamento extends javax.swing.JDialog {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         int linhaSelecionada = tblObjetos.getSelectedRow();
         Departamento dept = listObjetos.get(linhaSelecionada);
-       // DepartamentoDAO.deletar(dept.getId());
+        DepartamentoDAO.deletar(dept);
         atualizaTabela();
     }//GEN-LAST:event_btnExcluirActionPerformed
 

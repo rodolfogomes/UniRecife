@@ -12,10 +12,11 @@ import br.com.grupo02.negocio.error.GeralException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
-* @author ADM
+ * @author ADM
  */
 public class FormCurso extends javax.swing.JDialog {
 
@@ -25,7 +26,7 @@ public class FormCurso extends javax.swing.JDialog {
         listaCurso.clear();
         try {
             listaCurso.addAll(fachada.listaCursos());
-            int linha = listaCurso.size()-1 ;
+            int linha = listaCurso.size() - 1;
             if (linha >= 0) {
                 tblCurso.setRowSelectionInterval(linha, linha);
                 tblCurso.scrollRectToVisible(
@@ -37,21 +38,21 @@ public class FormCurso extends javax.swing.JDialog {
         }
 
     }
-    
-     private void isEditar(boolean editando){
-         btnCancelar.setEnabled(editando);
-         btnsalvar.setEnabled(editando);
-         btnEditar.setEnabled(!editando);
-         btnExcluir.setEnabled(!editando);
-         btnNovo.setEnabled(!editando);
-         btnFechar.setEnabled(!editando);
-         btnPrimeiro.setEnabled(!editando);
-         btnProximo.setEnabled(!editando);
-         btnAnterior.setEnabled(!editando);
-         btnUltimo.setEnabled(!editando);
-         txtDescricao.setEditable(editando);
-         tblCurso.setEnabled(!editando);
-     }
+
+    private void isEditar(boolean editando) {
+        btnCancelar.setEnabled(editando);
+        btnsalvar.setEnabled(editando);
+        btnEditar.setEnabled(!editando);
+        btnExcluir.setEnabled(!editando);
+        btnNovo.setEnabled(!editando);
+        btnFechar.setEnabled(!editando);
+        btnPrimeiro.setEnabled(!editando);
+        btnProximo.setEnabled(!editando);
+        btnAnterior.setEnabled(!editando);
+        btnUltimo.setEnabled(!editando);
+        txtDescricao.setEditable(editando);
+        tblCurso.setEnabled(!editando);
+    }
 
     /**
      * Creates new form FormCurso
@@ -270,9 +271,12 @@ public class FormCurso extends javax.swing.JDialog {
         try {
             int linhaSelecionada = tblCurso.getSelectedRow();
             Curso curso = listaCurso.get(linhaSelecionada);
-            fachada.salvarCurso(curso);
-            isEditar(false);
-            atualizaTabelaCurso();
+            if (validaCampos()) {
+                fachada.salvarCurso(curso);
+                isEditar(false);
+                atualizaTabelaCurso();
+            }
+
         } catch (ConexaoException | GeralException ex) {
             Logger.getLogger(FormCurso.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -280,7 +284,7 @@ public class FormCurso extends javax.swing.JDialog {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         listaCurso.add((Curso) new Curso());
-        int linha = listaCurso.size()-1;
+        int linha = listaCurso.size() - 1;
         tblCurso.setRowSelectionInterval(linha, linha);
         isEditar(true);
         txtDescricao.requestFocus();
@@ -296,8 +300,11 @@ public class FormCurso extends javax.swing.JDialog {
         int linhaSelecionada = tblCurso.getSelectedRow();
         Curso curso = listaCurso.get(linhaSelecionada);
         try {
-            fachada.edtidar(curso);
-            atualizaTabelaCurso();
+            if (validaCampos()) {
+                fachada.edtidar(curso);
+                atualizaTabelaCurso();
+            }
+
         } catch (ConexaoException ex) {
             ex.printStackTrace();
         }
@@ -322,9 +329,9 @@ public class FormCurso extends javax.swing.JDialog {
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
         int linha = tblCurso.getSelectedRow();
-        if((linha - 1) >=0){
-            linha--; 
-        
+        if ((linha - 1) >= 0) {
+            linha--;
+
         }
         tblCurso.setRowSelectionInterval(linha, linha);
         tblCurso.scrollRectToVisible(tblCurso.getCellRect(linha, 0, true));
@@ -332,19 +339,28 @@ public class FormCurso extends javax.swing.JDialog {
 
     private void btnProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoActionPerformed
         int linha = tblCurso.getSelectedRow();
-        if((linha + 1) <= (tblCurso.getRowCount() -1)){
+        if ((linha + 1) <= (tblCurso.getRowCount() - 1)) {
             linha++;
-        
+
         }
-        tblCurso.setRowSelectionInterval(linha,linha);
+        tblCurso.setRowSelectionInterval(linha, linha);
         tblCurso.scrollRectToVisible(tblCurso.getCellRect(linha, 0, true));
     }//GEN-LAST:event_btnProximoActionPerformed
 
     private void btnUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoActionPerformed
-        int linha = tblCurso.getRowCount() -1;
+        int linha = tblCurso.getRowCount() - 1;
         tblCurso.setRowSelectionInterval(linha, linha);
         tblCurso.scrollRectToVisible(tblCurso.getCellRect(linha, linha, true));
     }//GEN-LAST:event_btnUltimoActionPerformed
+
+    public boolean validaCampos() {
+        if (!(txtDescricao.getText().length() > 0)) {
+            JOptionPane.showMessageDialog(null, "A descrição é obrigatória.");
+            txtDescricao.requestFocus();
+            return false;
+        }
+        return true;
+    }
 
     /**
      * @param args the command line arguments
@@ -376,7 +392,7 @@ public class FormCurso extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FormCurso dialog = new FormCurso(new javax.swing.JFrame(),true);
+                FormCurso dialog = new FormCurso(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
