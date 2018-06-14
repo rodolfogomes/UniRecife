@@ -380,7 +380,7 @@ public class FormDepartamento extends javax.swing.JDialog {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         int linhaSelecionada = tblObjetos.getSelectedRow();
         Departamento dept = listObjetos.get(linhaSelecionada);
-        DepartamentoDAO.deletar(dept);
+      //  DepartamentoDAO.deletar(dept);
         atualizaTabela();
     }//GEN-LAST:event_btnExcluirActionPerformed
 
