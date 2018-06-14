@@ -35,7 +35,8 @@ public class FormDisciplina extends javax.swing.JDialog {
                 tblObjetos.setRowSelectionInterval (linha, linha);
                 tblObjetos.scrollRectToVisible(
                 tblObjetos.getCellRect(linha, linha, true));        
-            }                 
+            } 
+        
                 
      }
          
@@ -346,6 +347,7 @@ public class FormDisciplina extends javax.swing.JDialog {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here: // Botão Salvar
+        if(validaCampos()) {
         int linhaSelecionada = tblObjetos.getSelectedRow();
         Disciplina obj = listObjetos.get(linhaSelecionada);
         try {
@@ -362,7 +364,7 @@ public class FormDisciplina extends javax.swing.JDialog {
         } catch (DAOException ex) {
             Logger.getLogger(FormDisciplina.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+       } 
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 
