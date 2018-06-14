@@ -104,6 +104,8 @@ public class ProfessorBO {
      
 
     }
+    
+    
     /**
     * Método responsável por atualizar professor e inserir as informações;
     * @param antes checar a validação dos campos;

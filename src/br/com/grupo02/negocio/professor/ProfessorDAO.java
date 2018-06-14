@@ -59,6 +59,7 @@ public class ProfessorDAO implements IGerenciarDados<Professor>{
             sb = null;  
         }
     }
+    
 /**
     * Método responsável por atualizar dados na tabela professor;
     * @param professor objeto que será inserido quando esse método for chamado;
