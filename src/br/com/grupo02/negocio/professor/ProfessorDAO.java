@@ -36,9 +36,9 @@ public class ProfessorDAO implements IGerenciarDados<Professor>{
     public void inserir(Professor professor) throws ConexaoException,DAOException {
      StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO Professor ")
-        .append("(cpf, nome,telefone,salario,dep_codigo)")
+        .append("(cpf, nome,telefone,salario)")
         .append("VALUES")
-        .append("(?,?,?,?,?)");
+        .append("(?,?,?,?)");
     
     int index = 0;
      try (Connection con = GerenciarConexao.getInstancia().conectar()) {
@@ -46,8 +46,7 @@ public class ProfessorDAO implements IGerenciarDados<Professor>{
             ps.setString(++index, professor.getCpf());
             ps.setString(++index, professor.getNome());
             ps.setString(++index, professor.getTelefone());
-            ps.setFloat(++index, professor.getSalario());
-            ps.setInt(++index, professor.getDepartamento().getId());         
+            ps.setFloat(++index, professor.getSalario());     
             ps.executeUpdate();         
                 
             
@@ -69,7 +68,7 @@ public class ProfessorDAO implements IGerenciarDados<Professor>{
     @Override
     public void atualizar(Professor professor) throws ConexaoException, DAOException {
          
-        String sql = "update professor set cpf = ?,nome=?,telefone=?,salario = ?,dep_codigo=?"
+       String sql = "update professor set cpf = ?,nome=?,telefone=?,salario = ?"
                 + "where id=?";
        
         int index = 0;
@@ -79,7 +78,6 @@ public class ProfessorDAO implements IGerenciarDados<Professor>{
             ps.setString(++index, professor.getNome());
             ps.setString(++index, professor.getTelefone());
             ps.setFloat(++index,professor.getSalario());
-            ps.setInt(++index, professor.getDepartamento().getId());
             ps.setInt(++index, professor.getId());
             ps.execute();
             ps.close();
@@ -130,7 +128,6 @@ public class ProfessorDAO implements IGerenciarDados<Professor>{
                    prf.setNome(rs.getString("nome"));
                    prf.setTelefone(rs.getString("telefone"));
                    prf.setSalario(rs.getFloat("salario"));
-                   prf.getDepartamento().setId(rs.getInt("dep_codigo"));
                    return prf;
                 }
             }
@@ -165,7 +162,6 @@ public class ProfessorDAO implements IGerenciarDados<Professor>{
                 professor.setNome( rs.getString("nome") );
                 professor.setTelefone(rs.getString("telefone"));
                 professor.setSalario( rs.getFloat("salario"));
-                professor.getDepartamento().setId(rs.getInt("dep_codigo"));
                 lista.add(professor);
                 }   
             return lista;
@@ -177,7 +173,37 @@ public class ProfessorDAO implements IGerenciarDados<Professor>{
 
     }
        
-   
+    public boolean filtrarProfessor(Professor prf, String atributo) throws ConexaoException, DAOException, SQLException {
+        GerenciadorConexao gc;
+        gc = GerenciarConexao.getInstancia();
+
+        String sql = "SELECT * FROM professor WHERE ? = ?";
+        try (Connection con = gc.conectar()) {
+            PreparedStatement pstm;
+            pstm = con.prepareStatement(sql);
+            switch (atributo) {
+                case "nome":
+                    pstm.setString(1, atributo);
+                    pstm.setString(2, prf.getNome());
+                    break;
+                case "cpf":
+                    pstm.setString(1, atributo);
+                    pstm.setString(2, prf.getCpf());
+                    break;
+              
+                default:
+                    pstm.setString(1, "id");
+                    pstm.setInt(2, prf.getId());
+            }
+            try (Statement st = con.createStatement()) {
+                ResultSet rs = st.executeQuery(sql);
+                if (rs.next()) {
+                    return true;
+                }
+            } }
+        return false;
+
+        } 
 
     
 }

@@ -5,6 +5,10 @@
  */
 package br.com.grupo02.apresentacao;
 
+import br.com.grupo02.negocio.error.ConexaoException;
+import br.com.grupo02.negocio.error.DAOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -34,6 +38,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         barraMenu = new javax.swing.JMenuBar();
         menuCadastro = new javax.swing.JMenu();
         menuCurso = new javax.swing.JMenuItem();
+        jMenuProfessor = new javax.swing.JMenuItem();
         menuAjuda = new javax.swing.JMenu();
         menuSobre = new javax.swing.JMenuItem();
 
@@ -58,6 +63,14 @@ public class FormPrincipal extends javax.swing.JFrame {
             }
         });
         menuCadastro.add(menuCurso);
+
+        jMenuProfessor.setText("Professor");
+        jMenuProfessor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuProfessorActionPerformed(evt);
+            }
+        });
+        menuCadastro.add(jMenuProfessor);
 
         barraMenu.add(menuCadastro);
 
@@ -125,6 +138,23 @@ public class FormPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_menuCursoActionPerformed
 
+    private void jMenuProfessorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuProfessorActionPerformed
+        try {
+            // O this informa de qual frema ele será criado e o true se vai ser um modal.
+            FormProfessor form = new FormProfessor(this,true);
+            form.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+            form.setTitle("Gerenciamento de Professores");
+            form.setLocationRelativeTo(this);
+            form.setResizable(false);
+            form.setVisible(true);
+        } catch (ConexaoException ex) {
+            Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DAOException ex) {
+            Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                   
+    }//GEN-LAST:event_jMenuProfessorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -167,6 +197,7 @@ public class FormPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
+    private javax.swing.JMenuItem jMenuProfessor;
     private javax.swing.JLabel lbProjeto;
     private javax.swing.JMenu menuAjuda;
     private javax.swing.JMenu menuCadastro;
