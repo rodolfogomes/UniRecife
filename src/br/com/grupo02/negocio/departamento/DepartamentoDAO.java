@@ -15,34 +15,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Wallison     
+ *   
+ * @author Wallison           
  */
 public class DepartamentoDAO implements IGerenciarDados<Departamento> {
-    private Departamento dept;
     
+/**
+ * Inserir dados no Banco de Dados
+ * @throws ConexaoException
+ * @throws DAOException 
+ */
     @Override
     public void inserir(Departamento departamento) throws ConexaoException,DAOException {
-        GerenciadorConexao gc;
-        gc = GerenciarConexao.getInstancia();
+       
+        
         StringBuilder sb = new StringBuilder();
-        sb.append("INSERT DEPARTAMENTO");
-        sb.append("((id, nome, telefone, centro");
-        sb.append("VALUES");
-        sb.append("(?,?,?,?,)");
-        String sql = sb.toString().trim();
-        PreparedStatement pst;
+        sb.append("INSERT into DEPARTAMENTO")
+        .append("( nome, telefone, centro)")
+        .append("VALUES")
+        .append("(?,?,?)");
+       
         int i = 1;
-        try (Connection con = gc.conectar()) {
-            pst = con.prepareStatement(sql);
-            pst.setInt(i++, departamento.getId());
+        try (Connection con = GerenciarConexao.getInstancia().conectar()) {
+            PreparedStatement pst;
+            pst = con.prepareStatement(sb.toString());
             pst.setString(i++, departamento.getNome());
             pst.setString(i++, departamento.getTelefone());
             pst.setString(i++, departamento.getCentro()); 
             pst.executeUpdate();
             
         } catch (Exception e) {
-            throw new DAOException();
+            e.getMessage();
+            e.printStackTrace();
         } finally {
             sb.delete(0, sb.length());
             sb = null;     
@@ -146,5 +150,44 @@ public class DepartamentoDAO implements IGerenciarDados<Departamento> {
         } catch (Exception e) {
             throw new DAOException();
         }
+    }
+    
+       
+    public boolean filtrarDepartamento(Departamento dept, String atributo) throws ConexaoException, DAOException {
+        GerenciadorConexao gc;
+        gc = GerenciarConexao.getInstancia();
+
+        String sql = "SELECT * FROM DEPARTAMENTO WHERE ? = ?";
+        try (Connection con = gc.conectar()) {
+            PreparedStatement pstm;
+            pstm = con.prepareStatement(sql);
+            switch (atributo) {
+                case "nome":
+                    pstm.setString(1, atributo);
+                    pstm.setString(2, dept.getNome());
+                    break;
+                case "telefone":
+                    pstm.setString(1, atributo);
+                    pstm.setString(2, dept.getTelefone());
+                    break;
+                case "centro":
+                    pstm.setString(1, atributo);
+                    pstm.setString(2, dept.getCentro());
+                    break;
+                default:
+                    pstm.setString(1, "id");
+                    pstm.setInt(2, dept.getId());
+            }
+            try (Statement st = con.createStatement()) {
+                ResultSet rs = st.executeQuery(sql);
+                if (rs.next()) {
+                    return true;
+                }
+            }
+
+        } catch (SQLException ex) {
+            throw new DAOException();
+        }
+        return false;
     }
 }
