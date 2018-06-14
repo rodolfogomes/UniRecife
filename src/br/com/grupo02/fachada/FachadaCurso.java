@@ -8,6 +8,7 @@ package br.com.grupo02.fachada;
 import br.com.grupo02.negocio.curso.Curso;
 import br.com.grupo02.negocio.curso.CursoBO;
 import br.com.grupo02.negocio.error.ConexaoException;
+import br.com.grupo02.negocio.error.GeralException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +26,20 @@ public class FachadaCurso {
         return listaCurso;
     }
     
-    public void salvarCurso(Curso c) throws ConexaoException{
+    public void salvarCurso(Curso c) throws GeralException, ConexaoException{
         CursoBO bo = new CursoBO();
+        bo.validaCampos(c);
         bo.salvarCurso(c);
+    }
+
+    public void remover(int id) throws ConexaoException {
+        CursoBO bo = new CursoBO();
+        bo.remove(id);
+    }
+
+    public void edtidar(Curso curso) throws ConexaoException {
+        CursoBO bo = new CursoBO();
+        bo.editar(curso);
     }
     
 }

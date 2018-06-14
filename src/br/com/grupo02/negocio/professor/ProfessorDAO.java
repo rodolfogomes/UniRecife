@@ -6,7 +6,7 @@
 package br.com.grupo02.negocio.professor;
 import br.com.grupo02.negocio.error.ConexaoException;
 import br.com.grupo02.persistencia.GerenciarConexao;
-import br.com.grupo02.negocio.IGerenciarDados;
+import br.com.grupo02.persistencia.IGerenciarDados;
 import br.com.grupo02.negocio.departamento.Departamento;
 import br.com.grupo02.negocio.disciplina.Disciplina;
 import br.com.grupo02.negocio.error.DAOException;
